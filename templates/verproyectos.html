@@ -93,7 +93,7 @@
     height: 38px;
     color: white;
     background-color: #0E2B3E;
-    margin: 40px -6% -2% 150px;
+    margin: 0 -6% 0 150px;
 
 }
 h2, label{
@@ -102,14 +102,15 @@ h2, label{
     font-weight: 600;
 }
 label{
-    margin: 0 0 0 9%;
+    margin: 0 4% 0 2%;
+    
 }
 
 .fecha{
-    margin: 20px 0 20px 80px;
-    padding-left: 5px;
-    width: 100px;
-    font-size: 15px;
+    margin: 0 -130px 0 0;
+    padding-left: 8px;
+    width: 65px;
+    font-size: 14px;
 
 }
 
@@ -130,7 +131,7 @@ h2{
 
 #endDate{
     margin-right: -20px;
-    margin-top: -20px;
+    margin-top: 0;
 
 }
 
@@ -140,12 +141,13 @@ h2{
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 15px 0 0 45px;
 }
 
 input[type="number"] {
     color: #54BCDE;
     text-align: center; 
-    width: 160px;
+    width: 150px;
     height: 30px;
     margin: 0;
     border: 1px solid #ddd;
@@ -179,6 +181,13 @@ button.increment {
 button:focus {
     outline: none;
 }
+#label_progreso{
+    margin-left: -20px;
+    margin-right: 40px;
+
+}
+
+
 
 </style>
 
@@ -213,13 +222,13 @@ button:focus {
                                             <label for="startDate">Fecha de Inicio</label>
                                             <input type="date" class="fecha" id="startDate" name="startDate" required>
                                     
-                                            <label for="endDate">Fecha de Fin</label>
+                                            <label id="fecha_inicio" for="endDate">Fecha de Fin</label>
                                             <input type="date" class="fecha" id="endDate" name="endDate" required>
                                     
                                         </form>
 
                                         <div class="number-input-container">
-                                            <label for="progre" class="form-label">Progreso</label>
+                                            <label id="label_progreso" for="progre" class="form-label">Progreso</label>
                                             <button class="decrement">-</button>
                                             <input type="number" id="customNumberInput" value="0" min="0" max="100">
                                             <button class="increment">+</button>
