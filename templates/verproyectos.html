@@ -34,41 +34,25 @@
 
         <main class="contenido-principal">
             <header class="encabezado">
-                <h1>PROYECTO X</h1>
+                <h1>{{ proyecto.nombre }}</h1>
                 <div class="fechas">
-                    <p>Fecha inicial: 0X/0X/20XX</p>
-                    <p>Fecha final: 0X/0X/20XX</p>
+                    <p>Fecha inicial: {{ proyecto.fecha_inicio }}</p>
+                    <p>Fecha final: {{ proyecto.fecha_fin }}</p>
                 </div>
             </header>
 
             <section class="documentos">
-                <h2>DOCUMENTO</h2>
-                <!--  <div class="iconos-documentos">
-                    <div class="icono">
-                        <img src="{% static 'images/icono-cargar.png' %}" alt="Cargar documento">
-                        <p>Cargar documento</p>
-                    </div>
-                    <div class="icono">
-                        <img src="{% static 'images/icono-doc.png' %}" alt="Wall-e.docs">
-                        <p>Wall-e.docs</p>
-                    </div>
-                    <div class="icono">
-                        <img src="{% static 'images/icono-excel.png' %}" alt="Eva.excel">
-                        <p>Eva.excel</p>
-                    </div>
-                    <div class="icono">
-                        <img src="{% static 'images/icono-pdf.png' %}" alt="Transformer.pdf">
-                        <p>Transformer.pdf</p>
-                    </div>
-                </div> -->
+                <h2>Descripción</h2>
+                <p>{{ proyecto.descripcion }}</p>
+                
             </section>
 
             <section class="progreso">
                 <h3>Progreso del proyecto</h3>
                 <div class="barra-progreso">
-                    <div class="progreso-completado" style="width: 0%;"></div>
+                    
                 </div>
-                <p class="porcentaje">0%</p>
+    <p class="porcentaje">{{ proyecto.progreso }}%</p>
             </section>
         </main>
     </div>
@@ -116,3 +100,4 @@
 </body>
 
 </html>
+

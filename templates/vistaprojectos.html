@@ -223,43 +223,16 @@
                     <div class="project-card">
                         <h5>{{ proyecto.nombre }}</h5>
                         <p>{{ proyecto.descripcion }}</p>
-                        <button class="btn btn-view">Ver proyecto
-                            <a href="#"></a>
-                        </button>
+                        <form action="{% url 'verproyectos' proyecto.id %}" method="get">
+                            <button type="submit" class="btn btn-view">Ver proyecto</button>
+                        </form>
                     </div>
                 </div>
             {% endfor %}
 
 
 
-            {% comment %} <div class="col-md-3">
-                <div class="project-card">
-                    <h5>Facultad Robot</h5>
-                    <p>Administrador</p>
-                    <button class="btn btn-view ">Ver proyecto
-                        <a href=""></a>
-                    </button>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="project-card">
-                    <h5>E-commerce Shoes</h5>
-                    <p>Tutor</p>
-                    <button class="btn btn-view">Ver proyecto
-                        <a href=""></a>
-                    </button>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="project-card">
-                    <h5>Transporte v2</h5>
-                    <p>Asistente</p>
-                    <button class="btn btn-view">Ver proyecto
-                        <a href=""></a>
-                    </button>
-                </div>
-                
-            </div> {% endcomment %}
+           
             
             
         </div>

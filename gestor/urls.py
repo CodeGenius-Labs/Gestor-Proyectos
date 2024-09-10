@@ -30,6 +30,7 @@ urlpatterns = [
     path('logout/',views.exit, name='logout'),
     path('verproyectos/',views.verproyectos, name='verproyectos'),
     path('verusuarios/',views.verusuarios, name='verusuarios'),
+    path('verproyectos/<int:id>/', views.verproyectos, name='verproyectos'),
 ]
 
 if settings.DEBUG:

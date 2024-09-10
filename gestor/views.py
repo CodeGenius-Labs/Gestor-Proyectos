@@ -9,6 +9,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.views.decorators.csrf import csrf_exempt
 from user.models import Proyecto, MiembrosProyectos, Roles
+from django.shortcuts import get_object_or_404
 #----------------Inicio----------------
 def home(request):
     return render(request, 'index.html')
@@ -212,6 +213,9 @@ def actualizarperfil(request):
 
     return render(request, 'perfilconfig.html')  # Asegúrate de que este nombre coincida con tu archivo de plantilla
 
-#----------------Crear Proyectos----------------
+#----------------Definir ver proyectos--------------------------
+def verproyectos(request, id):
+    proyecto = get_object_or_404(Proyecto, id=id)
+    return render(request, 'verproyectos.html', {'proyecto': proyecto})
 
 
