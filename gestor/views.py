@@ -24,7 +24,7 @@ def login(request):
         if user is not None:
             auth_login(request, user)
             messages.success(request, 'Inicio sesion correctamente.')
-            return redirect('proyectos')  # Redirige a la vista de proyectos si el login es exitoso
+            return redirect('home')  # Redirige a la vista de proyectos si el login es exitoso
         else:
             messages.error(request, 'Credenciales inválidas. Por favor, inténtalo de nuevo.')
     return render(request, 'login.html')
@@ -74,7 +74,7 @@ def registro(request):
             user.save()
             auth_login(request, user)
             messages.success(request, 'Registrado correctamente.')
-            return redirect('proyectos')  # Redirige a la vista 'home' después del registro exitoso
+            return redirect('home')  # Redirige a la vista 'home' después del registro exitoso
 
     return render(request, 'registro.html')
 
