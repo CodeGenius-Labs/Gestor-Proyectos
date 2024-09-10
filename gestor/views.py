@@ -129,6 +129,7 @@ def proyectos(request):
                 messages.error(request, f'Ocurrió un error al crear el proyecto: {e}')
         else:
             messages.error(request, 'Por favor, rellene todos los campos.')
+        return redirect('proyectos')  # Redirige de vuelta a la página de perfil
 
     # Obtener los proyectos en los que el usuario es miembro
     proyectos_usuario = Proyecto.objects.filter(
