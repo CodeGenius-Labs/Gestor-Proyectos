@@ -8,25 +8,29 @@
     <title>Gestor de Proyectos</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/verproyectos.css' %}">
-    <!-- <link rel="stylesheet" href="{% static 'css/footer.css' %}"> -->
-
+    <!-----------<link rel="stylesheet" href="{% static 'css/footer.css' %}">------>
+    <link rel="stylesheet" href="{% static 'css/agregarusuario.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!------ventanas toast.js------->
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{% static 'js/toast.js' %}"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
 
     <link rel="shortcut icon" href=" {% static 'imagenes/ico/logo-gestor-proyectos-en-azul.ico' %}">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
     <div class="contenedor-principal">
         <aside class="barra-lateral">
             <img src="{% static 'images/logo-robot.png' %}" alt="imagen proyecto" class="logo">
-            <button class="boton-lateral">Actualizar proyecto</button>
-            <button class="boton-lateral"><a href="{% url 'verusuarios'%}"></a>Usuarios</button>
+            <!-- Botón que abre el modal de Usuarios -->
+            <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuarios">Ver Usuarios</button>
             <button class="boton-lateral">Eliminar usuarios</button>
             <button class="boton-lateral">Fechas y anotaciones</button>
             <button class="boton-lateral"><a href="{% url 'proyectos'%}" style="color: #54BCDE;">Volver</a></button>
@@ -108,15 +112,102 @@
                 <div class="barra-progreso">
                     
                 </div>
-    <p class="porcentaje">{{ proyecto.progreso }}%</p>
+                <p class="porcentaje">{{ proyecto.progreso }}%</p>
             </section>
         </main>
     </div>
 
+<<<<<<< HEAD
     {% include "footer.html" %}
 
+=======
+    <!-- Modal para mostrar los usuarios -->
+    <div class="modal fade" id="modalUsuarios" tabindex="-1" aria-labelledby="etiquetaModalUsuarios" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Usuarios</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body" id="listaUsuarios">
+                    
+                </div>
+                <div class="modal-footer">
+                    <!-- Botón que abre el modal de agregar usuario -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalConfirmacion">Agregar Usuario</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para confirmar agregar usuario -->
+    <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="etiquetaModalConfirmacion" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmación de agregar usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="correoElectronico" class="form-label">Correo electrónico</label>
+                        <input type="email" class="form-control" id="correoElectronico" placeholder="usuario@example.com">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="rolUsuario" class="form-label ">Rol</label>
+                        <select class="form-select" id="rolUsuario">
+                            <option value="Tutor">Tutor</option>
+                            <option value="Asistente">Asistente</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer mb-0">
+        <!---------Logo y titulo Gestorproyectos-------->
+        <div class="container">
+            <div class="row w-100">
+                <div class="col-md-4 mb-4 mb-md-0 text-center">
+                    <h5 class="text-uppercase">GESTOR PROYECTOS</h5>
+                    <!-- Ajustamos el tamaño del logo -->
+                    <img src="{% static 'imagenes/logo_gestor.png' %}" alt="Logo" class="logo2 img-fluid" style="max-width: 150px;">
+                </div>
+    
+                <!----------Redes sociales---------------->
+                <div class="col-md-4 mb-4 mb-md-0 text-center">
+                    <h5 class="text-uppercase">REDES SOCIALES</h5>
+                    <a href="#" class="text-primary mx-3"><i class="fa-brands fa-square-facebook fa-3x"></i></a>
+                    <a href="#" class="text-primary mx-3"><i class="fa-brands fa-instagram fa-3x"></i></a>
+                    <a href="#" class="text-primary mx-3"><i class="fa-brands fa-whatsapp fa-3x"></i></a>
+                </div>
+    
+                <!------------------Sobre Nosotros------------------------>
+                <div class="col-3 text-center">
+                    <h5 class="text-uppercase">NOSOTROS</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text">Home</a></li>
+                        <li><a href="#" class="text">Quienes somos</a></li>
+                        <li><a href="#" class="text">Preguntas frecuentes</a></li>
+                        <li><a href="#" class="text">Términos y condiciones</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    
+        <hr class="txtfooter my-1">
+        <div class="text-center">
+            <p class="pfooter mb-0 mt-0">© 2024 Gestor de proyectos company. Reservados todos los derechos</p>
+        </div>
+    </footer>
+    
+>>>>>>> test-backend1
 
 </body>
 
 </html>
-

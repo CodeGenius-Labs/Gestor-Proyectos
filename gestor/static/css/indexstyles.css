@@ -1,24 +1,24 @@
 body{
     background-color: #ffffff;
+    
 }
 
 header{
     width: 100%;
     height: 100px;
-    
+    padding-top: 15px;
 }
 
+.logogestor{
+    
+    width: 1000px;
+}
 header img{
-    width: 30%;
+    width: 250px;
     max-width: 100%;
     height: auto;
+    
 }
-
-img:hover{
-    cursor: pointer;
-}
-
-
 
 
 .botonproyectos, 
@@ -30,7 +30,7 @@ img:hover{
     width: 140px;
     height: auto;
     align-items: center;
-    
+    float: right;
 }
 
 .botonlogout a,
@@ -50,15 +50,19 @@ img:hover{
 
 
 .carruselimagenes{
-    width: 50%;
-    height: 50%;
+    width: 45%;
+    height: auto;
     margin: auto;
-    
+
 }
 
 .carruselimagenes img{
-    border-radius: 10px;
-    border: #0E2B3E 2px solid;
+    border-radius: 15px;
+    max-width: 100%;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+
 }
 
 
@@ -66,60 +70,43 @@ img:hover{
 
 
 
-
-.containmain{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        
-}
-
-.container2{
-    
-    color: #54BCDE;
-    margin: 50px;
-    display: block;
-    width: 700px;
-
-    
-}
-
-.container2 h1{
-    font-weight: bolder;
-    text-align: center;
-    font-size: 40px;
-
+.containmain {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Esto permite que los elementos se apilen en pantallas pequeñas */
+    padding: 20px;
 }
 
 .container2 {
-    
-    text-align: start;
-    margin-left:30px;
+    color: #54BCDE;
+    margin: 50px;
+    width: 100%; /* Asegura que ocupe todo el ancho en dispositivos pequeños */
+}
+
+
+
+
+
+.titulotext h1 {
+    font-weight: bolder;
+    text-align: center;
+    font-size: 40px;
+}
+
+.titulotext p {
+    text-align: center;
     font-size: 25px;
 
 }
 
 
-.image{
-    margin-right: auto;
-    margin-left: auto;
-    width: 650px;
-    height: auto;
-}
 
-.foto1{
-    display: flex;
+
+.img .img-fluid {
+    max-width: 100%;
     height: auto;
-    width: 70%;
-    margin-top: 20px;
-    position: relative;
-    justify-content: center;
-    align-items: center;
-    max-width: 80%;
-    height: auto;
-    border-radius: 15px;
-    margin-left: auto;
-    margin-right: auto;
-    
+    width: 400px;
+
 }
 
