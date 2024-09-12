@@ -47,6 +47,62 @@
                 
             </section>
 
+            <!---------TESTEO BACKEND-------->
+            <section class="test" style="margin: 50px 0;">
+                <div class="container">
+                
+                    <!-- Mostrar lista de usuarios del proyecto -->
+                    <h3>Usuarios en este proyecto</h3>
+                    <ul>
+                        {% for miembro in miembros %}
+                        <li>
+                            {{ miembro.usuario.username }} - {{ miembro.usuario.email }}
+                            
+                            <!-- Formulario para cambiar rol del usuario -->
+                            <form method="POST" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="miembro_id" value="{{ miembro.id }}">
+                                <select name="rol" class="form-select" style="display:inline;width:auto;">
+                                    {% for rol in roles %}
+                                    <option value="{{ rol.rol }}" {% if miembro.rol == rol %}selected{% endif %}>{{ rol.rol }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" name="cambiar_rol" class="btn btn-sm btn-secondary">Cambiar Rol</button>
+                            </form>
+                            
+                            <!-- Botón para eliminar usuario -->
+                            <form method="POST" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="miembro_id" value="{{ miembro.id }}">
+                                <button type="submit" name="eliminar_usuario" class="btn btn-danger btn-sm">Eliminar</button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                
+                    <!-- Formulario para agregar usuario al proyecto -->
+                    <h3>Agregar usuario al proyecto</h3>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="correo" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" name="correo" placeholder="usuario@example.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rol" class="form-label">Rol</label>
+                            <select name="rol" class="form-select" required>
+                                {% for rol in roles %}
+                                <option value="{{ rol.rol }}">{{ rol.rol }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" name="agregar_usuario" class="btn btn-primary">Agregar usuario</button>
+                    </form>
+                
+                </div>
+            </section>
+                <!---------FIN TESTEO BACKEND-------->
+
             <section class="progreso">
                 <h3>Progreso del proyecto</h3>
                 <div class="barra-progreso">
@@ -57,44 +113,7 @@
         </main>
     </div>
 
-    <footer class="footer mb-0" >
-
-        <!---------Logo----y titulo--Gestorproyectos-------->
-        <div class="container">
-            <div class="row w-100">
-                <div class="col-md-4 mb-4 mb-md-0 text-center">
-                    <h5 class="text-uppercase">GESTOR PROYECTOS</h5>
-                    <img  src="{% static 'imagenes/logo_gestor.png' %}" alt="Logo" class="logo2 img-fluid" >
-                </div>
-
-                <!----------Redes sociales---------------->
-                <div class="col-md-4 mb-4 mb-md-0 text-center">
-                    <h5 class="text-uppercase">REDES SOCIALES</h5>
-                    <a href="#" class="text-primary mx-3"><i class="fa-brands fa-square-facebook fa-3x"></i></a>
-                    <a href="#" class="text-primary mx-3"><i class="fa-brands fa-instagram fa-3x"></i></a>
-                    <a href="#" class="text-primary mx-3"><i class="fa-brands fa-whatsapp fa-3x"></i></a>
-                </div>
-
-                <!------------------Sobre Nosotros------------------------>
-                <div class="col-3 text-center">
-                    <h5 class="text-uppercase">NOSOTROS</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text">Home</a></li>
-                        <li><a href="#" class="text">Quienes somos</a></li>
-                        <li><a href="#" class="text">Preguntas frecuentes</a></li>
-                        <li><a href="#" class="text">Términos y condiciones</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-        </div>
-        <!----------la linea ----------->
-        <hr class="txtfooter my-1">
-        <div class="text-center">
-            <p class="pfooter mb-0  mt-0">© 2024 Gestor de proyectos company. Reservados todos los derechos</p>
-        </div>
-
-    </footer>
+    {% include "footer.html" %}
 
 
 </body>

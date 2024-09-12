@@ -95,55 +95,6 @@ def verusuarios(request):
 def exit(request):
         logout(request)
         return redirect('home')
-#----------------Vista de proyectos----------------
-@login_required(login_url="login")
-def proyectos(request):
-    if request.method == 'POST':
-        # Recoger datos del formulario
-        nombre = request.POST.get('nombre')
-        descripcion = request.POST.get('descripcion')
-        fecha_inicio = request.POST.get('fecha_inicio')
-        fecha_fin = request.POST.get('fecha_fin')
-
-        # Validar que todos los campos están llenos
-        if nombre and descripcion and fecha_inicio and fecha_fin:
-            try:
-                # Crear y guardar el proyecto usando el modelo Proyecto
-                proyecto = Proyecto(
-                    nombre=nombre,
-                    descripcion=descripcion,
-                    fecha_inicio=fecha_inicio,
-                    fecha_fin=fecha_fin
-                )
-                proyecto.save()
-                
-                # Asociar al usuario actual con el proyecto
-                miembro_proyecto = MiembrosProyectos(
-                    usuario=request.user,
-                    proyecto=proyecto,
-                    rol=Roles.objects.get(rol='Administrador del departamento')  # Asigna un rol por defecto o personalizado
-                )
-                miembro_proyecto.save()
-                
-                messages.success(request, 'Proyecto creado exitosamente.')
-            except Exception as e:
-                messages.error(request, f'Ocurrió un error al crear el proyecto: {e}')
-        else:
-            messages.error(request, 'Por favor, rellene todos los campos.')
-        return redirect('proyectos')  # Redirige de vuelta a la página de perfil
-
-    # Obtener los proyectos en los que el usuario es miembro
-    proyectos_usuario = Proyecto.objects.filter(
-        id__in=MiembrosProyectos.objects.filter(usuario=request.user).values('proyecto')
-    )
-
-    # Pasar los proyectos al contexto de la plantilla
-    context = {
-        'proyectos_usuario': proyectos_usuario
-    }
-
-    return render(request, 'vistaprojectos.html', context)
-
 
 
 #----------------Actualizar perfil----------------
@@ -213,9 +164,118 @@ def actualizarperfil(request):
 
     return render(request, 'perfilconfig.html')  # Asegúrate de que este nombre coincida con tu archivo de plantilla
 
+#----------------Vista de proyectos----------------
+@login_required(login_url="login")
+def proyectos(request):
+    if request.method == 'POST':
+        # Recoger datos del formulario
+        nombre = request.POST.get('nombre')
+        descripcion = request.POST.get('descripcion')
+        fecha_inicio = request.POST.get('fecha_inicio')
+        fecha_fin = request.POST.get('fecha_fin')
+
+        # Validar que todos los campos están llenos
+        if nombre and descripcion and fecha_inicio and fecha_fin:
+            try:
+                # Crear y guardar el proyecto usando el modelo Proyecto
+                proyecto = Proyecto(
+                    nombre=nombre,
+                    descripcion=descripcion,
+                    fecha_inicio=fecha_inicio,
+                    fecha_fin=fecha_fin
+                )
+                proyecto.save()
+                
+                # Asociar al usuario actual con el proyecto
+                miembro_proyecto = MiembrosProyectos(
+                    usuario=request.user,
+                    proyecto=proyecto,
+                    rol=Roles.objects.get(rol='Administrador del departamento')  # Asigna un rol por defecto o personalizado
+                )
+                miembro_proyecto.save()
+                
+                messages.success(request, 'Proyecto creado exitosamente.')
+            except Exception as e:
+                messages.error(request, f'Ocurrió un error al crear el proyecto: {e}')
+        else:
+            messages.error(request, 'Por favor, rellene todos los campos.')
+        return redirect('proyectos')  # Redirige de vuelta a la página de perfil
+
+    # Obtener los proyectos en los que el usuario es miembro
+    proyectos_usuario = Proyecto.objects.filter(
+        id__in=MiembrosProyectos.objects.filter(usuario=request.user).values('proyecto')
+    )
+
+    # Pasar los proyectos al contexto de la plantilla
+    context = {
+        'proyectos_usuario': proyectos_usuario
+    }
+
+    return render(request, 'vistaprojectos.html', context)
+
 #----------------Definir ver proyectos--------------------------
+@login_required(login_url="login")
 def verproyectos(request, id):
     proyecto = get_object_or_404(Proyecto, id=id)
-    return render(request, 'verproyectos.html', {'proyecto': proyecto})
+
+    # Obtener los miembros del proyecto
+    miembros = MiembrosProyectos.objects.filter(proyecto=proyecto).exclude(usuario=request.user)
+
+    if request.method == 'POST':
+        # Acción para agregar un usuario
+        if 'agregar_usuario' in request.POST:
+            correo = request.POST.get('correo')
+            rol = request.POST.get('rol')
+
+            try:
+                usuario = User.objects.get(email=correo)
+                rol_obj = Roles.objects.get(rol=rol)
+                # Verificar si el usuario ya está en el proyecto
+                if not MiembrosProyectos.objects.filter(usuario=usuario, proyecto=proyecto).exists():
+                    MiembrosProyectos.objects.create(usuario=usuario, proyecto=proyecto, rol=rol_obj)
+                    messages.success(request, f"Usuario {usuario.email} agregado al proyecto.")
+                else:
+                    messages.warning(request, f"El usuario {usuario.email} ya forma parte del proyecto.")
+            except User.DoesNotExist:
+                messages.error(request, f"No se encontró un usuario con el correo {correo}.")
+            except Roles.DoesNotExist:
+                messages.error(request, f"El rol {rol} no existe.")
+        
+        # Acción para eliminar un usuario
+        elif 'eliminar_usuario' in request.POST:
+            miembro_id = request.POST.get('miembro_id')
+            MiembrosProyectos.objects.filter(id=miembro_id).delete()
+            messages.success(request, "El usuario fue eliminado del proyecto.")
+
+        # Acción para actualizar el rol de un usuario
+        elif 'cambiar_rol' in request.POST:
+            miembro_id = request.POST.get('miembro_id')
+            nuevo_rol = request.POST.get('rol')
+            try:
+                miembro = MiembrosProyectos.objects.get(id=miembro_id)
+                rol_obj = Roles.objects.get(rol=nuevo_rol)
+                # Verificar si el rol actual es diferente del nuevo rol
+                if miembro.rol != rol_obj:
+                    miembro.rol = rol_obj
+                    miembro.save()
+                    messages.success(request, f"El rol de {miembro.usuario.email} se ha actualizado a {nuevo_rol}.")
+                else:
+                    messages.info(request, f"El usuario {miembro.usuario.email} ya tiene el rol {nuevo_rol}.")
+            except MiembrosProyectos.DoesNotExist:
+                messages.error(request, "No se pudo encontrar el miembro del proyecto.")
+            except Roles.DoesNotExist:
+                messages.error(request, "El rol seleccionado no existe.")
+
+        return redirect('verproyectos', id=id)
+
+    context = {
+        'proyecto': proyecto,
+        'miembros': miembros,
+        'roles': Roles.objects.exclude(rol='Administrador del departamento'),  # Pasamos los roles disponibles para el selector
+    }
+
+    return render(request, 'verproyectos.html', context)
+
+
 
 
