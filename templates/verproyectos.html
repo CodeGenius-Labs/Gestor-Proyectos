@@ -51,16 +51,29 @@
                 
             </section>
 
-            <!---------TESTEO BACKEND-------->
-            <section class="test" style="margin: 50px 0;">
-                <div class="container">
-                
-                    <!-- Mostrar lista de usuarios del proyecto -->
-                    <h3>Usuarios en este proyecto</h3>
+            <section class="progreso">
+                <h3>Progreso del proyecto</h3>
+                <div class="barra-progreso">
+                    
+                </div>
+                <p class="porcentaje">{{ proyecto.progreso }}%</p>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal para mostrar los usuarios -->
+    <div class="modal fade" id="modalUsuarios" tabindex="-1" aria-labelledby="etiquetaModalUsuarios" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Usuarios</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body" id="listaUsuarios">
                     <ul>
                         {% for miembro in miembros %}
                         <li>
-                            {{ miembro.usuario.username }} - {{ miembro.usuario.email }}
+                            {{ miembro.usuario.email }}
                             
                             <!-- Formulario para cambiar rol del usuario -->
                             <form method="POST" style="display:inline;">
@@ -83,54 +96,6 @@
                         </li>
                         {% endfor %}
                     </ul>
-                
-                    <!-- Formulario para agregar usuario al proyecto -->
-                    <h3>Agregar usuario al proyecto</h3>
-                    <form method="POST">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="correo" class="form-label">Correo electrónico</label>
-                            <input type="email" class="form-control" name="correo" placeholder="usuario@example.com" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="rol" class="form-label">Rol</label>
-                            <select name="rol" class="form-select" required>
-                                {% for rol in roles %}
-                                <option value="{{ rol.rol }}">{{ rol.rol }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <button type="submit" name="agregar_usuario" class="btn btn-primary">Agregar usuario</button>
-                    </form>
-                
-                </div>
-            </section>
-                <!---------FIN TESTEO BACKEND-------->
-
-            <section class="progreso">
-                <h3>Progreso del proyecto</h3>
-                <div class="barra-progreso">
-                    
-                </div>
-                <p class="porcentaje">{{ proyecto.progreso }}%</p>
-            </section>
-        </main>
-    </div>
-
-<<<<<<< HEAD
-    {% include "footer.html" %}
-
-=======
-    <!-- Modal para mostrar los usuarios -->
-    <div class="modal fade" id="modalUsuarios" tabindex="-1" aria-labelledby="etiquetaModalUsuarios" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Usuarios</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body" id="listaUsuarios">
-                    
                 </div>
                 <div class="modal-footer">
                     <!-- Botón que abre el modal de agregar usuario -->
@@ -148,65 +113,32 @@
                     <h5 class="modal-title">Confirmación de agregar usuario</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="correoElectronico" class="form-label">Correo electrónico</label>
-                        <input type="email" class="form-control" id="correoElectronico" placeholder="usuario@example.com">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="correo" class="form-label">Correo electrónico</label>
+                                <input type="email" class="form-control" name="correo" placeholder="usuario@example.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="rol" class="form-label">Rol</label>
+                                <select name="rol" class="form-select" required>
+                                    {% for rol in roles %}
+                                    <option value="{{ rol.rol }}">{{ rol.rol }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
                     </div>
-
-                    <div class="mb-3">
-                        <label for="rolUsuario" class="form-label ">Rol</label>
-                        <select class="form-select" id="rolUsuario">
-                            <option value="Tutor">Tutor</option>
-                            <option value="Asistente">Asistente</option>
-                        </select>
+                    <div class="modal-footer">
+                        <button type="submit" name="agregar_usuario" class="btn btn-primary">Agregar</button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Agregar</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 
-    <footer class="footer mb-0">
-        <!---------Logo y titulo Gestorproyectos-------->
-        <div class="container">
-            <div class="row w-100">
-                <div class="col-md-4 mb-4 mb-md-0 text-center">
-                    <h5 class="text-uppercase">GESTOR PROYECTOS</h5>
-                    <!-- Ajustamos el tamaño del logo -->
-                    <img src="{% static 'imagenes/logo_gestor.png' %}" alt="Logo" class="logo2 img-fluid" style="max-width: 150px;">
-                </div>
+    {% include "footer.html" %}
     
-                <!----------Redes sociales---------------->
-                <div class="col-md-4 mb-4 mb-md-0 text-center">
-                    <h5 class="text-uppercase">REDES SOCIALES</h5>
-                    <a href="#" class="text-primary mx-3"><i class="fa-brands fa-square-facebook fa-3x"></i></a>
-                    <a href="#" class="text-primary mx-3"><i class="fa-brands fa-instagram fa-3x"></i></a>
-                    <a href="#" class="text-primary mx-3"><i class="fa-brands fa-whatsapp fa-3x"></i></a>
-                </div>
-    
-                <!------------------Sobre Nosotros------------------------>
-                <div class="col-3 text-center">
-                    <h5 class="text-uppercase">NOSOTROS</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text">Home</a></li>
-                        <li><a href="#" class="text">Quienes somos</a></li>
-                        <li><a href="#" class="text">Preguntas frecuentes</a></li>
-                        <li><a href="#" class="text">Términos y condiciones</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    
-        <hr class="txtfooter my-1">
-        <div class="text-center">
-            <p class="pfooter mb-0 mt-0">© 2024 Gestor de proyectos company. Reservados todos los derechos</p>
-        </div>
-    </footer>
-    
->>>>>>> test-backend1
 
 </body>
 
