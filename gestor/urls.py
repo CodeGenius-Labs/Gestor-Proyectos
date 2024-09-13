@@ -28,9 +28,8 @@ urlpatterns = [
     path('proyectos/', views.proyectos, name='proyectos'),
     path('perfil/',views.actualizarperfil, name='actualizar_perfil'),
     path('logout/',views.exit, name='logout'),
-    path('verproyectos/',views.verproyectos, name='verproyectos'),
-    path('verusuarios/',views.verusuarios, name='verusuarios'),
     path('verproyectos/<int:id>/', views.verproyectos, name='verproyectos'),
+    #path('verificar/', views.verusuarios, name='verificar_contraseña'),
 ]
 
 if settings.DEBUG:
