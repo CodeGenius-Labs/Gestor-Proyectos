@@ -181,35 +181,35 @@
                             <div class="content">
                                 <div class="inputs">
                                     <span class="close-btn">&times;</span>
+                                    
                                     <h2>Crear nuevo proyecto</h2>
+
+                                    <form method="POST" action="{% url 'proyectos' %}">
+                                        {% csrf_token %}
                                    {% comment %}  Campo de nombre {% endcomment %}
                                     <div class="input_campos">
-                                        <label for="username" >Nombre</label>
-                                        <input class="input_nombre" placeholder="Nombre del proyecto" name="username" >
+                                        <label for="nombre" >Nombre</label>
+                                        <input class="input_nombre" placeholder="Nombre del proyecto" name="nombre" >
                                     </div>
                             
                                    {% comment %} Campo de Descripcion {% endcomment %}
                                     <div class="input_campos">
                                         
-                                        <label for="password" class="form-label">Descripcion</label>
-                                        <input class="input_descripcion" type="text" name="Descripcion">
+                                        <label for="descripcion" class="form-label">Descripcion</label>
+                                        <input class="input_descripcion" type="text" name="descripcion">
                                     </div>
                             
                         
-                                    <div class="form-container">                                        
-                                        <form id="calendarForm">
-                                            <label for="startDate">Fecha de Inicio</label>
-                                            <input type="date" class="fecha" id="startDate" name="startDate" required>
+                                    <div class="form-container">
+                                            <label for="fecha_inicio">Fecha de Inicio</label>
+                                            <input type="date" class="fecha" id="startDate" name="fecha_inicio" required>
                                     
-                                            <label for="endDate">Fecha de Fin</label>
-                                            <input type="date" class="fecha" id="endDate" name="endDate" required>
-                                    
-                                        </form>
+                                            <label for="fecha_fin">Fecha de Fin</label>
+                                            <input type="date" class="fecha" id="endDate" name="fecha_fin" required>
                                     </div>
                                     
-                                        <a href="{% url 'verproyectos' %}"><button class="btncrear" type="submit" id="boton">Crear</button></a>
-                                    </form>          
-                                  </form>
+                                        <button class="btncrear" type="submit" id="boton">Crear</button>
+                                    </form>
                                 </div>
                               </div>
                         </div>
@@ -218,35 +218,21 @@
                     <!--Fin de modal emergente-->
                 </div>
             </div>
+            {% for proyecto in proyectos_usuario %}
+                <div class="col-md-3">
+                    <div class="project-card">
+                        <h5>{{ proyecto.nombre }}</h5>
+                        <p>{{ proyecto.descripcion }}</p>
+                        <form action="{% url 'verproyectos' proyecto.id %}" method="get">
+                            <button type="submit" class="btn btn-view">Ver proyecto</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
 
-            <div class="col-md-3">
-                <div class="project-card">
-                    <h5>Facultad Robot</h5>
-                    <p>Administrador</p>
-                    <button class="btn btn-view ">Ver proyecto
-                        <a href=""></a>
-                    </button>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="project-card">
-                    <h5>E-commerce Shoes</h5>
-                    <p>Tutor</p>
-                    <button class="btn btn-view">Ver proyecto
-                        <a href=""></a>
-                    </button>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="project-card">
-                    <h5>Transporte v2</h5>
-                    <p>Asistente</p>
-                    <button class="btn btn-view">Ver proyecto
-                        <a href=""></a>
-                    </button>
-                </div>
-                
-            </div>
+
+
+           
             
             
         </div>

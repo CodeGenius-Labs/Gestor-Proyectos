@@ -8,6 +8,8 @@ from django.contrib.auth import authenticate, login as auth_login, logout
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.views.decorators.csrf import csrf_exempt
+from user.models import Proyecto, MiembrosProyectos, Roles
+from django.shortcuts import get_object_or_404
 #----------------Inicio----------------
 def home(request):
     return render(request, 'index.html')
@@ -22,7 +24,7 @@ def login(request):
         if user is not None:
             auth_login(request, user)
             messages.success(request, 'Inicio sesion correctamente.')
-            return redirect('proyectos')  # Redirige a la vista de proyectos si el login es exitoso
+            return redirect('home')  # Redirige a la vista de proyectos si el login es exitoso
         else:
             messages.error(request, 'Credenciales inválidas. Por favor, inténtalo de nuevo.')
     return render(request, 'login.html')
@@ -72,7 +74,7 @@ def registro(request):
             user.save()
             auth_login(request, user)
             messages.success(request, 'Registrado correctamente.')
-            return redirect('proyectos')  # Redirige a la vista 'home' después del registro exitoso
+            return redirect('home')  # Redirige a la vista 'home' después del registro exitoso
 
     return render(request, 'registro.html')
 
@@ -95,7 +97,51 @@ def exit(request):
 #----------------Vista de proyectos----------------
 @login_required(login_url="login")
 def proyectos(request):
-    return render(request,'vistaprojectos.html')
+    if request.method == 'POST':
+        # Recoger datos del formulario
+        nombre = request.POST.get('nombre')
+        descripcion = request.POST.get('descripcion')
+        fecha_inicio = request.POST.get('fecha_inicio')
+        fecha_fin = request.POST.get('fecha_fin')
+
+        # Validar que todos los campos están llenos
+        if nombre and descripcion and fecha_inicio and fecha_fin:
+            try:
+                # Crear y guardar el proyecto usando el modelo Proyecto
+                proyecto = Proyecto(
+                    nombre=nombre,
+                    descripcion=descripcion,
+                    fecha_inicio=fecha_inicio,
+                    fecha_fin=fecha_fin
+                )
+                proyecto.save()
+                
+                # Asociar al usuario actual con el proyecto
+                miembro_proyecto = MiembrosProyectos(
+                    usuario=request.user,
+                    proyecto=proyecto,
+                    rol=Roles.objects.get(rol='Administrador del departamento')  # Asigna un rol por defecto o personalizado
+                )
+                miembro_proyecto.save()
+                
+                messages.success(request, 'Proyecto creado exitosamente.')
+            except Exception as e:
+                messages.error(request, f'Ocurrió un error al crear el proyecto: {e}')
+        else:
+            messages.error(request, 'Por favor, rellene todos los campos.')
+        return redirect('proyectos')  # Redirige de vuelta a la página de perfil
+
+    # Obtener los proyectos en los que el usuario es miembro
+    proyectos_usuario = Proyecto.objects.filter(
+        id__in=MiembrosProyectos.objects.filter(usuario=request.user).values('proyecto')
+    )
+
+    # Pasar los proyectos al contexto de la plantilla
+    context = {
+        'proyectos_usuario': proyectos_usuario
+    }
+
+    return render(request, 'vistaprojectos.html', context)
 
 
 
@@ -166,66 +212,9 @@ def actualizarperfil(request):
 
     return render(request, 'perfilconfig.html')  # Asegúrate de que este nombre coincida con tu archivo de plantilla
 
-@login_required
-def crearprojectos(request):
-        if request.method == 'POST':
-            nombre = request.POST.get('nombre')
-            descripcion = request.POST.get('descripcion')
-            #fecha_inicio = request.POST.get('fecha_inicio')
-            #fecha_fin = request.POST.get('fecha_fin')
+#----------------Definir ver proyectos--------------------------
+def verproyectos(request, id):
+    proyecto = get_object_or_404(Proyecto, id=id)
+    return render(request, 'verproyectos.html', {'proyecto': proyecto})
 
-            #Validar nombre y descripcion no esten vacios
-            if not nombre or not descripcion:
-                messages.error(request, 'Por favor, ingresa un nombre y una descripción.')
-                return redirect('crearprojectos')
-            
-            #Crear y guardar proyecto
-            Proyecto.objects.create(nombre=nombre, descripcion=descripcion, creador=request.user)
-            messages.success(request, 'Proyecto creado exitosamente.')
 
-            return redirect('proyectos')  # Redirige a la lista de proyectos
-        
-        
-        return render(request, 'crearprojectos.html')
-
-@login_required
-def actualizar_proyecto(request, proyecto_id):
-    proyecto = get_object_or_404(Proyecto, id=proyecto_id)
-
-    # Verificar si el usuario tiene permiso para actualizar el proyecto
-    if request.user != proyecto.administrador:
-        return HttpResponseForbidden("No tienes permiso para actualizar este proyecto.")
-
-    if request.method == "POST":
-        form = ProyectoForm(request.POST, instance=proyecto)
-        
-        if form.is_valid():
-            # Verificar cambios
-            cambios = {}
-            proyecto_actualizado = form.save(commit=False)
-            
-            if proyecto.nombre != proyecto_actualizado.nombre:
-                cambios['nombre'] = (proyecto.nombre, proyecto_actualizado.nombre)
-            if proyecto.descripcion != proyecto_actualizado.descripcion:
-                cambios['descripcion'] = (proyecto.descripcion, proyecto_actualizado.descripcion)
-
-            
-            # Guardar el proyecto si todo está validado correctamente
-            proyecto_actualizado.save()
-
-            # Registrar cambios si hubo alguno
-            if cambios:
-                ProyectoUpdateLog.objects.create(
-                    proyecto=proyecto_actualizado,
-                    usuario=request.user,
-                    cambios=cambios
-                )
-                messages.success(request, "El proyecto ha sido actualizado y los cambios han sido registrados.")
-            else:
-                messages.info(request, "No hubo cambios en el proyecto.")
-            
-            return redirect('proyecto_detalle', proyecto_id=proyecto.id)
-    else:
-        form = ProyectoForm(instance=proyecto)
-
-    return render(request, 'proyectos/actualizar.html', {'form': form})
