@@ -16,14 +16,14 @@
 
     <style>
     .modal {
-        display: none; /* Oculto por defecto */
+        display: none;
         position: fixed;
         z-index: 1;
         left: 0;
         top: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+        background-color: rgba(0, 0, 0, 0.5);
         transition: .8;
     }
     
@@ -118,12 +118,15 @@
         margin-top: -20px;
 
     }
+    .label_down{
+        margin-bottom: -40px;
+    }
 </style>
 
 </head>
 <body>
     
-    <!–--saludotexto---iconoperfil-->
+    <!--saludotexto-iconoperfil-->
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             <div class="welcome-text">Bienvenid@, {{user.username}}</div>
@@ -134,10 +137,10 @@
                 </a>
             </div>
         </div>
-    <!–--saludotexto---iconoperfil-->
+    <!--saludotexto---iconoperfil-->
 
 
-        <!–-Proyecto-barrabusqueda,botonfiltro,menudesplegable-->
+        <!--Proyecto-barrabusqueda,botonfiltro,menudesplegable --> 
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div class="project-title">GESTOR DE PROYECTOS</div>
             <div class="d-flex align-items-center">

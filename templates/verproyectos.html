@@ -8,12 +8,11 @@
     <title>Gestor de Proyectos</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/verproyectos.css' %}">
-    <!-- <link rel="stylesheet" href="{% static 'css/footer.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}"> 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!------ventanas toast.js------->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{% static 'js/toast.js' %}"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
@@ -21,12 +20,236 @@
     <link rel="shortcut icon" href=" {% static 'imagenes/ico/logo-gestor-proyectos-en-azul.ico' %}">
 </head>
 
+<style>
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: .8;
+}
+
+/* Contenido del Modal */
+.modal-content {
+    background-color: #fff;
+    margin: 9% auto;
+    padding: 20px 30px 20px 20px;
+    border: 1px solid #888;
+    width: 30%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+/* Botón para cerrar el Modal */
+.close-btn {
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: red;
+    color: white;
+    width: 40PX;
+    height: 40px;
+    border-radius: 50%;
+    margin: -9% 0 0 350px;
+    z-index: 5;
+    padding-left: 12px;
+    padding-top: 4px;
+    display: block;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+.input_campos input{
+    background-color: #0E2B3E;
+    color: white;
+    
+}
+.input_nombre{
+    border: solid 1px white;
+    margin: 30px -10% 0 50px;
+    height: 35px;
+    width: 190px; 
+}
+
+.input_descripcion{
+    border: solid 1px white;
+    height: 100px;
+    margin: 20px -9% 0 20px;
+    width: 190px; 
+
+}
+
+.form-container input{
+    border: solid 1px white;
+    width: 188px;
+    height: 38px;
+    color: white;
+    background-color: #0E2B3E;
+    margin: 0 -6% 0 150px;
+
+}
+h2, label{
+    color: #0E2B3E;
+    font-family: "Libre Franklin", sans-serif;
+    font-weight: 600;
+}
+label{
+    margin: 0 4% 0 2%;
+    
+}
+
+.fecha{
+    margin: 0 -130px 0 0;
+    padding-left: 8px;
+    width: 65px;
+    font-size: 14px;
+
+}
+
+h2{
+    font-size: 15px;
+    margin-top: -3%;
+    text-align: center;
+}
+.btnactualizar{
+    background-color: #0E2B3E;
+    color: #54BCDE;
+    width: 90px;
+    height: 40px;
+    font-family: "Libre Franklin", sans-serif;
+    font-weight: 700;
+    margin: 5% 40%;
+}
+
+#endDate{
+    margin-right: -20px;
+    margin-top: 0;
+
+}
+
+
+/* Progreso*/
+.number-input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0 0 45px;
+}
+
+input[type="number"] {
+    color: #54BCDE;
+    text-align: center; 
+    width: 150px;
+    height: 30px;
+    margin: 0;
+    border: 1px solid #ddd;
+    border-left: none;
+    border-right: none;
+    font-size: 20px;
+}
+
+button.decrement, button.increment {
+    background-color: #0E2B3E;
+    color: #54BCDE;
+    border: 1px solid #ddd;
+    width: 20px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button.decrement {
+    border-radius: 5px 0 0 5px; 
+}
+
+button.increment {
+    border-radius: 0 5px 5px 0; 
+
+}
+
+button:focus {
+    outline: none;
+}
+#label_progreso{
+    margin-left: -20px;
+    margin-right: 40px;
+
+}
+
+
+
+</style>
+
 <body>
     <div class="contenedor-principal">
         <aside class="barra-lateral">
             <img src="{% static 'images/logo-robot.png' %}" alt="imagen proyecto" class="logo">
-            <button class="boton-lateral">Actualizar proyecto</button>
-            <button class="boton-lateral"><a href="{% url 'verusuarios'%}"></a>Usuarios</button>
+            
+            <button class="boton-lateral" id="openModalBtn">Actualizar proyecto</button>
+
+                    <!--Modal emergente--> 
+                    <div id="modal" class="modal">
+                        <div class="modal-content">
+                            <div class="content">
+                                <div class="inputs">
+                                    <span class="close-btn">&times;</span>
+                                    <h2>Configurar proyecto</h2>
+
+                                    <div class="input_campos">
+                                        <label for="username" >Nombre</label>
+                                        <input class="input_nombre" type="text" name="username" >
+                                    </div>
+                            
+                                    <div class="input_campos">
+                                        <label for="password" class="form-label">Descripcion</label>
+                                        <input class="input_descripcion" type="text" name="Descripcion">
+                                    </div>
+                            
+                        
+                                    <div class="form-container">                                        
+                                        <form id="calendarForm">
+                                            <label for="startDate">Fecha de Inicio</label>
+                                            <input type="date" class="fecha" id="startDate" name="startDate" required>
+                                    
+                                            <label id="fecha_inicio" for="endDate">Fecha de Fin</label>
+                                            <input type="date" class="fecha" id="endDate" name="endDate" required>
+                                    
+                                        </form>
+
+                                        <div class="number-input-container">
+                                            <label id="label_progreso" for="progre" class="form-label">Progreso</label>
+                                            <button class="decrement">-</button>
+                                            <input type="number" id="customNumberInput" value="0" min="0" max="100">
+                                            <button class="increment">+</button>
+                                        </div>
+                                    </div>
+                                    
+                                        <button class="btnactualizar" type="submit" id="boton">Actualizar</button>
+                                    </form>          
+                                  </form>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+
+                    <!--Fin de modal emergente-->
+
+
+
+
+
+            <button class="boton-lateral">Agregar usuarios</button>
             <button class="boton-lateral">Eliminar usuarios</button>
             <button class="boton-lateral">Fechas y anotaciones</button>
             <button class="boton-lateral"><a href="{% url 'proyectos'%}" style="color: #54BCDE;">Volver</a></button>
@@ -88,7 +311,7 @@
             </div>
             
         </div>
-        <!----------la linea ----------->
+
         <hr class="txtfooter my-1">
         <div class="text-center">
             <p class="pfooter mb-0  mt-0">© 2024 Gestor de proyectos company. Reservados todos los derechos</p>
@@ -96,6 +319,7 @@
 
     </footer>
 
+    <script src="{% static 'js/verproyecto.js' %}"></script>
 
 </body>
 
