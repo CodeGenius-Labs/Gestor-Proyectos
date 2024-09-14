@@ -1,41 +1,54 @@
 
-.container {
-    text-align: center;
-}
+/*Vista Ver usuarios   #modalUsuarios*/
 
-#botonAgregarUsuario {
-    margin-bottom: 20px;
+#modalUsuarios .modal-dialog{
+    max-width: 550px;
 }
-
-.modal-header {
-    background-color: #f8f9fa;
-}
-
-.modal-title {
-    color: #343a40;
-}
-
-.modal-body {
-    padding: 20px;
-}
-
-.modal-footer {
-    background-color: #f1f1f1;
+#modalUsuarios .modal-title{
+    color:#0E2B3E;
 }
 
 
-.btn-primary {
-    background-color: #0e2b3e;
-    color: #54bcde;
-    border-radius: 5px;
+#modalUsuarios .modal-body form{
+    display: inline;
     
 }
 
-.btn-danger {
-    background-color: #dc3545;
-    border-radius: 5px;
+#modalUsuarios li{
+    
+    margin: 5px 10px;
 }
 
-.form-control {
-    margin-bottom: 15px;
+#modalUsuarios .form-select{
+    display: inline;
+    width: 115px;
+    margin-left:5px;
+    
+}
+
+
+
+
+
+
+
+
+
+#modalUsuarios .btn-primary{
+    background-color: #0E2B3E;
+    color: #54BCDE;
+}
+
+#modalUsuarios .btn-secondary{
+    color: #0e2b3e72;
+    
+    margin-left: 5px;
+    wi
+}
+
+#modalUsuarios .btn-danger{
+    background-color: #ff00008d;
+    color: #000000;
+    margin-left: 5px;
+    width: 30px;
 }
