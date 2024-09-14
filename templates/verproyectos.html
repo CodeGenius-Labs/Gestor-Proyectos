@@ -25,49 +25,8 @@
     <div class="contenedor-principal">
         <aside class="barra-lateral">
             <img src="{% static 'images/logo-robot.png' %}" alt="imagen proyecto" class="logo">
-            <button class="boton-lateral">Actualizar Proyectos</a> proyecto</button>
-            <button class="boton-lateral"><a href="{% url 'verusuarios'%}"></a>Usuarios</button>
-            <button class="boton-lateral">Eliminar usuarios</button>
-            <button class="boton-lateral">Fechas y anotaciones</button>
-            <button class="boton-lateral"><a href="{% url 'proyectos'%}" style="color: #54BCDE;">Volver</a></button>
-        </aside>
-
-        <main class="contenido-principal">
-            <header class="encabezado">
-                <h1>{{ proyecto.nombre }}</h1>
-                <div class="fechas">
-                    <p>Fecha inicial: {{ proyecto.fecha_inicio }}</p>
-                    <p>Fecha final: {{ proyecto.fecha_fin }}</p>
-                </div>
-            </header>
-
-            <section class="documentos">
-                <h2>Descripción</h2>
-                <p>{{ proyecto.descripcion }}</p>
-
-            </section>
-
-            <section class="progreso">
-                <h3>Progreso del proyecto</h3>
-                <div class="barra-progreso">
-
-                </div>
-                <p class="porcentaje">{{ proyecto.progreso }}%</p>
-            </section>
-        </main>
-    </div>
-
-    <footer class="footer mb-0">
-
-
-
-        <div class="contenedor-principal">
-            <aside class="barra-lateral">
-                <img src="{% static 'images/logo-robot.png' %}" alt="imagen proyecto" class="logo">
-
-
-                <button class="boton-lateral" id="openModalBtn">Actualizar proyecto</button>
-
+            <button class="boton-lateral">Editar Proyecto</a></button>
+            
                 <!--Modal emergente-->
                 <div id="modal" class="modal">
                     <div class="modal-content">
@@ -110,9 +69,42 @@
                         </div>
                     </div>
                 </div>
-            </aside>
-        </div>
+            <button class="boton-lateral"><a href="{% url 'verusuarios'%}"></a>Usuarios</button>
+            <button class="boton-lateral">Eliminar usuarios</button>
+            <button class="boton-lateral">Fechas y anotaciones</button>
+            <button class="boton-lateral"><a href="{% url 'proyectos'%}" style="color: #54BCDE;">Volver</a></button>
+        </aside>
 
+        <main class="contenido-principal">
+            <header class="encabezado">
+                <h1>{{ proyecto.nombre }}</h1>
+                <div class="fechas">
+                    <p>Fecha inicial: {{ proyecto.fecha_inicio }}</p>
+                    <p>Fecha final: {{ proyecto.fecha_fin }}</p>
+                </div>
+            </header>
+
+            <section class="documentos">
+                <h2>Descripción</h2>
+                <p>{{ proyecto.descripcion }}</p>
+
+            </section>
+
+            <section class="progreso">
+                <h3>Progreso del proyecto</h3>
+                <div class="barra-progreso">
+
+                </div>
+                <p class="porcentaje">{{ proyecto.progreso }}%</p>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer mb-0">
+
+
+
+    
 
         <!---------Logo----y titulo--Gestorproyectos-------->
         <div class="container">
