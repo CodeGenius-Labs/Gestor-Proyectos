@@ -25,7 +25,7 @@
     <div class="contenedor-principal">
         <aside class="barra-lateral">
             <img src="{% static 'images/logo-robot.png' %}" alt="imagen proyecto" class="logo">
-            <button class="boton-lateral">Actualizar proyecto</button>
+            <button class="boton-lateral">Actualizar Proyectos</a> proyecto</button>
             <button class="boton-lateral"><a href="{% url 'verusuarios'%}"></a>Usuarios</button>
             <button class="boton-lateral">Eliminar usuarios</button>
             <button class="boton-lateral">Fechas y anotaciones</button>
@@ -44,27 +44,82 @@
             <section class="documentos">
                 <h2>Descripción</h2>
                 <p>{{ proyecto.descripcion }}</p>
-                
+
             </section>
 
             <section class="progreso">
                 <h3>Progreso del proyecto</h3>
                 <div class="barra-progreso">
-                    
+
                 </div>
-    <p class="porcentaje">{{ proyecto.progreso }}%</p>
+                <p class="porcentaje">{{ proyecto.progreso }}%</p>
             </section>
         </main>
     </div>
 
-    <footer class="footer mb-0" >
+    <footer class="footer mb-0">
+
+
+
+        <div class="contenedor-principal">
+            <aside class="barra-lateral">
+                <img src="{% static 'images/logo-robot.png' %}" alt="imagen proyecto" class="logo">
+
+
+                <button class="boton-lateral" id="openModalBtn">Actualizar proyecto</button>
+
+                <!--Modal emergente-->
+                <div id="modal" class="modal">
+                    <div class="modal-content">
+                        <div class="content">
+                            <div class="inputs">
+                                <span class="close-btn">&times;</span>
+                                <h2>Configurar proyecto</h2>
+
+                                <!-- FORMULARIO -->
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <label for="nombre">Nombre del proyecto:</label>
+                                    <input type="text" id="nombre" name="nombre" value="{{ proyecto.nombre }}" required>
+
+                                    <label for="descripcion">Descripción:</label>
+                                    <textarea id="descripcion" name="descripcion"
+                                        required>{{ proyecto.descripcion }}</textarea>
+
+                                    <label for="fecha_inicio">Fecha de inicio:</label>
+                                    <input type="date" id="fecha_inicio" name="fecha_inicio"
+                                        value="{{ proyecto.fecha_inicio }}" required>
+
+                                    <label for="fecha_fin">Fecha de fin:</label>
+                                    <input type="date" id="fecha_fin" name="fecha_fin" value="{{ proyecto.fecha_fin }}"
+                                        required>
+
+                                    <label for="progreso">Progreso:</label>
+                                    <input type="number" id="progreso" name="progreso" value="{{ proyecto.progreso }}"
+                                        min="0" max="100" required>
+
+                                    <button type="submit">Actualizar Proyecto</button>
+                                </form>
+
+                                <a href="{% url 'actualizar_proyecto' proyecto.id %}">
+                                    <button class="btnactualizar" type="submit" id="boton">Actualizar</button>
+                                </a>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
 
         <!---------Logo----y titulo--Gestorproyectos-------->
         <div class="container">
             <div class="row w-100">
                 <div class="col-md-4 mb-4 mb-md-0 text-center">
                     <h5 class="text-uppercase">GESTOR PROYECTOS</h5>
-                    <img  src="{% static 'imagenes/logo_gestor.png' %}" alt="Logo" class="logo2 img-fluid" >
+                    <img src="{% static 'imagenes/logo_gestor.png' %}" alt="Logo" class="logo2 img-fluid">
                 </div>
 
                 <!----------Redes sociales---------------->
@@ -86,7 +141,7 @@
                     </ul>
                 </div>
             </div>
-            
+
         </div>
         <!----------la linea ----------->
         <hr class="txtfooter my-1">
@@ -100,4 +155,3 @@
 </body>
 
 </html>
-

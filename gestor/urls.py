@@ -31,6 +31,8 @@ urlpatterns = [
     path('verproyectos/',views.verproyectos, name='verproyectos'),
     path('verusuarios/',views.verusuarios, name='verusuarios'),
     path('verproyectos/<int:id>/', views.verproyectos, name='verproyectos'),
+    path('actualizar_proyecto/<int:proyecto_id>/', views.actualizar_proyecto, name='actualizar_proyecto'),
+
 ]
 
 if settings.DEBUG:
