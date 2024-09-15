@@ -198,20 +198,19 @@
                             
                                    {% comment %} Campo de Descripcion {% endcomment %}
                                     <div class="input_campos">
-                                        
                                         <label for="descripcion" class="form-label">Descripcion</label>
                                         <input class="input_descripcion" type="text" name="descripcion">
                                     </div>
                             
-                        
-                                    <div class="form-container">
+                                    <div class="form-container">                                        
+                                        <form id="calendarForm">
                                             <label for="fecha_inicio">Fecha de Inicio</label>
                                             <input type="date" class="fecha" id="startDate" name="fecha_inicio" required>
                                     
                                             <label for="fecha_fin">Fecha de Fin</label>
                                             <input type="date" class="fecha" id="endDate" name="fecha_fin" required>
+                                        </form>
                                     </div>
-                                    
                                         <button class="btncrear" type="submit" id="boton">Crear</button>
                                     </form>
                                 </div>

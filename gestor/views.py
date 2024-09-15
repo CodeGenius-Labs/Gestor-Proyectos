@@ -97,6 +97,25 @@ def exit(request):
         return redirect('home')
 
 
+def actualizar_proyecto(request, proyecto_id):
+    proyecto = get_object_or_404(Proyecto, id=proyecto_id)
+
+    if request.method == 'POST':
+        # Procesar la actualización
+        proyecto.nombre = request.POST.get('nombre')
+        proyecto.descripcion = request.POST.get('descripcion')
+        proyecto.fecha_inicio = request.POST.get('fecha_inicio')
+        proyecto.fecha_fin = request.POST.get('fecha_fin')
+        proyecto.progreso = request.POST.get('progreso')
+        proyecto.save()
+        return redirect('verproyectos')  # O redirigir a la página que prefieras
+
+    return render(request, 'actualizar_proyecto.html', {'proyecto': proyecto})
+
+
+
+
+
 #----------------Actualizar perfil----------------
 
 @login_required(login_url="login")
@@ -275,6 +294,9 @@ def verproyectos(request, id):
     }
 
     return render(request, 'verproyectos.html', context)
+
+
+from django.shortcuts import render
 
 
 
