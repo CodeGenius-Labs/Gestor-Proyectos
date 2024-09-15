@@ -203,7 +203,6 @@ button:focus {
             
             <button class="boton-lateral" id="openModalBtn">Actualizar proyecto</button>
 
-            <!--Modal emergente-->
                     <div id="modal" class="modal">
                         <div class="modal-content">
                             <div class="content">
@@ -211,38 +210,40 @@ button:focus {
                                     <span class="close-btn">&times;</span>
                                     <h2>Configurar proyecto</h2>
 
-                                    <!-- FORMULARIO -->
-                                    <form method="POST">
-                                        {% csrf_token %}
-                                        <label for="nombre">Nombre del proyecto:</label>
-                                        <input type="text" id="nombre" name="nombre" value="{{ proyecto.nombre }}" required>
+                                    <div class="input_campos">
+                                        <label for="username" >Nombre</label>
+                                        <input class="input_nombre" type="text" name="username" >
+                                    </div>
+                            
+                                    <div class="input_campos">
+                                        <label for="password" class="form-label">Descripcion</label>
+                                        <input class="input_descripcion" type="text" name="Descripcion">
+                                    </div>
+                            
+                        
+                                    <div class="form-container">                                        
+                                        <form id="calendarForm">
+                                            <label for="startDate">Fecha de Inicio</label>
+                                            <input type="date" class="fecha" id="startDate" name="startDate" required>
+                                    
+                                            <label id="fecha_inicio" for="endDate">Fecha de Fin</label>
+                                            <input type="date" class="fecha" id="endDate" name="endDate" required>
+                                    
+                                        </form>
 
-                                        <label for="descripcion">Descripción:</label>
-                                        <textarea id="descripcion" name="descripcion"
-                                            required>{{ proyecto.descripcion }}</textarea>
-
-                                        <label for="fecha_inicio">Fecha de inicio:</label>
-                                        <input type="date" id="fecha_inicio" name="fecha_inicio"
-                                            value="{{ proyecto.fecha_inicio }}" required>
-
-                                        <label for="fecha_fin">Fecha de fin:</label>
-                                        <input type="date" id="fecha_fin" name="fecha_fin" value="{{ proyecto.fecha_fin }}"
-                                            required>
-
-                                        <label for="progreso">Progreso:</label>
-                                        <input type="number" id="progreso" name="progreso" value="{{ proyecto.progreso }}"
-                                            min="0" max="100" required>
-
-                                        <button type="submit">Actualizar Proyecto</button>
-                                    </form>
-
-                                    <a href="{% url 'actualizar_proyecto' proyecto.id %}">
+                                        <div class="number-input-container">
+                                            <label id="label_progreso" for="progre" class="form-label">Progreso</label>
+                                            <button class="decrement">-</button>
+                                            <input type="number" id="customNumberInput" value="0" min="0" max="100">
+                                            <button class="increment">+</button>
+                                        </div>
+                                    </div>
+                                    
                                         <button class="btnactualizar" type="submit" id="boton">Actualizar</button>
-                                    </a>
-
-                                    </form>
+                                    </form>          
+                                  </form>
                                 </div>
-                            </div>
+                              </div>
                         </div>
                     </div>
 
