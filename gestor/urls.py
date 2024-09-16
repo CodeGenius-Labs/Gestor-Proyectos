@@ -13,6 +13,7 @@ urlpatterns = [
     path('perfil/',views.actualizarperfil, name='actualizar_perfil'),
     path('logout/',views.exit, name='logout'),
     path('verproyectos/<int:id>/', views.verproyectos, name='verproyectos'),
+    path('actualizar_proyecto/<int:proyecto_id>/', views.actualizar_proyecto, name='actualizar_proyecto'),
 ]
 
 if settings.DEBUG:
