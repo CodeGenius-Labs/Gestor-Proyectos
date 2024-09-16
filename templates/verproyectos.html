@@ -203,40 +203,40 @@ button:focus {
             
             <button class="boton-lateral" id="openModalBtn">Editar proyecto</button>
 
-                <!--------Inicio del modal emergente------>
-
-                    <div id="modal" class="modal">
+                <!--1------Inicio del modal emergente------>
+                  
+                    <div id="modal" class="modal" style="display: none;">
                         <div class="modal-content">
                             <div class="content">
                                 <div class="inputs">
                                     <span class="close-btn">&times;</span>
-                                    <h2>Configurar proyecto</h2>
+                                    <h2>Configurar Proyecto</h2>
 
                                     <form method="POST" action="{% url 'actualizar_proyecto' proyecto.id %}">
                                         {% csrf_token %}
                                         <div class="input_campos">
                                             <label for="nombre">Nombre</label>
-                                            <input class="input_nombre" type="text" name="nombre" value="{{ proyecto.nombre }}">
+                                            <input class="input_nombre" type="text" name="nombre" value="{{ proyecto.nombre }}" required>
                                         </div>
-                                
+                                    
                                         <div class="input_campos">
                                             <label for="descripcion" class="form-label">Descripción</label>
-                                            <input class="input_descripcion" type="text" name="descripcion" value="{{ proyecto.descripcion }}">
+                                            <input class="input_descripcion" type="text" name="descripcion" value="{{ proyecto.descripcion }}" required>
                                         </div>
-                                
-                                        <div class="form-container">                                        
+                                    
+                                        <div class="form-container">
                                             <label for="fecha_inicio">Fecha de Inicio</label>
                                             <input type="date" class="fecha" id="fecha_inicio" name="fecha_inicio" value="{{ proyecto.fecha_inicio|date:'Y-m-d' }}" required>
-                                    
+                                        
                                             <label for="fecha_fin">Fecha de Fin</label>
                                             <input type="date" class="fecha" id="fecha_fin" name="fecha_fin" value="{{ proyecto.fecha_fin|date:'Y-m-d' }}" required>
                                         </div>
 
                                         <div class="number-input-container">
                                             <label id="label_progreso" for="progreso" class="form-label">Progreso</label>
-                                            <button class="decrement">-</button>
-                                            <input type="number" id="progreso" name="progreso" value="{{ proyecto.progreso }}" min="0" max="100">
-                                            <button class="increment">+</button>
+                                            <button type="button" class="decrement">-</button>
+                                            <input type="number" id="progreso" name="progreso" value="{{ proyecto.progreso }}" min="0" max="100" required>
+                                            <button type="button" class="increment">+</button>
                                         </div>
                                         
                                         <button class="btnactualizar" type="submit">Actualizar</button>
@@ -246,6 +246,7 @@ button:focus {
                         </div>
                     </div>
 
+                    
                     <!--Fin de modal emergente-->
 
 

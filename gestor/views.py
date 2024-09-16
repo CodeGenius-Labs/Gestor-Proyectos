@@ -296,8 +296,8 @@ def verproyectos(request, id):
     return render(request, 'verproyectos.html', context)
 
 #-------------Actualizar Proyectos ---------------------------
-def actualizar_proyecto(request, proyecto_id):
-    proyecto = get_object_or_404(Proyecto, id=proyecto_id)
+def actualizar_proyecto(request, id):
+    proyecto = get_object_or_404(Proyecto, id=id)
 
     if request.method == 'POST':
         # Procesar la actualización
@@ -307,8 +307,7 @@ def actualizar_proyecto(request, proyecto_id):
         proyecto.fecha_fin = request.POST.get('fecha_fin')
         proyecto.progreso = request.POST.get('progreso')
         proyecto.save()
-        return redirect('verproyectos', proyecto_id=proyecto.id)  # Redirigir a la página actualizada
+        return redirect('verproyectos', id=id)  # Redireccionar con el id correcto
 
-    return render(request, 'verproyectos.html', {'proyecto': proyecto})
-
+    return render(request, 'actualizar_proyecto.html', {'proyecto': proyecto})
 
