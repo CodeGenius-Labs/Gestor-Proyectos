@@ -307,9 +307,8 @@ def actualizar_proyecto(request, proyecto_id):
         proyecto.fecha_fin = request.POST.get('fecha_fin')
         proyecto.progreso = request.POST.get('progreso')
         proyecto.save()
-        return redirect('verproyectos')  # O redirigir a la página que prefieras
+        return redirect('verproyectos', proyecto_id=proyecto.id)  # Redirigir a la página actualizada
 
-    return render(request, 'actualizar_proyecto.html', {'proyecto': proyecto})
-
+    return render(request, 'verproyectos.html', {'proyecto': proyecto})
 
 
