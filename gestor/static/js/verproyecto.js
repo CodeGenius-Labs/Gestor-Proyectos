@@ -1,4 +1,4 @@
-const modal = document.getElementById('modal');
+const modal = document.getElementById('customModal');
         const openModalBtn = document.getElementById('openModalBtn');
         const closeModalBtn = document.querySelector('.close-btn');
         const closeButton = document.getElementById('closeModalBtn'); 

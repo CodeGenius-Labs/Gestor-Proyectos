@@ -33,7 +33,7 @@
 </head>
 
 <style>
-.modal {
+.customModal {
     display: none;
     position: fixed;
     z-index: 1;
@@ -46,7 +46,7 @@
 }
 
 /* Contenido del Modal */
-.modal-content {
+.customModal .modal-content {
     background-color: #fff;
     margin: 9% auto;
     padding: 20px 30px 20px 20px;
@@ -207,12 +207,13 @@ button:focus {
     <div class="contenedor-principal">
         <aside class="barra-lateral">
             <img src="{% static 'images/logo-robot.png' %}" alt="imagen proyecto" class="logo">
-            
+
+            {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
             <button class="boton-lateral" id="openModalBtn">Editar proyecto</button>
 
                 <!--1------Inicio del modal emergente------>
                   
-                    <div id="modal" class="modal" style="display: none;">
+                    <div id="customModal" class="customModal" style="display: none;">
                         <div class="modal-content">
                             <div class="content">
                                 <div class="inputs">
@@ -262,8 +263,7 @@ button:focus {
 
             <!-- Botón que abre el modal de Usuarios -->
 
-            {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
-                <button class="boton-lateral">Actualizar Proyecto</a></button>
+            
                 <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuarios">Ver Usuarios</button>
             {% endif %}
             <button class="boton-lateral">Fechas y anotaciones</button>
