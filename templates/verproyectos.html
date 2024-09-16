@@ -206,10 +206,11 @@ button:focus {
 <body>
     <div class="contenedor-principal">
         <aside class="barra-lateral">
-            <img src="{% static 'images/logo-robot.png' %}" alt="imagen proyecto" class="logo">
+            <img src="{% static 'imagenes/roibot.jpg' %}" alt="imagen proyecto" class="logo">
 
             {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
             <button class="boton-lateral" id="openModalBtn">Editar proyecto</button>
+            <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuarios">Ver Usuarios</button>
 
                 <!--1------Inicio del modal emergente------>
                   
@@ -257,15 +258,12 @@ button:focus {
                     
                     <!--Fin de modal emergente-->
 
-
+            {% endif %}
 
 
 
             <!-- Botón que abre el modal de Usuarios -->
 
-            
-                <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuarios">Ver Usuarios</button>
-            {% endif %}
             <button class="boton-lateral">Fechas y anotaciones</button>
             <button class="boton-lateral"><a href="{% url 'proyectos'%}" style="color: #54BCDE;">Volver</a></button>
         </aside>
@@ -295,6 +293,7 @@ button:focus {
         </main>
     </div>
 
+    {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
     <!-- Modal para mostrar los usuarios -->
     <div class="modal fade" id="modalUsuarios" tabindex="-1" aria-labelledby="etiquetaModalUsuarios" aria-hidden="true">
         <div class="modal-dialog">
@@ -370,6 +369,7 @@ button:focus {
             </div>
         </div>
     </div>
+    {% endif %}
 
     {% include "footer.html" %}
     
