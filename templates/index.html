@@ -1,8 +1,8 @@
-
 {% load static %}
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,36 +10,28 @@
     <link rel="shortcut icon" href=" {% static 'imagenes/ico/logo-gestor-proyectos-en-azul.ico' %}">
     <link rel="stylesheet" href="css/indexstyles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="{% static 'css/cookies.css' %}">
     <link rel="stylesheet" href="{% static 'css/indexstyles.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
 
-    
-    
-    
+
+
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
     <!------ventanas toast.js------->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
 </head>
+
 <body>
-    {% if messages %}
-        {% for message in messages %}
-            {% if message.tags == 'success'%}
-                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-            {% elif message.tags == 'info' %}
-                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-            {% elif message.tags == 'warning' %}
-                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-            {% elif message.tags == 'error' %}
-                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
     <header>
 
         <!-------------NAVBAR  Y BOTOBN LOGIN------------------------------>
@@ -47,108 +39,113 @@
             <div class="container ">
 
                 <div class="logogestor">
-                <img class="img-fluid" src="{% static 'imagenes/logo.png' %}" alt="">
+                    <img class="img-fluid" src="{% static 'imagenes/logo.png' %}" alt="">
                 </div>
-                    
-                <div class="collapse navbar-collapse   " >
+
+                <div class="collapse navbar-collapse   ">
                     {% if request.user.is_authenticated %}
                     <div class="botonlogout">
-                        <button class=" buttonlogout btn w-100 " >
-                    
+                        <button class=" buttonlogout btn w-100 ">
+
                             <i class="fa-solid fa-right-from-bracket d-inline-block"></i>
-                            <a class="d-none  d-md-inline "href="{% url 'logout'%}">Cerrar Sesion</a>
-                    
+                            <a class="d-none  d-md-inline " href="{% url 'logout'%}">Cerrar Sesion</a>
+
                         </button>
                     </div>
                     <div class="botonproyectos">
-                        <button class=" buttonproyectos btn w-100 " >
-                    
+                        <button class=" buttonproyectos btn w-100 ">
+
                             <i class="fa-regular fa-folder d-inline-block"></i>
-                            <a class="d-none  d-md-inline "href="{% url 'proyectos'%}">proyectos<a>
-                                
+                            <a class="d-none  d-md-inline " href="{% url 'proyectos'%}">proyectos<a>
+
                         </button>
                     </div>
 
                     {% else %}
 
-                    </div>
-                    <div class="botonlogin">
-                        <button class=" buttonlogin btn w-100   " >
-                    
-                            <i class="fa-solid fa-right-to-bracket d-inline-block "></i>
-                            <a class="d-none  d-sm-inline "href="{% url 'login'%}">Iniciar Sesion</a>
-                    
-                        </button>
-                    </div>
-                        
-                    
-                    {% endif %}
                 </div>
-                
-            
+                <div class="botonlogin">
+                    <button class=" buttonlogin btn w-100   ">
+
+                        <i class="fa-solid fa-right-to-bracket d-inline-block "></i>
+                        <a class="d-none  d-sm-inline " href="{% url 'login'%}">Iniciar Sesion</a>
+
+                    </button>
                 </div>
+
+
+                {% endif %}
+            </div>
+
+
+            </div>
             </div>
         </nav>
-        </header>
+    </header>
 
-        <!------Carrusel de imagenes ------->
-        
-        
-        <div class="carruselimagenes">
+    <!------Carrusel de imagenes ------->
 
-            <div id="carouselExampleFade" class="carousel slide carousel-fade mt-0 w-100">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img  src="{% static 'imagenes/imagenescarrusel/imgcarr1.jpg' %}" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'imagenes/imagenescarrusel/imgcarr3.jpg' %}" class="d-block w-100" alt="...">
-                    </div>
-                    
-                    </div>
-                    <button class="btncontrol carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+
+    <div class="carruselimagenes">
+
+        <div id="carouselExampleFade" class="carousel slide carousel-fade mt-0 w-100">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{% static 'imagenes/imagenescarrusel/imgcarr1.jpg' %}" class="d-block w-100" alt="...">
                 </div>
+                <div class="carousel-item">
+                    <img src="{% static 'imagenes/imagenescarrusel/imgcarr3.jpg' %}" class="d-block w-100" alt="...">
+                </div>
+
+            </div>
+            <button class="btncontrol carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
+    </div>
 
 
-        <!------------contenedormain  titulo e imagen---------------------------->
-        <div class="containmain">
-            <div class="container">
-                <div class="row align-items-center">
-                    <!-- Texto -->
-                    <div class=" titulotext col-12 col-md-6  text-center ">
-                        <h1>GESTIONA TU PROPIO PROYECTO</h1>
-                        <p>Gestiona tu proyecto por medios de documentos y anotaciones, de forma ágil, simple y sin complicaciones.</p>
-                    </div>
-                    <!-- Imagen -->
-                    <div class=" img col-12 col-md-6 ">
-                        <img class="img-fluid rounded d-block mx-auto" src="{% static 'imagenes/imagenescarrusel/imgcarr4.png' %}" alt="Imagen proyecto">
-                    </div>
+    <!------------contenedormain  titulo e imagen---------------------------->
+    <div class="containmain">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Texto -->
+                <div class=" titulotext col-12 col-md-6  text-center ">
+                    <h1>GESTIONA TU PROPIO PROYECTO</h1>
+                    <p>Gestiona tu proyecto por medios de documentos y anotaciones, de forma ágil, simple y sin
+                        complicaciones.</p>
+                </div>
+                <!-- Imagen -->
+                <div class=" img col-12 col-md-6 ">
+                    <img class="img-fluid rounded d-block mx-auto"
+                        src="{% static 'imagenes/imagenescarrusel/imgcarr4.png' %}" alt="Imagen proyecto">
                 </div>
             </div>
-            
         </div>
-        
+
+    </div>
 
 
 
-        </div>
-        
-        <!------------popout cookies------------------------------>
-        <!-------------------------------------------------------->
-        <script src="{% static 'js/cookies.js' %} " defer ></script>
-        {% include "footer.html" %}
-        {% include "cookies.html" %}
-        
-        
 
-        
-    </body>
+    </div>
+
+    <!------------popout cookies------------------------------>
+    <!-------------------------------------------------------->
+    <script src="{% static 'js/cookies.js' %} " defer></script>
+    {% include "footer.html" %}
+    {% include "cookies.html" %}
+
+
+
+
+</body>
+
 </html>
