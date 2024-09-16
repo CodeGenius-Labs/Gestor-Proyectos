@@ -7,48 +7,46 @@
 #modalUsuarios .modal-title{
     color:#0E2B3E;
 }
-
-
+#modalUsuarios .miembro_id{
+    color: #0E2B3E;
+}
 #modalUsuarios .modal-body form{
     display: inline;
     
 }
-
 #modalUsuarios li{
     
-    margin: 5px 10px;
+    margin: 10px 10px;
 }
-
 #modalUsuarios .form-select{
     display: inline;
     width: 115px;
     margin-left:5px;
+    color: #0E2B3E;
     
 }
-
-
-
-
-
-
-
-
-
 #modalUsuarios .btn-primary{
     background-color: #0E2B3E;
     color: #54BCDE;
 }
 
 #modalUsuarios .btn-secondary{
-    color: #0e2b3e72;
-    
+    background-color: #0E2B3E;
+    color: #54BCDE;
     margin-left: 5px;
-    wi
+    
 }
 
 #modalUsuarios .btn-danger{
-    background-color: #ff00008d;
-    color: #000000;
+    background-color: #FF4C4C;
+    color: #4A4A4A;
     margin-left: 5px;
     width: 30px;
+}
+
+/*Vista agregar usuarios   #modalConfirmacion*/
+
+#modalConfirmacion .btn-primary{
+    background-color: #0E2B3E;
+    color: #54BCDE;
 }

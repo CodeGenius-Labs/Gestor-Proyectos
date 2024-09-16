@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="{% static 'css/agregarusuario.css' %}">
 
 
+    <script src="{% static 'js/verusuario.js' %}"></script>
+
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -32,9 +35,9 @@
 <body>
     <div class="contenedor-principal">
         <aside class="barra-lateral">
-            <img src="{% static 'images/logo-robot.png' %}" alt="imagen proyecto" class="logo">
+            <img src="{% static 'imagenes/roibot.jpg' %}" alt="imagen proyecto" class="logo">
             <!-- Botón que abre el modal de Usuarios -->
-            <button class="boton-lateral">Actualizar Proyectos</a></button>
+            <button class="boton-lateral">Actualizar Proyecto</a></button>
             <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuarios">Ver Usuarios</button>
             <button class="boton-lateral">Fechas y anotaciones</button>
             <button class="boton-lateral"><a href="{% url 'proyectos'%}" style="color: #54BCDE;">Volver</a></button>
@@ -95,7 +98,7 @@
                             <form method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="miembro_id" value="{{ miembro.id }}">
-                                <button type="submit" name="eliminar_usuario" class="btn btn-danger btn-sm"><i class="fa-solid fa-x"></i></button>
+                                <button type="submit" name="eliminar_usuario" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
                             </form>
                         </li>
                         {% endfor %}
@@ -134,7 +137,7 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" name="agregar_usuario" class="btn btn-primary">Agregar</button>
+                        <button type="submit" name="agregar_usuario" class="btn btn-primary" >Agregar</button>
                     </div>
                 </form>
             </div>
