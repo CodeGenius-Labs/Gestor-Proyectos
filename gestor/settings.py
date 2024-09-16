@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'gestor.urls'
@@ -79,17 +80,19 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'gestord3_gestor',
-        'USER': 'gestord3__dEdiQVZ-O9xF1kmbO7YYgjdWujq5H65C',
+        'USER': 'gestord3_admin',
         'PASSWORD': 'gestor_proyectos',
         'HOST': 'cloud3.googiehost.com',
-        'PORT': 3306,
+        'PORT': 3306, 
     }
+    
 }
 
 
 
 
 # Password validation
+# Test
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -139,3 +142,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'user.User'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'

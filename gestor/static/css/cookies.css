@@ -1,0 +1,102 @@
+
+body {
+	background: #ffff;
+	
+}
+
+
+
+
+
+p{
+    
+    line-height: 150%;
+    margin-right: auto;
+    text-align: center;
+    margin-left: auto;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+
+.avisocookies{
+    top: 20%;
+    display: none;
+    background: #ffff;
+    padding: 80px;
+    max-width: 350px;
+    border-radius: 15px;
+    position: fixed;
+    margin-left: 40%;
+    margin-right: auto;
+    width: calc(100%-40px);
+    z-index: 100;
+    box-shadow: 0px 2px 20px 10px rgba(222, 222, 222, .25);
+    text-align: center;
+    border: #0e2b3e 2px solid;
+
+}
+
+.avisocookies h3{
+    color: #0e2b3e;
+    text-align: center;
+    width: 100%;
+
+
+}
+
+
+
+
+.avisocookies.activo{
+    display: block;
+}
+
+
+.avisocookies .boton{
+    width: 100%;
+    background-color: #0e2b3e;
+    border: 2px #595959 solid;
+    text-align: center;
+    padding: 15px 20px;
+    font-weight: 700;
+    color: #54bcde;
+    cursor: pointer;
+    transition: .3s ease all;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    
+    
+}
+
+
+.avisocookies .boton:hover{
+    color: #ffff;
+}
+
+.avisocookies .enlace{
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.avisocookies .enlace:hover{
+    text-decoration: underline;
+}
+
+
+.fondoavisocookies{
+    display: none;
+    background: rgba(36, 35, 35, 0.2);
+    position: fixed;
+    z-index: 99;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+}
+
+.fondoavisocookies.activo{
+    display: block;
+}

@@ -1,0 +1,76 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block tittle %}  {% endblock tittle %}   </title>
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!------ventanas toast.js------->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+</head>
+{% block body %}
+
+
+{% if messages %}
+{% for message in messages %}
+    {% if message.tags == 'success'%}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+    {% elif message.tags == 'info' %}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+    {% elif message.tags == 'warning' %}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+    {% elif message.tags == 'error' %}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+    {% endif %}
+{% endfor %}
+{% endif %}
+    <footer class="footer mb-0" >
+
+        <!---------Logo----y titulo--Gestorproyectos-------->
+        <div class="container">
+            <div class="row w-100">
+                <div class="col-md-4 mb-4 mb-md-0 text-center">
+                    <h5 class="text-uppercase text-center">GESTOR PROYECTOS</h5>
+                    <img  src="{% static 'imagenes/logo_gestor.png' %}" alt="Logo" class="logo2 img-fluid" >
+                </div>
+
+                <!----------Redes sociales---------------->
+                <div class="col-md-4 mb-4 mb-md-0 text-center">
+                    <h5 class="text-uppercase text-center">REDES SOCIALES</h5>
+                    <a href="#" class="text-primary mx-3"><i class="fa-brands fa-square-facebook fa-3x"></i></a>
+                    <a href="#" class="text-primary mx-3"><i class="fa-brands fa-instagram fa-3x"></i></a>
+                    <a href="#" class="text-primary mx-3"><i class="fa-brands fa-whatsapp fa-3x"></i></a>
+                </div>
+
+                <!------------------Sobre Nosotros------------------------>
+                <div class="col-md-4 mb-4 mb-md-0 text-center">
+                    <h5 class="text-uppercase">NOSOTROS</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text">Home</a></li>
+                        <li><a href="#" class="text">Quienes somos</a></li>
+                        <li><a href="#" class="text">Preguntas frecuentes</a></li>
+                        <li><a href="#" class="text">Términos y condiciones</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!----------la linea ----------->
+            <hr class="txtfooter my-1">
+            <div class="text-center">
+                <p class="pfooter mb-0  mt-0">© 2024 Gestor de proyectos company. Reservados todos los derechos</p>
+            </div>
+        </div>
+
+
+    </footer>
+
+    
+{% endblock body %}
+    
+</body>
+</html>

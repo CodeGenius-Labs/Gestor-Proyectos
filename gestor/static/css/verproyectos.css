@@ -1,0 +1,312 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.contenedor-principal {
+    display: flex;
+    height: 100vh;
+}
+
+.barra-lateral {
+    width: 280px;
+    background-color: #FFFFFF; 
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 2px solid #0E2B3E;
+}
+
+.logo {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+.boton-lateral {
+    width: 100%;
+    margin: 10px 0;
+    padding: 20px;
+    background-color: #0E2B3E; 
+    border-radius: 20px;
+    color: #54BCDE;
+    cursor: pointer;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.boton-lateral:hover {
+    background-color: #54BCDE; 
+    color: #0E2B3E;
+}
+
+.boton-lateral a{
+    text-decoration: none;
+}
+
+.contenido-principal {
+    flex: 1;
+    padding: 20px;
+    background-color: #FFFFFF; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.encabezado {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border-bottom: 2px solid #0E2B3E;
+    padding-bottom: 10px;
+}
+
+.encabezado h1 {
+    color: #0E2B3E;
+    font-size: 30px;
+}
+
+.fechas {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.fechas p {
+    margin: 0;
+    font-size: 25px;
+    color: #54BCDE;
+}
+
+
+.documentos {
+    margin-top: 20px;
+    text-align: center;
+    margin-top: -100px;
+}
+
+.documentos h2 {
+    font-size: 30px;
+    color: #0E2B3E;
+    margin-bottom: 10px;
+}
+
+/* .iconos-documentos {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.icono {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.icono img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 5px;
+}
+
+.icono p {
+    font-size: 12px;
+    color: #333;
+}
+ */
+
+.progreso {
+    margin-top: 20px;
+}
+
+.progreso h3 {
+    font-size: 30px;
+    color: #54BCDE;
+    margin-bottom: 10px;
+}
+
+.barra-progreso {
+    width: 100%;
+    height: 20px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.progreso-completado {
+    height: 100%;
+    background-color: #54BCDE; 
+    transition: width 0.3s;
+}
+
+.porcentaje {
+    text-align: right;
+    font-size: 14px;
+    color: #555;
+}
+
+/* footer.pie-pagina {
+    width: 100%;
+    background-color: #FFFFFF; 
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative; 
+}
+
+.seccion-pie {
+    flex: 1;
+    text-align: center;
+    
+}
+
+.seccion-pie img{
+    width: 100px;
+}
+
+.redes-sociales a {
+    margin: 0 10px;
+}
+
+footer h4 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer ul li {
+    margin: 5px 0;
+}
+
+footer ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+footer ul li a:hover {
+    text-decoration: underline;
+}
+ */
+
+ /* Footer Styles */
+
+ footer {
+    background-color: #FFFFFF; /* Fondo gris claro para el footer */
+    padding: 40px 0; /* Espaciado superior e inferior */
+    text-align: center; /* Centramos el contenido */
+    color: #54BCDE; /* Color de texto acorde a tu imagen */
+    display: flex; /* Utilizamos flexbox para la alineación */
+    justify-content: space-around; /* Distribuimos los elementos de manera uniforme */
+    align-items: center; /* Centramos verticalmente los elementos */
+    flex-wrap: wrap; /* Permite que los elementos se ajusten en dispositivos más pequeños */
+}
+
+.container{
+    width: 100%;
+}
+
+.row{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+/* Logo and Title Styles */
+footer h5 {
+    color: #54BCDE; /* Color para el texto de los títulos */
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+footer i{
+    padding: 0 12px;
+    font: 16px;
+}
+
+/* Ajuste del contenedor del logo y el título */
+footer .logo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+footer img {
+    max-width: 100px; /* Ajustamos el tamaño del logo */
+    margin-bottom: 10px;
+}
+
+/* Social Media Icons */
+footer .social-icons {
+    display: flex; /* Colocamos los íconos en fila */
+    gap: 15px; /* Espaciado entre los íconos */
+}
+
+footer .fa-brands {
+    font-size: 60px; /* Tamaño de los íconos de redes sociales */
+    color: #54BCDE;
+    transition: color 0.3s ease;
+}
+
+footer .fa-brands:hover {
+    color: #3498db; /* Cambio de color en hover */
+}
+
+/* Links Section */
+footer .links-section {
+    display: flex;
+    flex-direction: column; /* Alineación de los enlaces en columna */
+}
+
+footer ul {
+    list-style: none; /* Quitamos los bullets */
+    padding: 0;
+    margin: 0;
+}
+
+footer ul li {
+    margin: 10px 0;
+}
+
+footer ul li a {
+    color: #54BCDE;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer ul li a:hover {
+    color: #3498db; /* Cambio de color al pasar el mouse */
+}
+
+/* Footer Bottom Line */
+footer hr {
+    border-top: 1px solid #54BCDE; /* Línea superior */
+    margin: 15px 0;
+    width: 100%;
+}
+
+footer p {
+    color: #54BCDE;
+    margin: 0;
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+}
+
+

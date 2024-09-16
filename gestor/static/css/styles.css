@@ -1,0 +1,161 @@
+html {
+    padding: 0;
+    margin: 0;
+    scrollbar-width: none;
+    overflow: hidden;
+}
+
+body {
+    background-color: #274960 !important;
+    font-family: "Libre Franklin", sans-serif;
+    font-weight: 300;
+}
+
+.login {
+    height: 400px;
+}
+
+.content {
+    display: flex;
+}
+
+.image {
+
+    width: 40%;
+    height: 800px;
+    margin-top: -8PX;
+
+}
+
+.inputs {
+    width: 27%;
+    margin-left: 20px;
+    margin-top: 2%;
+    
+}
+
+.inputs label {
+    margin-left: 10px;
+    padding-top: 2%;
+    color: white;
+    font-size: 13px;
+    font-weight: 450;
+}
+
+
+.image img {
+    margin-left: 100px;
+    width: 180%;
+    height: 85%;
+
+}
+
+.inputs img {
+    margin: 0;
+    margin-left: 65px;
+    padding-bottom: 40px;
+    width: 80%;
+}
+
+.material-symbols-outlined {
+    color: white;
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 200,
+        'GRAD' 0,
+        'opsz' 24
+}
+
+.inputs span {
+    font-size: 100px;
+    margin-left: 160px;
+}
+
+.nombre {
+    margin: 30px 0 20px 25px;
+    background-color: #274960;
+    border: 1px solid rgba(255, 255, 255, 0.664);
+    box-shadow: 2px 3px 4px black;
+   
+}
+
+
+.correo {
+    margin: 30px 0 40px 25px;
+    background-color: #274960;
+    border: 1px solid rgba(255, 255, 255, 0.664);
+    box-shadow: 2px 3px 4px black;
+}
+
+.password {
+    margin-left: 67px;
+    background-color: #274960;
+    border: 1px solid rgba(255, 255, 255, 0.664);
+    box-shadow: 2px 3px 4px black;
+    color: white;
+}
+
+.correo:hover{
+
+    border: 1px solid #257fbb;
+}
+ .password:hover{
+
+    border: 1px solid #257fbb;
+}
+
+#boton{
+    background-color: #162e3d;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 40px ;
+    margin-top: 80px;
+    margin-left: 130px ;
+    font-weight: bold;
+    margin-bottom: 50px;
+
+}
+#boton:hover{
+    transform: scale(106%);
+}
+
+#botonr{
+    background-color: #162e3d;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 40px ;
+    margin-top: 60px;
+    margin-left: 130px ;
+    font-weight: bold;
+    margin-bottom: 50px;
+
+}
+
+.inputs a{
+    text-decoration: none;
+    color: #74b7f5;
+    font-weight: 400;
+}
+
+.inputs a:hover{
+    color: #009dff;
+
+}
+
+.inputs h6{
+    color: white;
+    font-weight: 100;
+    margin-left: 80px;
+    font-family: "Libre Franklin", sans-serif;
+}
+
+.crear{
+    color: #54BCDE;
+    margin-left: 140px;
+    font-size: 120%;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 10px;
+
+
+}
