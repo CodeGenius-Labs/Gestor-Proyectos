@@ -7,15 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de Proyectos</title>
     {% load static %}
+
+
+
+    <!---------Css-------->
     <link rel="stylesheet" href="{% static 'css/verproyectos.css' %}">
-    <!-----------<link rel="stylesheet" href="{% static 'css/footer.css' %}">------>
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
     <link rel="stylesheet" href="{% static 'css/agregarusuario.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <script src="{% static 'js/verusuario.js' %}"></script>
+
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="{% static 'js/toast.js' %}"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
 
     <link rel="shortcut icon" href=" {% static 'imagenes/ico/logo-gestor-proyectos-en-azul.ico' %}">
@@ -254,8 +261,11 @@ button:focus {
 
 
             <!-- Botón que abre el modal de Usuarios -->
-            <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuarios">Ver Usuarios</button>
-            <button class="boton-lateral">Eliminar usuarios</button>
+
+            {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
+                <button class="boton-lateral">Actualizar Proyecto</a></button>
+                <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuarios">Ver Usuarios</button>
+            {% endif %}
             <button class="boton-lateral">Fechas y anotaciones</button>
             <button class="boton-lateral"><a href="{% url 'proyectos'%}" style="color: #54BCDE;">Volver</a></button>
         </aside>
@@ -300,10 +310,10 @@ button:focus {
                             {{ miembro.usuario.email }}
                             
                             <!-- Formulario para cambiar rol del usuario -->
-                            <form method="POST" style="display:inline;">
+                            <form method="POST" >
                                 {% csrf_token %}
                                 <input type="hidden" name="miembro_id" value="{{ miembro.id }}">
-                                <select name="rol" class="form-select" style="display:inline;width:auto;">
+                                <select name="rol" class="form-select" >
                                     {% for rol in roles %}
                                     <option value="{{ rol.rol }}" {% if miembro.rol == rol %}selected{% endif %}>{{ rol.rol }}</option>
                                     {% endfor %}
@@ -312,10 +322,10 @@ button:focus {
                             </form>
                             
                             <!-- Botón para eliminar usuario -->
-                            <form method="POST" style="display:inline;">
+                            <form method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="miembro_id" value="{{ miembro.id }}">
-                                <button type="submit" name="eliminar_usuario" class="btn btn-danger btn-sm">Eliminar</button>
+                                <button type="submit" name="eliminar_usuario" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
                             </form>
                         </li>
                         {% endfor %}
@@ -354,7 +364,7 @@ button:focus {
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" name="agregar_usuario" class="btn btn-primary">Agregar</button>
+                        <button type="submit" name="agregar_usuario" class="btn btn-primary" >Agregar</button>
                     </div>
                 </form>
             </div>

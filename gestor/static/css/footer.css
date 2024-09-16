@@ -1,9 +1,4 @@
 
-*{
-    color: #54BCDE;
-    
-}
-
 
 .footer .logo2 {
     background-color: #ffffff; 
@@ -19,6 +14,9 @@
     height: auto;
 }
 
+a{
+    display: contents;
+}
 
 .footer h5 {
     color: #54BCDE;
