@@ -32,7 +32,6 @@ class Roles(models.Model):
 
     rol = models.CharField(max_length=50, choices=ROLE_CHOICES, default=TUTOR)
     
-
     def __str__(self):
         return self.rol
 
@@ -43,4 +42,3 @@ class MiembrosProyectos(models.Model):
 
     def __str__(self):
         return f"{self.usuario} - {self.rol} - {self.proyecto}"
-
