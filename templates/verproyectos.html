@@ -189,9 +189,6 @@ button:focus {
     margin-right: 40px;
 
 }
-
-
-
 </style>
 
 <body>
@@ -204,7 +201,6 @@ button:focus {
             <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuarios">Ver Usuarios</button>
 
                 <!--1------Inicio del modal emergente------>
-                  
                     <div id="customModal" class="customModal" style="display: none;">
                         <div class="modal-content">
                             <div class="content">
@@ -251,11 +247,10 @@ button:focus {
 
             {% endif %}
 
+            
 
+            <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalAnotaciones">Anotaciones</button>
 
-            <!-- Botón que abre el modal de Usuarios -->
-
-            <button class="boton-lateral">Fechas y anotaciones</button>
             <button class="boton-lateral"><a href="{% url 'proyectos'%}" style="color: #54BCDE;">Volver</a></button>
         </aside>
 
@@ -285,6 +280,7 @@ button:focus {
     </div>
 
     {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
+    
     <!-- Modal  mostrar usuarios -->
     <div class="modal fade" id="modalUsuarios" tabindex="-1" aria-labelledby="etiquetaModalUsuarios" aria-hidden="true">
         <div class="modal-dialog">
@@ -315,7 +311,7 @@ button:focus {
                                 <form method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="miembro_id" value="{{ miembro.id }}">
-                                    <button type="submit" name="eliminar_usuario" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
+                                    <button type="submit" name="eliminar_usuario" class="btn btn-danger btn-sm"><i class="fa-solid fa-user-minus"></i></button>
                                 </form>
                             </div>
                         </li>
@@ -329,7 +325,7 @@ button:focus {
             </div>
         </div>
     </div>
-    <!-- Modal agregar usuario -->
+    <!-- ModalConfirmacion -->
     <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="etiquetaModalConfirmacion" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -361,6 +357,41 @@ button:focus {
         </div>
     </div>
     {% endif %}
+
+    <!---ModalAnotaciones -->
+<div class="modal fade" id="modalAnotaciones" tabindex="-1" aria-labelledby="etiquetaModalAnotacion" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Anotaciones</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body" id="Anotaciones">
+                <ul class="list-group">
+                    {% for miembro in miembros %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>{{ miembro.usuario.email }}</span>
+                        <div class="spancomm"><span>Hola buenas primer comentario</span> </div>
+                        <div class="spandate"><span>21/01/2204</span> </div>
+                        <div><button type="submit" name="eliminarAnotacion" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button></div>
+
+
+                        
+                        
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="anotaciontxt" placeholder="Anotacion" required>
+                    <button type="submit" name="agregarAnotacion" class="btn btn-primary">Agregar Anotacion</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
     {% include "footer.html" %}
     
