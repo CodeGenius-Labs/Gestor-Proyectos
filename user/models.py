@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 
-# Validador para el teléfono
 phone_validator = RegexValidator(regex=r'^\d{1,14}$', message="El número de teléfono solo puede contener hasta 14 dígitos.")
 
 class User(AbstractUser):
@@ -42,3 +41,19 @@ class MiembrosProyectos(models.Model):
 
     def __str__(self):
         return f"{self.usuario} - {self.rol} - {self.proyecto}"
+    
+class Archivos(models.Model):
+    nombre = models.CharField(max_length=45)
+    ruta = models.CharField(max_length=255)
+    proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Comentario(models.Model):
+    correo = models.EmailField(max_length=500)
+    comentario = models.TextField()
+    fecha = models.DateTimeField(null=True, blank=True)
+    proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE) 
+
+    def __str__(self):
+        return f"Comentario de {self.correo} en el proyecto {self.proyecto.nombre}"
