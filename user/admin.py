@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Proyecto, Roles, MiembrosProyectos, Archivos, Comentario
+from .models import User, Proyecto, Roles, MiembrosProyectos, Archivos, Comentarios
 
 # Register your models here.
 
@@ -19,6 +19,6 @@ class MiembrosProyectosAdmin(admin.ModelAdmin):
 class ArchivosAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'proyecto', 'usuario')
 
-@admin.register(Comentario)
-class ComentarioAdmin(admin.ModelAdmin):
-    list_display = ('correo', 'comentario', 'fecha', 'proyecto')
+@admin.register(Comentarios)
+class ComentariosAdmin(admin.ModelAdmin):
+    list_display = ('comentario', 'proyecto', 'usuario', 'fecha_hora')

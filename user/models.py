@@ -6,8 +6,8 @@ phone_validator = RegexValidator(regex=r'^\d{1,14}$', message="El número de tel
 
 class User(AbstractUser):
     picture = models.ImageField(default='profile_default.png', upload_to='users/')
-    location = models.CharField(max_length=60, null= False , blank=True)
-    number_phone = models.CharField(max_length=14, validators=[phone_validator], null= False, blank=True)
+    location = models.CharField(max_length=60, default='No especificada')  
+    number_phone = models.CharField(max_length=14, validators=[phone_validator], default='0000000000', blank=True)
 
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=100)
@@ -49,11 +49,8 @@ class Archivos(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
-class Comentario(models.Model):
-    correo = models.EmailField(max_length=500)
+class Comentarios(models.Model):
     comentario = models.TextField()
-    fecha = models.DateTimeField(null=True, blank=True)
-    proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE) 
-
-    def __str__(self):
-        return f"Comentario de {self.correo} en el proyecto {self.proyecto.nombre}"
+    fecha_hora = models.DateTimeField(null=True, blank=True)
+    proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
