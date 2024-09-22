@@ -1,19 +1,3 @@
-"""
-URL configuration for gestor project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -21,15 +5,18 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.home, name='home'),
+    path('', views.home, name='home'),
     path('login/', views.login, name='login'),
-    #path('accounts/', include ('django.contrib.auth.urls')),
+    #path('accounts/', include('django.contrib.auth.urls')),
     path('registro/', views.registro, name='registro'),
     path('proyectos/', views.proyectos, name='proyectos'),
-    path('perfil/',views.actualizarperfil, name='actualizar_perfil'),
-    path('logout/',views.exit, name='logout'),
-
+    path('perfil/', views.actualizarperfil, name='actualizar_perfil'),
+    path('logout/', views.exit, name='logout'),
+    path('verproyectos/<int:id>/', views.verproyectos, name='verproyectos'),
+    path('actualizar_proyecto/<int:id>/', views.actualizar_proyecto, name='actualizar_proyecto'),
+    
 ]
+
 
 if settings.DEBUG:
     from django.conf.urls.static import static

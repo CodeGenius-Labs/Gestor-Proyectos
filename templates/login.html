@@ -32,23 +32,23 @@
           <!-- Fin de bloque para mostrar mensajes de error -->
            
           <form class="input_campos" method="POST" action="{% url 'login' %}">
-            {% csrf_token %} <!-------Seguridad ataques CSRF----------------------->
+            {% csrf_token %} 
     
-            <!-------Campo de nombre de usuario o correo----------------------->
+           {% comment %}  Campo de nombre de usuario o correo {% endcomment %}
             <div class="input_campos">
-                <label for="username" >Nombre de Usuario o Correo:</label>
-                <input type="text" name="username" required>
+                <label for="username" >Usuario o Correo</label>
+                <input type="text" name="username" class="correo" required>
             </div>
     
-            <!-------Campo de contraseña----------------------->
+           {% comment %} Campo de contraseña {% endcomment %}
             <div class="input_campos">
-                <label for="password" class="form-label">Contraseña:</label>
-                <input type="password" name="password" required>
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" name="password" class="password" required>
             </div>
     
-            <!-------Botón de inicio de sesión----------------------->
+            {% comment %} Botón de inicio de sesión {% endcomment %}
             
-                <button type="submit" id="boton">Iniciar Sesión</button>
+                <button class="btn btn-primary" type="submit" id="boton">Iniciar sesión</button>
             
           </form>
           <h6>No tienes una cuenta? <a href="{% url 'registro'%}">Registrate aqui</a></h6>

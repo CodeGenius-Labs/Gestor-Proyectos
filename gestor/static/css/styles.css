@@ -35,12 +35,13 @@ body {
 }
 
 .inputs label {
-    margin-left: 20px;
+    margin-left: 10px;
     padding-top: 2%;
     color: white;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 450;
 }
+
 
 .image img {
     margin-left: 100px;
@@ -70,21 +71,28 @@ body {
     margin-left: 160px;
 }
 
-
-
-.correo {
-    margin: 20px 0 50px 6px;
+.nombre {
+    margin: 30px 0 20px 25px;
     background-color: #274960;
     border: 1px solid rgba(255, 255, 255, 0.664);
     box-shadow: 2px 3px 4px black;
    
 }
 
-.password {
-    margin-left: 52px;
+
+.correo {
+    margin: 30px 0 40px 25px;
     background-color: #274960;
     border: 1px solid rgba(255, 255, 255, 0.664);
     box-shadow: 2px 3px 4px black;
+}
+
+.password {
+    margin-left: 67px;
+    background-color: #274960;
+    border: 1px solid rgba(255, 255, 255, 0.664);
+    box-shadow: 2px 3px 4px black;
+    color: white;
 }
 
 .correo:hover{
@@ -110,6 +118,19 @@ body {
 #boton:hover{
     transform: scale(106%);
 }
+
+#botonr{
+    background-color: #162e3d;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 40px ;
+    margin-top: 60px;
+    margin-left: 130px ;
+    font-weight: bold;
+    margin-bottom: 50px;
+
+}
+
 .inputs a{
     text-decoration: none;
     color: #74b7f5;
@@ -130,10 +151,10 @@ body {
 
 .crear{
     color: #54BCDE;
-    margin-left: 140px ;
-    font-size: 140%;
+    margin-left: 140px;
+    font-size: 120%;
     font-weight: bold;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     margin-top: 10px;
 
 
