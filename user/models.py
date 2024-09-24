@@ -44,7 +44,7 @@ class MiembrosProyectos(models.Model):
     
 class Archivos(models.Model):
     nombre = models.CharField(max_length=45)
-    archivoss = models.FileField(upload_to='archivos/', default='archivos/prueba.txt')
+    archivoss = models.FileField(upload_to='archivos/')
     proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
