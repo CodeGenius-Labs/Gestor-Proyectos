@@ -17,7 +17,7 @@ class MiembrosProyectosAdmin(admin.ModelAdmin):
 
 @admin.register(Archivos)
 class ArchivosAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'proyecto', 'usuario')
+    list_display = ('nombre', 'proyecto', 'usuario', 'archivoss')
 
 @admin.register(Comentarios)
 class ComentariosAdmin(admin.ModelAdmin):
