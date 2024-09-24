@@ -192,6 +192,162 @@ button:focus {
 
 
 
+
+/* Nuevo css para el modal cargar archivos*/
+
+project-card {
+    border: 4px solid #0E2B3E;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    color: #0E2B3E;
+    margin-bottom: 30px;
+    transition: box-shadow 0.3s;
+    font-family: AngsanaUPC ;
+}
+.project-card:hover {
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+    background-color: #dcdcdc;
+    
+}
+.project-card h5 {
+    font-weight: lighter;
+    border-bottom: 30px;
+    color: #000;
+}
+.project-card p {
+    color: #000;
+    font-weight: bolder;
+}
+.btn-view {
+    border-radius: 15px;
+    color: #54BCDE;    ;
+    
+    padding: 10px 20px;
+    background-color: #0E2B3E;
+
+}
+
+
+.btn-view:hover {
+    background-color: #031d2e;
+    color: #ffffff;
+    transform: scale(1.1);
+    transition: 0.2s ease-in;
+
+}
+
+#buttons_pito{
+    margin-top: 30vh;
+    position: absolute;
+    height: 60vh;
+    width: 60vw;
+}
+.documentos{
+    margin-top: -25%;
+}
+#cargar{
+    margin-left: 8%;
+}
+
+
+
+.modalito {
+    position: relative;
+    align-content: center;
+    padding: 5% 20%;
+
+}
+
+h2{
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 34px;
+}
+input[type="file"] {
+    background-color: transparent;
+
+}
+
+input::placeholder {
+    color: white;
+}
+
+
+.uploadDocuments {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.uploadDocuments input[type="file"] {
+    display: none;
+}
+
+.uploadDocuments label {
+    background-color: #272d5a;
+    color: white;
+    padding: 10px 22px;
+    margin-left: 12px;
+    border-radius: 5px;
+    width: 20%;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.uploadDocuments label:hover {
+    background-color: #257fbb;
+}
+
+
+.uploadDocuments .file-name {
+    display: inline;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 0.9em;
+    color: #6f7287;
+}
+
+.search {
+    input {
+        width: 100%;
+        height: 35px;
+
+        &::placeholder {
+            color: lightgray;
+            text-align: center;
+            font-size: 1.2em;
+        }
+    }
+
+}
+
+.btncargar{
+    background-color: #274960;
+    color: #54BCDE;
+    font-size: 21px;
+    font-weight: 690;
+    width: 220px;
+    height: 40px;
+    border-radius: 16px;
+    margin-top: 50px;
+    margin-left: 22%;
+
+}
+
+
+
+
+
+
+
+
+
+
+
 </style>
 
 <body>
@@ -296,6 +452,54 @@ button:focus {
             <section class="documentos">
                 <h2>Descripción</h2>
                 <p>{{ proyecto.descripcion }}</p>
+
+
+
+                <!-- Nuevo modal para cargar archivos -->
+
+
+                <section class="row" id="buttons_pito">
+                    <div class="col-md-3 position-absolute top-0 start-0" id="cargar">
+                       <div class="project-card">
+    
+                            <button class="btn btn-view " id="openModalBtn3"><i class="fa-solid fa-plus fa-2x"></i></button>
+                            <h5>Carga proyecto</h5>
+    
+                            <!--Modal emergente--> 
+                            <div id="modal3" class="modal"> 
+                                <div class="modal-content">
+                                    <div class="content">
+                                        <div class="inputs">
+                                            <span class="close-btn">&times;</span>
+                                            <form method="POST" action="{% url 'proyectos' %}">
+                                                {% csrf_token %}
+                                                <div class="modalito">
+                                                    <h2>Cargar Archivo</h2>
+                                                    <div class="uploadDocuments">
+                                                        <label for="legalDocument">Examinar...</label>
+                                                        <input type="file" id="legalDocument" name="legalDocument" accept="image/*,application/pdf"
+                                                            onchange="showFileName()" required>
+                                                        <span class="file-name" id="file-name">No se ha seleccionado ningun archivo</span>
+                                                    </div>
+                                                    <div class="search">
+                                                        <input type="search" placeholder="Ingresa el nombre del archivo">
+                                                    </div>
+                                                    <button type="submit" class="btncargar">Cargar</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+                      <!--Fin de modal emergente-->
+                   </div>
+                </section>
+
+
+
+
+                
                 
             </section>
 
@@ -391,7 +595,8 @@ button:focus {
     {% include "footer.html" %}
     
     <script src="{% static 'js/verproyecto.js' %}"></script>
-
+    <script src="{% static 'js/cargararchivos.js' %}"></script>
+    
 </body>
 
 </html>
