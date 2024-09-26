@@ -187,34 +187,32 @@
                                     <span class="close-btn">&times;</span>
                                     
                                     <h2>Crear nuevo proyecto</h2>
-
+                    
                                     <form method="POST" action="{% url 'proyectos' %}">
                                         {% csrf_token %}
-                                   {% comment %}  Campo de nombre {% endcomment %}
-                                    <div class="input_campos">
-                                        <label for="nombre" >Nombre</label>
-                                        <input class="input_nombre" placeholder="Nombre del proyecto" name="nombre" >
-                                    </div>
-                            
-                                   {% comment %} Campo de Descripcion {% endcomment %}
-                                    <div class="input_campos">
-                                        <label for="descripcion" class="form-label">Descripcion</label>
-                                        <input class="input_descripcion" type="text" name="descripcion">
-                                    </div>
-                            
-                                    <div class="form-container">                                        
-                                        <form id="calendarForm">
+                                        <!-- Campo de nombre -->
+                                        <div class="input_campos">
+                                            <label for="nombre">Nombre</label>
+                                            <input class="input_nombre" placeholder="Nombre del proyecto" name="nombre" required>
+                                        </div>
+                                
+                                        <!-- Campo de Descripcion -->
+                                        <div class="input_campos">
+                                            <label for="descripcion" class="form-label">Descripcion</label>
+                                            <input class="input_descripcion" type="text" name="descripcion" required>
+                                        </div>
+                                
+                                        <div class="form-container">                                        
                                             <label for="fecha_inicio">Fecha de Inicio</label>
                                             <input type="date" class="fecha" id="startDate" name="fecha_inicio" required>
                                     
                                             <label for="fecha_fin">Fecha de Fin</label>
                                             <input type="date" class="fecha" id="endDate" name="fecha_fin" required>
-                                        </form>
-                                    </div>
+                                        </div>
                                         <button class="btncrear" type="submit" id="boton">Crear</button>
                                     </form>
                                 </div>
-                              </div>
+                            </div>
                         </div>
                     </div>
 

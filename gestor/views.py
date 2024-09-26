@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.views.decorators.csrf import csrf_exempt
-from user.models import Proyecto, MiembrosProyectos, Roles
+from proyecto.models import Proyecto, MiembrosProyectos, Roles, Archivos, Comentarios
 from django.shortcuts import get_object_or_404
 #----------------Inicio----------------
 def home(request):
@@ -240,6 +240,10 @@ def verproyectos(request, id):
     # Obtener los miembros del proyecto
     miembros = MiembrosProyectos.objects.filter(proyecto=proyecto).exclude(usuario=request.user)
 
+    # Obtener el rol del usuario actual en el proyecto
+    miembro_actual = MiembrosProyectos.objects.filter(proyecto=proyecto, usuario=request.user).first()
+    rol_usuario_actual = miembro_actual.rol if miembro_actual else None
+
     if request.method == 'POST':
         # Acción para agregar un usuario
         if 'agregar_usuario' in request.POST:
@@ -291,6 +295,7 @@ def verproyectos(request, id):
         'proyecto': proyecto,
         'miembros': miembros,
         'roles': Roles.objects.exclude(rol='Administrador del departamento'),  # Pasamos los roles disponibles para el selector
+        'rol_usuario_actual': rol_usuario_actual,  # Pasamos el rol del usuario actual al contexto
     }
 
     return render(request, 'verproyectos.html', context)
