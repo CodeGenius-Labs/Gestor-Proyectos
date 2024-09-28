@@ -1,42 +1,34 @@
-const modal = document.getElementById('customModal');
-        const openModalBtn = document.getElementById('openModalBtn');
-        const closeModalBtn = document.querySelector('.close-btn');
-        const closeButton = document.getElementById('closeModalBtn'); 
-        
-        // Abre el modal 
-        openModalBtn.onclick = function() {
-            modal.style.display = 'block';
-        }
-        
-        // Cierra el modal
-        closeModalBtn.onclick = function() {
-            modal.style.display = 'none';
-        }
+document.addEventListener("DOMContentLoaded", function() {
+    const modal2 = document.getElementById('modal2');
+    const openModalBtn2 = document.getElementById('openModalBtn2'); 
+    const closeModalBtn2 = document.getElementById('closeModalBtn2'); 
 
-        // Cierra el modal al hacer clic fuera de él
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
+    openModalBtn2.onclick = function() {
+        modal2.style.display = 'block';
+    }
 
+    closeModalBtn2.onclick = function() {
+        modal2.style.display = 'none';
+    }
 
+    // Cierra el modal al hacer clic fuera de él
+    window.onclick = function(event) {
+        if (event.target === modal2) {
+            modal2.style.display = 'none';
+        }
+    }
 
-        const decrementButton = document.querySelector('.decrement');
-        const incrementButton = document.querySelector('.increment');
-        const numberInput = document.getElementById('customNumberInput');
-        
-        
-        decrementButton.onclick = function() {
-            let currentValue = parseInt(numberInput.value);
-            if (currentValue > parseInt(numberInput.min)) {
-                numberInput.value = currentValue - 1;
-            }
+    decrementButton2.onclick = function() {
+        let currentValue = parseInt(numberInput2.value);
+        if (currentValue > parseInt(numberInput2.min)) {
+            numberInput2.value = currentValue - 1;
         }
-        
-        incrementButton.onclick = function() {
-            let currentValue = parseInt(numberInput.value);
-            if (currentValue < parseInt(numberInput.max)) {
-                numberInput.value = currentValue + 1;
-            }
+    }
+    
+    incrementButton2.onclick = function() {
+        let currentValue = parseInt(numberInput2.value);
+        if (currentValue < parseInt(numberInput2.max)) {
+            numberInput2.value = currentValue + 1;
         }
+    }
+});
