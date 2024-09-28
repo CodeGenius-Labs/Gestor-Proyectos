@@ -1,25 +1,26 @@
 /* Estilo del contenedor del botón "Cargar Proyecto" */
 #buttons_pito {
-    margin-top: 30vh;
-    position: absolute;
-    height: auto; /* Cambiado para ajustarse al contenido */
-    width: 60vw;
+    position: absolute; /* Esto asegura que el cuadro se coloque relativo al contenedor */
     display: flex;
-    justify-content: center; /* Centrar horizontalmente */
+    flex-wrap: wrap;
+    justify-content: space-around; /* Espaciado uniforme dentro del contenedor */
+    padding: 20px; /* Añadimos espacio interno */
 }
 
 /* Estilo de la tarjeta del proyecto */
 .project-card {
-    border: 4px solid #0E2B3E;
-    border-radius: 15px;
-    padding: 20px;
-    text-align: center;
-    color: #0E2B3E;
-    margin-bottom: 30px;
-    transition: box-shadow 0.3s;
-    font-family: AngsanaUPC;
-    width: 100%; /* Asegura que ocupe todo el espacio del contenedor */
-    max-width: 300px; /* Limitar el ancho máximo de la tarjeta */
+    position: absolute; /* Aseguramos que se posicione en su contenedor padre */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto; /* Ajustamos el ancho para que ocupe todo el espacio del contenedor */
+    height: auto; /* Ajustamos la altura para que sea flexible */
+    margin: 0 auto; /* Centramos el cuadro */
+    padding: 30px 7px;
+    border: 2px solid #54BCDE;
+    border-radius: 10px;
+    background-color: #f9f9f9;
 }
 
 .project-card:hover {
