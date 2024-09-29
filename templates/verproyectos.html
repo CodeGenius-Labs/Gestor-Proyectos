@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="{% static 'css/agregarusuario.css' %}">
     <link rel="stylesheet" href="{% static 'css/modaleditar.css' %}">
     <link rel="stylesheet" href="{% static 'css/modalcargar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modaldetalle.css' %}">
+
+
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -171,13 +174,48 @@
                         <!--Fin de modal emergente-->
                     </div>
                 </section>
+ 
+                
+            
+
+                <section class="file-card">
+                    <div class="file-header">
+                        <span class="file-icon">E</span>
+                        <!-- Botón que abre modal4 -->
+                        <div class="file-options" onclick="openModal4()">•••</div>
+                    </div>
+                    <!-- Clic en el nombre del archivo que abre modal5 -->
+                    <div class="file-name" onclick="openModal5()">Wall-e.docs</div>
+                
+                    <!-- Modal descripcion (modal5) -->
+                    <div id="modal5" class="modal">
+                        <div class="modal-content5">
+                            <span class="close-btn-modal5">&times;</span>
+                            <div class="modalito5">
+                                <h1>FACULTAD ROBOT</h1>
+                                <p>Un robot, Nace, Crece, Se reproduce y muere, pero la verdad de la vida es ¿por qué un robot nace y no se crea?; ¿Por qué Crece y no se actualiza?; ¿Por qué se reproduce y no se clona? y por último ¿Por qué se muere y no se recicla? En fin, la hipocresía...</p>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- Modal detalle (modal4) -->
+                    <div id="modal4" class="modal">
+                        <div class="modal-content4">
+                            <span class="close-btn-modal4">&times;</span>
+                            <div class="modalito4">
+                                <h3>Detalles del documento</h3>
+                                <p><strong>Subido por:</strong> Marlon Pastrana Moreno</p>
+                                <p><strong>Tipo de archivo:</strong> Docs</p>
+                                <p><strong>Tamaño:</strong> 250KB</p>
+                                <p><strong>Fecha modificación:</strong> 22/05/2024</p>
+                                <button class="delete-btn">Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
                 
 
-
-
                 
-                
-            </section>
 
             <section class="progreso">
                 <h3>Progreso del proyecto</h3>
@@ -272,6 +310,61 @@
     
     <script src="{% static 'js/verproyecto.js' %}"></script>
     <script src="{% static 'js/cargararchivos.js' %}"></script>
+    <script src="{% static 'js/modaldetalle.js' %}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const modal4 = document.getElementById('modal4');
+    const modal5 = document.getElementById('modal5');
+    const closeBtn4 = document.querySelector('.close-btn-modal4');
+    const closeBtn5 = document.querySelector('.close-btn-modal5');
+
+   
+    function openModal4() {
+        modal4.style.display = 'block';
+    }
+
+
+    function closeModal4() {
+        modal4.style.display = 'none';
+    }
+
+
+    function openModal5() {
+        modal5.style.display = 'block';
+    }
+
+
+    function closeModal5() {
+        modal5.style.display = 'none';
+    }
+
+
+    closeBtn4.onclick = function () {
+        closeModal4();
+    }
+
+    closeBtn5.onclick = function () {
+        closeModal5();
+    }
+
+   
+    window.onclick = function (event) {
+        if (event.target == modal4) {
+            closeModal4();
+        } else if (event.target == modal5) {
+            closeModal5();
+        }
+    }
+
+
+    window.openModal4 = openModal4;
+    window.openModal5 = openModal5;
+});
+
+</script>
+
+
     
 </body>
 
