@@ -493,6 +493,13 @@ input::placeholder {
                             </div>
                       </div>
                       <!--Fin de modal emergente-->
+                      <script>
+                        function showFileName() {
+                            const input = document.getElementById('legalDocument');
+                            const fileName = document.getElementById('file-name');
+                            fileName.textContent = input.files.length > 0 ? input.files[0].name : 'No se ha seleccionado ningun archivo';
+                        }
+                    </script>
                    </div>
                 </section>
 
