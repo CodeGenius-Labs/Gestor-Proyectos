@@ -256,6 +256,9 @@ def verproyectos(request, id):
     # Obtener los miembros del proyecto
     miembros = MiembrosProyectos.objects.filter(proyecto=proyecto).exclude(usuario=request.user)
 
+    # Obtener los comentarios asociados al proyecto
+    comentarios = Comentarios.objects.filter(proyecto=proyecto)
+
     # Obtener el rol del usuario actual en el proyecto
     miembro_actual = MiembrosProyectos.objects.filter(proyecto=proyecto, usuario=request.user).first()
     rol_usuario_actual = miembro_actual.rol if miembro_actual else None
@@ -305,6 +308,18 @@ def verproyectos(request, id):
             except Roles.DoesNotExist:
                 messages.error(request, "El rol seleccionado no existe.")
 
+        # Acción para agregar una anotación
+        elif 'agregarAnotacion' in request.POST:
+            texto_anotacion = request.POST.get('anotaciontxt')
+            Comentarios.objects.create(comentario=texto_anotacion, proyecto=proyecto, usuario=request.user)
+            messages.success(request, "Anotación agregada con éxito.")
+
+        # Acción para eliminar una anotación
+        elif 'eliminarAnotacion' in request.POST:
+            comentario_id = request.POST.get('comentario_id')
+            Comentarios.objects.filter(id=comentario_id).delete()
+            messages.success(request, "Anotación eliminada con éxito.")
+
         return redirect('verproyectos', id=id)
 
     context = {
@@ -312,6 +327,7 @@ def verproyectos(request, id):
         'miembros': miembros,
         'roles': Roles.objects.exclude(rol='Administrador del departamento'),  # Pasamos los roles disponibles para el selector
         'rol_usuario_actual': rol_usuario_actual,  # Pasamos el rol del usuario actual al contexto
+        'comentarios': comentarios,  # Pasamos los comentarios al contexto
     }
 
     return render(request, 'verproyectos.html', context)

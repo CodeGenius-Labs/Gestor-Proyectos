@@ -198,8 +198,11 @@ button:focus {
 
             {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
             <button class="boton-lateral" id="openModalBtn">Editar proyecto</button>
+            {% endif %}
+            {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
             <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuarios">Ver Usuarios</button>
-
+            {% endif %}
+            {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
                 <!--1------Inicio del modal emergente------>
                     <div id="customModal" class="customModal" style="display: none;">
                         <div class="modal-content">
@@ -279,7 +282,7 @@ button:focus {
         </main>
     </div>
 
-    {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
+    {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
     
     <!-- Modal  mostrar usuarios -->
     <div class="modal fade" id="modalUsuarios" tabindex="-1" aria-labelledby="etiquetaModalUsuarios" aria-hidden="true">
@@ -295,6 +298,10 @@ button:focus {
                         <li class="d-flex justify-content-between align-items-center">
                             <span>{{ miembro.usuario.email }}</span>
                             <div class="d-flex">
+                                {% if rol_usuario_actual.rol == 'Tutor'%}
+                                    <span>{{ miembro.rol }}</span>
+                                {% elif rol_usuario_actual.rol == 'Administrador del departamento'%}
+
                                 <!--cambiar rol usuario -->
                                 <form method="POST" class="me-2">
                                     {% csrf_token %}
@@ -313,18 +320,22 @@ button:focus {
                                     <input type="hidden" name="miembro_id" value="{{ miembro.id }}">
                                     <button type="submit" name="eliminar_usuario" class="btn btn-danger btn-sm"><i class="fa-solid fa-user-minus"></i></button>
                                 </form>
+                                {% endif %}
                             </div>
                         </li>
                         {% endfor %}
                     </ul>
                 </div>
+                {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalConfirmacion">Agregar Usuario</button>
                 </div>
+                {% endif %}
             </div>
             </div>
         </div>
     </div>
+    {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
     <!-- ModalConfirmacion -->
     <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="etiquetaModalConfirmacion" aria-hidden="true">
         <div class="modal-dialog">
@@ -357,6 +368,7 @@ button:focus {
         </div>
     </div>
     {% endif %}
+    {% endif %}
 
     <!---ModalAnotaciones -->
 <div class="modal fade" id="modalAnotaciones" tabindex="-1" aria-labelledby="etiquetaModalAnotacion" aria-hidden="true">
@@ -368,25 +380,34 @@ button:focus {
             </div>
             <div class="modal-body" id="Anotaciones">
                 <ul class="list-group">
-                    {% for miembro in miembros %}
+                    {% for comentario in comentarios %}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>{{ miembro.usuario.email }}</span>
-                        <div class="spancomm"><span>Hola buenas primer comentario</span> </div>
-                        <div class="spandate"><span>21/01/2204</span> </div>
-                        <div><button type="submit" name="eliminarAnotacion" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button></div>
-
-
-                        
-                        
+                        <span>{{ comentario.usuario.email }}</span>
+                        <div class="spancomm"><span>{{ comentario.comentario }}</span> </div>
+                        <div class="spandate"><span>{{ comentario.fecha_hora|date:"d/m/Y" }}</span> </div>
+                        {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
+                        <div>
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="comentario_id" value="{{ comentario.id }}">
+                                <button type="submit" name="eliminarAnotacion" class="btn btn-danger btn-sm">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                        {% endif %}
                     </li>
                     {% endfor %}
                 </ul>
             </div>
             <div class="modal-footer">
-                <div class="input-group">
-                    <input type="text" class="form-control" name="anotaciontxt" placeholder="Anotacion" required>
-                    <button type="submit" name="agregarAnotacion" class="btn btn-primary">Agregar Anotacion</button>
-                </div>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="anotaciontxt" placeholder="Anotacion" required>
+                        <button type="submit" name="agregarAnotacion" class="btn btn-primary">Agregar Anotacion</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
