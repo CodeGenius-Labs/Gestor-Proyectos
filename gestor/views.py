@@ -365,6 +365,21 @@ def cargar_archivo(request):
 
 
 
+def eliminar_archivo(request, archivo_id):
+    archivo = get_object_or_404(Archivos, id=archivo_id)
+
+    if request.method == 'POST':
+        archivo.delete()
+        messages.success(request, 'El archivo ha sido eliminado exitosamente.')
+        return redirect('nombre_de_la_vista_donde_se_muestran_los_archivos')
+    
+    return redirect('nombre_de_la_vista_donde_se_muestran_los_archivos')
+
+
+
+
+
+
 
 
 
