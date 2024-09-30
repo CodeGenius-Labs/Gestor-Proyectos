@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.views.decorators.csrf import csrf_exempt
-from user.models import Proyecto, MiembrosProyectos, Roles
+from proyecto.models import Proyecto, MiembrosProyectos, Roles, Archivos, Comentarios
 from django.shortcuts import get_object_or_404
 #----------------Inicio----------------
 def home(request):

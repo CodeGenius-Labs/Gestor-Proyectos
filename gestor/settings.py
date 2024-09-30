@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user',
+    'proyecto',
 ]
 
 MIDDLEWARE = [
@@ -140,6 +141,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #Creacion de la ruta de MEDIA
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+ARCHIVOS_URL = '/archivos/'
+ARCHIVOS_ROOT = os.path.join(BASE_DIR, 'archivos')
 
 AUTH_USER_MODEL = 'user.User'
 LOGIN_REDIRECT_URL = 'home'
