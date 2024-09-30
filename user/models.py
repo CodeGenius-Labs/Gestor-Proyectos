@@ -8,3 +8,6 @@ class User(AbstractUser):
     picture = models.ImageField(default='profile_default.png', upload_to='users/')
     location = models.CharField(max_length=60, default='No especificada')  
     number_phone = models.CharField(max_length=14, validators=[phone_validator], default='0000000000', blank=True)
+
+
+

@@ -1,14 +1,15 @@
 document.addEventListener("DOMContentLoaded", function() {
     const modal3 = document.getElementById('modal3');
-    const openModalBtn3 = document.getElementById('openModalBtn3');
-    const closeModalBtn = document.querySelector('.close-btn');
+    const openModalBtn3 = document.getElementById('openModalBtnModal3');
+    const closeModalBtn3 = document.querySelector('.close-btn-modal3');
+
 
     // Lógica para abrir el modal
     openModalBtn3.onclick = function () {
         modal3.style.display = 'block';
     }
     
-    closeModalBtn.onclick = function () {
+    closeModalBtn3.onclick = function () {
         modal3.style.display = 'none';
     }
 
@@ -19,9 +20,9 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    function showFileName() {
-        const input = document.getElementById('legalDocument');
-        const fileName = document.getElementById('file-name');
+    window.showFileNameModal3 = function() {
+        const input = document.getElementById('legalDocumentModal3');
+        const fileName = document.getElementById('file-name-modal3');
         fileName.textContent = input.files.length > 0 ? input.files[0].name : 'No se ha seleccionado ningun archivo';
     }
 });
