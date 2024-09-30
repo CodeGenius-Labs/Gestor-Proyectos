@@ -183,7 +183,6 @@ def actualizarperfil(request):
 
     return render(request, 'perfilconfig.html')  # Asegúrate de que este nombre coincida con tu archivo de plantilla
 
-#----------------Vista de proyectos----------------
 @login_required(login_url="login")
 def proyectos(request):
     if request.method == 'POST':
@@ -209,7 +208,7 @@ def proyectos(request):
                 miembro_proyecto = MiembrosProyectos(
                     usuario=request.user,
                     proyecto=proyecto,
-                    rol=Roles.objects.get(rol='Administrador del departamento')  # Asigna un rol por defecto o personalizado
+                    rol=Roles.objects.get(rol='Administrador del departamento')
                 )
                 miembro_proyecto.save()
                 
@@ -225,12 +224,29 @@ def proyectos(request):
         id__in=MiembrosProyectos.objects.filter(usuario=request.user).values('proyecto')
     )
 
+    # Manejo de búsqueda
+    query = request.GET.get('search', '')
+    if query:
+        proyectos_usuario = proyectos_usuario.filter(nombre__icontains=query)
+
+    # Manejar el filtrado y ordenamiento
+    order = request.GET.get('order')
+    direction = request.GET.get('direction', 'asc')
+
+    if order in ['nombre', 'fecha_inicio', 'fecha_fin']:
+        if direction == 'asc':
+            proyectos_usuario = proyectos_usuario.order_by(order)
+        else:
+            proyectos_usuario = proyectos_usuario.order_by('-' + order)
+
     # Pasar los proyectos al contexto de la plantilla
     context = {
-        'proyectos_usuario': proyectos_usuario
+        'proyectos_usuario': proyectos_usuario,
+        'search_query': query,  # Para mantener la consulta en la barra de búsqueda
     }
 
     return render(request, 'vistaprojectos.html', context)
+
 
 #----------------Definir ver proyectos--------------------------
 @login_required(login_url="login")
