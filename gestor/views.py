@@ -10,6 +10,12 @@ from django.core.validators import validate_email
 from django.views.decorators.csrf import csrf_exempt
 from proyecto.models import Proyecto, MiembrosProyectos, Roles, Archivos, Comentarios
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from proyecto.models import Archivos, Proyecto  # Asegúrate de que esto coincide con la ubicación de tus modelos
+from django.core.files.storage import FileSystemStorage
+
 
 
 
@@ -248,6 +254,21 @@ def verproyectos(request, id):
     rol_usuario_actual = miembro_actual.rol if miembro_actual else None
 
     if request.method == 'POST':
+        # Cargar archivo
+        if 'legalDocument' in request.FILES:  # Cambia 'legalDocument' al nombre del campo del formulario
+            archivo_file = request.FILES['legalDocument']
+            nombre_archivo = request.POST.get('nombre')  # Asegúrate de que este campo esté en tu formulario
+            nuevo_archivo = Archivos(
+                nombre=nombre_archivo,
+                archivoss=archivo_file,
+                proyecto=proyecto,
+                usuario=request.user
+            )
+            nuevo_archivo.save()
+            messages.success(request, 'Archivo cargado exitosamente.')
+            return redirect('verproyectos', id=proyecto.id)
+        
+    if request.method == 'POST':
         # Acción para agregar un usuario
         if 'agregar_usuario' in request.POST:
             correo = request.POST.get('correo')
@@ -318,53 +339,5 @@ def actualizar_proyecto(request, id):
         return redirect('verproyectos', id=id)  # Redireccionar con el id correcto
 
     return render(request, 'actualizar_proyecto.html', {'proyecto': proyecto})
-
-
-
-
-
-def carga_proyecto(request):
-    if request.method == 'POST':
-        form = ArchivosForm(request.POST, request.FILES)
-        if form.is_valid():
-            nuevo_archivo = form.save(commit=False)  # Guarda el objeto pero no lo comete aún
-            nuevo_archivo.save()  # Ahora lo comete
-            # Verificación adicional para confirmar que el archivo se ha guardado
-            if Archivos.objects.filter(id=nuevo_archivo.id).exists():
-                return HttpResponse('Archivo cargado con éxito!')
-            else:
-                return HttpResponse('Error en la carga del archivo, no se pudo verificar en la base de datos.')
-        else:
-            errors = form.errors.as_text()
-            response_message = f'Error en la carga del archivo, por favor revise los datos ingresados. Errores: {errors}'
-            return HttpResponse(response_message)
-    else:
-        form = ArchivosForm()
-    return render(request, 'cargar_archivo.html', {'form': form})
-
-
-
-
-def cargar_archivo(request):
-    if request.method == 'POST':
-        form = Archivos(request.POST, request.FILES)
-        if form.is_valid():
-            archivo = form.save(commit=False)
-            archivo.usuario = request.user  # Asocia el archivo al usuario que lo está subiendo
-            archivo.proyecto = Proyecto.objects.get(id=request.POST.get('proyecto_id'))  # Asocia el archivo al proyecto seleccionado
-            archivo.save()
-            messages.success(request, 'Archivo cargado exitosamente.')
-            return redirect('proyectos')  # Redirigir a la vista de proyectos
-        else:
-            messages.error(request, 'Error al cargar el archivo.')
-    else:
-        form = Archivos()
-
-    return render(request, 'cargar_archivo.html', {'form': form})
-
-
-
-
-
 
 
