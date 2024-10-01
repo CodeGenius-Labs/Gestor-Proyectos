@@ -277,9 +277,9 @@ def verproyectos(request, id):
 
     if request.method == 'POST':
         # Cargar archivo
-        if 'legalDocument' in request.FILES:  # Cambia 'legalDocument' al nombre del campo del formulario
+        if 'legalDocument' in request.FILES:
             archivo_file = request.FILES['legalDocument']
-            nombre_archivo = request.POST.get('nombre')  # Asegúrate de que este campo esté en tu formulario
+            nombre_archivo = request.POST.get('nombre')
             nuevo_archivo = Archivos(
                 nombre=nombre_archivo,
                 archivoss=archivo_file,
@@ -289,17 +289,30 @@ def verproyectos(request, id):
             nuevo_archivo.save()
             messages.success(request, 'Archivo cargado exitosamente.')
             return redirect('verproyectos', id=proyecto.id)
-        
-    if request.method == 'POST':
+
+        # Eliminar archivo
+        if 'eliminar_archivo' in request.POST:
+            archivo_id = request.POST.get('archivo_id')
+            archivo = get_object_or_404(Archivos, id=archivo_id)
+            archivo.delete()
+            messages.success(request, "Archivo eliminado exitosamente.")
+            return redirect('verproyectos', id=proyecto.id)
+
+        # Descargar archivo
+        if 'descargar_archivo' in request.POST:
+            archivo_id = request.POST.get('archivo_id')
+            archivo = get_object_or_404(Archivos, id=archivo_id)
+            response = HttpResponse(archivo.archivo, content_type='application/octet-stream')
+            response['Content-Disposition'] = f'attachment; filename="{archivo.nombre}"'
+            return response
+
         # Acción para agregar un usuario
         if 'agregar_usuario' in request.POST:
             correo = request.POST.get('correo')
             rol = request.POST.get('rol')
-
             try:
                 usuario = User.objects.get(email=correo)
                 rol_obj = Roles.objects.get(rol=rol)
-                # Verificar si el usuario ya está en el proyecto
                 if not MiembrosProyectos.objects.filter(usuario=usuario, proyecto=proyecto).exists():
                     MiembrosProyectos.objects.create(usuario=usuario, proyecto=proyecto, rol=rol_obj)
                     messages.success(request, f"Usuario {usuario.email} agregado al proyecto.")
@@ -310,20 +323,19 @@ def verproyectos(request, id):
             except Roles.DoesNotExist:
                 messages.error(request, f"El rol {rol} no existe.")
         
-        # Acción para eliminar un usuario
+        # Eliminar usuario
         elif 'eliminar_usuario' in request.POST:
             miembro_id = request.POST.get('miembro_id')
             MiembrosProyectos.objects.filter(id=miembro_id).delete()
             messages.success(request, "El usuario fue eliminado del proyecto.")
 
-        # Acción para actualizar el rol de un usuario
+        # Cambiar rol de usuario
         elif 'cambiar_rol' in request.POST:
             miembro_id = request.POST.get('miembro_id')
             nuevo_rol = request.POST.get('rol')
             try:
                 miembro = MiembrosProyectos.objects.get(id=miembro_id)
                 rol_obj = Roles.objects.get(rol=nuevo_rol)
-                # Verificar si el rol actual es diferente del nuevo rol
                 if miembro.rol != rol_obj:
                     miembro.rol = rol_obj
                     miembro.save()
@@ -335,13 +347,13 @@ def verproyectos(request, id):
             except Roles.DoesNotExist:
                 messages.error(request, "El rol seleccionado no existe.")
 
-        # Acción para agregar una anotación
+        # Agregar anotación
         elif 'agregarAnotacion' in request.POST:
             texto_anotacion = request.POST.get('anotaciontxt')
             Comentarios.objects.create(comentario=texto_anotacion, proyecto=proyecto, usuario=request.user)
             messages.success(request, "Anotación agregada con éxito.")
 
-        # Acción para eliminar una anotación
+        # Eliminar anotación
         elif 'eliminarAnotacion' in request.POST:
             comentario_id = request.POST.get('comentario_id')
             Comentarios.objects.filter(id=comentario_id).delete()
@@ -352,13 +364,14 @@ def verproyectos(request, id):
     context = {
         'proyecto': proyecto,
         'miembros': miembros,
-        'roles': Roles.objects.exclude(rol='Administrador del departamento'),  # Pasamos los roles disponibles para el selector
-        'rol_usuario_actual': rol_usuario_actual,  # Pasamos el rol del usuario actual al contexto
-        'comentarios': comentarios,  # Pasamos los comentarios al contexto
-        'archivos': archivos,  # Pasamos los archivos
+        'roles': Roles.objects.exclude(rol='Administrador del departamento'),
+        'rol_usuario_actual': rol_usuario_actual,
+        'comentarios': comentarios,
+        'archivos': archivos,
     }
 
     return render(request, 'verproyectos.html', context)
+
 
 #-------------Actualizar Proyectos ---------------------------
 def actualizar_proyecto(request, id):
@@ -375,65 +388,6 @@ def actualizar_proyecto(request, id):
         return redirect('verproyectos', id=id)  # Redireccionar con el id correcto
 
     return render(request, 'actualizar_proyecto.html', {'proyecto': proyecto})
-
-
-
-
-
-def carga_proyecto(request):
-    if request.method == 'POST':
-        form = ArchivosForm(request.POST, request.FILES)
-        if form.is_valid():
-            nuevo_archivo = form.save(commit=False)  # Guarda el objeto pero no lo comete aún
-            nuevo_archivo.save()  # Ahora lo comete
-            # Verificación adicional para confirmar que el archivo se ha guardado
-            if Archivos.objects.filter(id=nuevo_archivo.id).exists():
-                return HttpResponse('Archivo cargado con éxito!')
-            else:
-                return HttpResponse('Error en la carga del archivo, no se pudo verificar en la base de datos.')
-        else:
-            errors = form.errors.as_text()
-            response_message = f'Error en la carga del archivo, por favor revise los datos ingresados. Errores: {errors}'
-            return HttpResponse(response_message)
-    else:
-        form = ArchivosForm()
-    return render(request, 'cargar_archivo.html', {'form': form})
-
-
-
-
-def cargar_archivo(request):
-    if request.method == 'POST':
-        form = Archivos(request.POST, request.FILES)
-        if form.is_valid():
-            archivo = form.save(commit=False)
-            archivo.usuario = request.user  # Asocia el archivo al usuario que lo está subiendo
-            archivo.proyecto = Proyecto.objects.get(id=request.POST.get('proyecto_id'))  # Asocia el archivo al proyecto seleccionado
-            archivo.save()
-            messages.success(request, 'Archivo cargado exitosamente.')
-            return redirect('proyectos')  # Redirigir a la vista de proyectos
-        else:
-            messages.error(request, 'Error al cargar el archivo.')
-    else:
-        form = Archivos()
-
-    return render(request, 'cargar_archivo.html', {'form': form})
-
-
-
-
-def eliminar_archivo(request, archivo_id):
-    archivo = get_object_or_404(Archivos, id=archivo_id)
-
-    if request.method == 'POST':
-        archivo.delete()
-        messages.success(request, 'El archivo ha sido eliminado exitosamente.')
-        return redirect('nombre_de_la_vista_donde_se_muestran_los_archivos')
-    
-    return redirect('nombre_de_la_vista_donde_se_muestran_los_archivos')
-
-
-
 
 
 

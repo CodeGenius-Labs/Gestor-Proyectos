@@ -343,8 +343,9 @@
     </div>
 </div>
 
+{% for archivo in archivos %}
 <!-- Modal detalle (modal4) -->
-<div id="modal4" class="modal">
+<div id="modal{{ archivo.id }}" class="modal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -352,16 +353,30 @@
                 <button type="button" class="btn-close close-btn-modal4" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p><strong>Subido por:</strong> Marlon Pastrana Moreno</p>
-                <p><strong>Tipo de archivo:</strong> Docs</p>
-                <p><strong>Tamaño:</strong> 250KB</p>
-                <p><strong>Fecha modificación:</strong> 22/05/2024</p>
-                <button class="btn btn-danger">Eliminar</button>
-                <button class="btn btn-primary">Descargar</button>
+                <p><strong>Subido por:</strong> {{ archivo.usuario.username }}</p>
+                <p><strong>Tipo de archivo:</strong> {{ archivo.tipo }}</p>
+                <p><strong>Tamaño:</strong> {{ archivo.tamaño }}KB</p>
+                <p><strong>Fecha modificación:</strong> {{ archivo.fecha_modificacion }}</p>
+
+                <!-- Formulario para eliminar archivo -->
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
+                    <button class="btn btn-danger" name="eliminar_archivo" type="submit">Eliminar</button>
+                </form>
+
+                <!-- Formulario para descargar archivo -->
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
+                    <button class="btn btn-primary" name="descargar_archivo" type="submit">Descargar</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
+{% endfor %}
+
 
 
     {% include "footer.html" %}
