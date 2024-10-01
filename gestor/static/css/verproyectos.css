@@ -88,8 +88,8 @@
 
 
 .documentos {
-    margin-top: -520px;
     text-align: center;
+    /* background-color: #54BCDE; */
 }
 
 .documentos h2 {
@@ -97,31 +97,6 @@
     color: #0E2B3E;
     margin-bottom: 10px;
 }
-
-/* .iconos-documentos {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-}
-
-.icono {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-}
-
-.icono img {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 5px;
-}
-
-.icono p {
-    font-size: 12px;
-    color: #333;
-}
- */
 
 .progreso {
     margin-top: 20px;
@@ -154,159 +129,29 @@
     color: #555;
 }
 
-/* footer.pie-pagina {
-    width: 100%;
-    background-color: #FFFFFF; 
-    color: white;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative; 
-}
 
-.seccion-pie {
-    flex: 1;
-    text-align: center;
-    
-}
 
-.seccion-pie img{
-    width: 100px;
-}
 
-.redes-sociales a {
-    margin: 0 10px;
-}
 
-footer h4 {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-footer ul {
-    list-style: none;
-    padding: 0;
-}
-
-footer ul li {
-    margin: 5px 0;
-}
-
-footer ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-footer ul li a:hover {
-    text-decoration: underline;
-}
- */
-
- /* Footer Styles */
-
- footer {
-    background-color: #FFFFFF; /* Fondo gris claro para el footer */
-    padding: 40px 0; /* Espaciado superior e inferior */
-    text-align: center; /* Centramos el contenido */
-    color: #54BCDE; /* Color de texto acorde a tu imagen */
-    display: flex; /* Utilizamos flexbox para la alineación */
-    justify-content: space-around; /* Distribuimos los elementos de manera uniforme */
-    align-items: center; /* Centramos verticalmente los elementos */
-    flex-wrap: wrap; /* Permite que los elementos se ajusten en dispositivos más pequeños */
-}
-
-.container{
-    width: 100%;
-}
-
-.row{
-    display: flex;
-    width: 100%;
-    justify-content: space-evenly;
-}
-
-/* Logo and Title Styles */
-footer h5 {
-    color: #54BCDE; /* Color para el texto de los títulos */
-    font-weight: bold;
-    margin-bottom: 20px;
-    font-size: 20px;
-}
-
-footer i{
-    padding: 0 12px;
-    font: 16px;
-}
-
-/* Ajuste del contenedor del logo y el título */
-footer .logo-section {
+#project-card-id{
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    height: auto;
+    width: 150px;
+    padding: 18px 24px;
+    border: 3px solid #0E2B3E;
+    border-radius: 15px;
+    background-color: #f9f9f9;
+    transition: box-shadow 0.3s;
+    font-family: AngsanaUPC ;
 }
 
-footer img {
-    max-width: 100px; /* Ajustamos el tamaño del logo */
-    margin-bottom: 10px;
-}
-
-/* Social Media Icons */
-footer .social-icons {
-    display: flex; /* Colocamos los íconos en fila */
-    gap: 15px; /* Espaciado entre los íconos */
-}
-
-footer .fa-brands {
-    font-size: 60px; /* Tamaño de los íconos de redes sociales */
-    color: #54BCDE;
-    transition: color 0.3s ease;
-}
-
-footer .fa-brands:hover {
-    color: #3498db; /* Cambio de color en hover */
-}
-
-/* Links Section */
-footer .links-section {
-    display: flex;
-    flex-direction: column; /* Alineación de los enlaces en columna */
-}
-
-footer ul {
-    list-style: none; /* Quitamos los bullets */
-    padding: 0;
-    margin: 0;
-}
-
-footer ul li {
-    margin: 10px 0;
-}
-
-footer ul li a {
-    color: #54BCDE;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-footer ul li a:hover {
-    color: #3498db; /* Cambio de color al pasar el mouse */
-}
-
-/* Footer Bottom Line */
-footer hr {
-    border-top: 1px solid #54BCDE; /* Línea superior */
-    margin: 15px 0;
-    width: 100%;
-}
-
-footer p {
-    color: #54BCDE;
-    margin: 0;
-    font-size: 14px;
-    text-align: center;
-    width: 100%;
+#project-card-id:hover {
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+    background-color: #dcdcdc;
+    
 }
 
 

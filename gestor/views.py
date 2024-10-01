@@ -10,6 +10,12 @@ from django.core.validators import validate_email
 from django.views.decorators.csrf import csrf_exempt
 from proyecto.models import Proyecto, MiembrosProyectos, Roles, Archivos, Comentarios
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from proyecto.models import Archivos, Proyecto  # Asegúrate de que esto coincide con la ubicación de tus modelos
+from django.core.files.storage import FileSystemStorage
+
 
 
 
@@ -186,7 +192,6 @@ def actualizarperfil(request):
 
     return render(request, 'perfilconfig.html')  # Asegúrate de que este nombre coincida con tu archivo de plantilla
 
-#----------------Vista de proyectos----------------
 @login_required(login_url="login")
 def proyectos(request):
     if request.method == 'POST':
@@ -212,7 +217,7 @@ def proyectos(request):
                 miembro_proyecto = MiembrosProyectos(
                     usuario=request.user,
                     proyecto=proyecto,
-                    rol=Roles.objects.get(rol='Administrador del departamento')  # Asigna un rol por defecto o personalizado
+                    rol=Roles.objects.get(rol='Administrador del departamento')
                 )
                 miembro_proyecto.save()
                 
@@ -228,12 +233,29 @@ def proyectos(request):
         id__in=MiembrosProyectos.objects.filter(usuario=request.user).values('proyecto')
     )
 
+    # Manejo de búsqueda
+    query = request.GET.get('search', '')
+    if query:
+        proyectos_usuario = proyectos_usuario.filter(nombre__icontains=query)
+
+    # Manejar el filtrado y ordenamiento
+    order = request.GET.get('order')
+    direction = request.GET.get('direction', 'asc')
+
+    if order in ['nombre', 'fecha_inicio', 'fecha_fin']:
+        if direction == 'asc':
+            proyectos_usuario = proyectos_usuario.order_by(order)
+        else:
+            proyectos_usuario = proyectos_usuario.order_by('-' + order)
+
     # Pasar los proyectos al contexto de la plantilla
     context = {
-        'proyectos_usuario': proyectos_usuario
+        'proyectos_usuario': proyectos_usuario,
+        'search_query': query,  # Para mantener la consulta en la barra de búsqueda
     }
 
     return render(request, 'vistaprojectos.html', context)
+
 
 #----------------Definir ver proyectos--------------------------
 @login_required(login_url="login")
@@ -243,10 +265,31 @@ def verproyectos(request, id):
     # Obtener los miembros del proyecto
     miembros = MiembrosProyectos.objects.filter(proyecto=proyecto).exclude(usuario=request.user)
 
+    # Obtener los comentarios asociados al proyecto
+    comentarios = Comentarios.objects.filter(proyecto=proyecto)
+
+    # Obtener los archivos asociados al proyecto
+    archivos = Archivos.objects.filter(proyecto=proyecto)
+
     # Obtener el rol del usuario actual en el proyecto
     miembro_actual = MiembrosProyectos.objects.filter(proyecto=proyecto, usuario=request.user).first()
     rol_usuario_actual = miembro_actual.rol if miembro_actual else None
 
+    if request.method == 'POST':
+        # Cargar archivo
+        if 'legalDocument' in request.FILES:  # Cambia 'legalDocument' al nombre del campo del formulario
+            archivo_file = request.FILES['legalDocument']
+            nombre_archivo = request.POST.get('nombre')  # Asegúrate de que este campo esté en tu formulario
+            nuevo_archivo = Archivos(
+                nombre=nombre_archivo,
+                archivoss=archivo_file,
+                proyecto=proyecto,
+                usuario=request.user
+            )
+            nuevo_archivo.save()
+            messages.success(request, 'Archivo cargado exitosamente.')
+            return redirect('verproyectos', id=proyecto.id)
+        
     if request.method == 'POST':
         # Acción para agregar un usuario
         if 'agregar_usuario' in request.POST:
@@ -292,6 +335,18 @@ def verproyectos(request, id):
             except Roles.DoesNotExist:
                 messages.error(request, "El rol seleccionado no existe.")
 
+        # Acción para agregar una anotación
+        elif 'agregarAnotacion' in request.POST:
+            texto_anotacion = request.POST.get('anotaciontxt')
+            Comentarios.objects.create(comentario=texto_anotacion, proyecto=proyecto, usuario=request.user)
+            messages.success(request, "Anotación agregada con éxito.")
+
+        # Acción para eliminar una anotación
+        elif 'eliminarAnotacion' in request.POST:
+            comentario_id = request.POST.get('comentario_id')
+            Comentarios.objects.filter(id=comentario_id).delete()
+            messages.success(request, "Anotación eliminada con éxito.")
+
         return redirect('verproyectos', id=id)
 
     context = {
@@ -299,6 +354,8 @@ def verproyectos(request, id):
         'miembros': miembros,
         'roles': Roles.objects.exclude(rol='Administrador del departamento'),  # Pasamos los roles disponibles para el selector
         'rol_usuario_actual': rol_usuario_actual,  # Pasamos el rol del usuario actual al contexto
+        'comentarios': comentarios,  # Pasamos los comentarios al contexto
+        'archivos': archivos,  # Pasamos los archivos
     }
 
     return render(request, 'verproyectos.html', context)

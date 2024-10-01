@@ -36,8 +36,11 @@
 
             {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
             <button class="boton-lateral" id="openModalBtn2">Editar proyecto</button>
+            {% endif %}
+            {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
             <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuarios">Ver Usuarios</button>
-
+            {% endif %}
+            {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
                 <!--1------Inicio del modal emergente------>
                   
                 <div id="modal2" class="modal2" style="display: none;">
@@ -114,9 +117,8 @@
 
 
 
-            <!-- Botón que abre el modal de Usuarios -->
+            <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalAnotaciones">Anotaciones</button>
 
-            <button class="boton-lateral">Fechas y anotaciones</button>
             <button class="boton-lateral"><a href="{% url 'proyectos'%}" style="color: #54BCDE;">Volver</a></button>
         </aside>
 
@@ -132,97 +134,32 @@
             <section class="documentos">
                 <h2>Descripción</h2>
                 <p>{{ proyecto.descripcion }}</p>
-
-
-
-                <!-- Nuevo modal para cargar archivos -->
-
-
-                <section class="row" id="buttons_pito">
-                    <div class="col-md-3 position-absolute top-0 start-0" id="cargar">
-                        <div class="project-card">
-                            <button class="btn btn-view" id="openModalBtnModal3"><i class="fa-solid fa-plus fa-2x"></i></button>
-                            <h5>Cargar Archivos</h5>
-                
-                            <!--Modal emergente--> 
-                            <div id="modal3" class="modal"> 
-                                <div class="modal-content3">
-                                    <div class="content">
-                                        <div class="inputs">
-                                            <span class="close-btn-modal3">&times;</span>
-                                            <form method="POST" action="{% url 'proyectos' %}">
-                                                {% csrf_token %}
-                                                <div class="modalito">
-                                                    <h2>Cargar Archivo</h2>
-                                                    <div class="uploadDocuments">
-                                                        <label for="legalDocumentModal3">Examinar...</label>
-                                                        <input type="file" id="legalDocumentModal3" name="legalDocument" accept="image/*,application/pdf"
-                                                            onchange="showFileNameModal3()" required>
-                                                        <!-- <span class="file-name" id="file-name-modal3">No se ha seleccionado ningun archivo</span> -->
-                                                    </div>
-                                                    <div class="search">
-                                                        <input type="search" placeholder="Ingresa el nombre del archivo">
-                                                    </div>
-                                                    <button type="submit" class="btncargar">Cargar</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                      </div>
-                      <!--Fin de modal emergente-->
-                      <script>
-                        function showFileName() {
-                            const input = document.getElementById('legalDocument');
-                            const fileName = document.getElementById('file-name');
-                            fileName.textContent = input.files.length > 0 ? input.files[0].name : 'No se ha seleccionado ningun archivo';
-                        }
-                    </script>
-                   </div>
-                </section>
- 
-                
+            </section>
+            <section class="row">
+                <div class="col-md-3 mb-3">
+                    <div class="project-card" id="project-card-id">
+                        <button class="btn btn-view" id="openModalBtnModal3">
+                            <i class="fa-solid fa-plus fa-2x"></i>
+                        </button>
+                        <h5>Cargar Archivos</h5>
+                    </div>
+                </div>
             
-
-                <section class="file-card">
-                    <div class="file-header">
-                        <span class="file-icon">E</span>
-                        <!-- Botón que abre modal4 -->
-                        <div class="file-options" onclick="openModal4()">•••</div>
-                    </div>
-                    <!-- Clic en el nombre del archivo que abre modal5 -->
-                    <div class="file-name" onclick="openModal5()">Wall-e.docs</div>
-                
-                    <!-- Modal descripcion (modal5) -->
-                    <div id="modal5" class="modal">
-                        <div class="modal-content5">
-                            <span class="close-btn-modal5">&times;</span>
-                            <div class="modalito5">
-                                <h1>FACULTAD ROBOT</h1>
-                                <p>Un robot, Nace, Crece, Se reproduce y muere, pero la verdad de la vida es ¿por qué un robot nace y no se crea?; ¿Por qué Crece y no se actualiza?; ¿Por qué se reproduce y no se clona? y por último ¿Por qué se muere y no se recicla? En fin, la hipocresía...</p>
-                            </div>
+                <!-- Este es el div que contendrá las tarjetas de archivos en el futuro -->
+                {% for archivo in archivos %}
+                <div class="col-md-3 mb-3">
+                    <div class="file-card">
+                        <div class="file-header d-flex justify-content-between">
+                            <span class="file-icon">E</span>
+                            <div class="file-options" onclick="openModal4()">•••</div>
                         </div>
+                        <div class="file-name" onclick="openModal5()">{{ archivo.nombre }}</div>
                     </div>
-                
-                    <!-- Modal detalle (modal4) -->
-                    <div id="modal4" class="modal">
-                        <div class="modal-content4">
-                            <span class="close-btn-modal4">&times;</span>
-                            <div class="modalito4">
-                                <h3>Detalles del documento</h3>
-                                <p><strong>Subido por:</strong> Marlon Pastrana Moreno</p>
-                                <p><strong>Tipo de archivo:</strong> Docs</p>
-                                <p><strong>Tamaño:</strong> 250KB</p>
-                                <p><strong>Fecha modificación:</strong> 22/05/2024</p>
-                                <button class="delete-btn">Eliminar</button>
-                                <button class="delete-btn">descargar</button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                
-
+                </div>
+                {% endfor %}
+            </section>
+            
+            
                 
 
             <section class="progreso">
@@ -235,7 +172,8 @@
         </main>
     </div>
 
-    {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
+    {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
+    
     <!-- Modal  mostrar usuarios -->
     <div class="modal fade" id="modalUsuarios" tabindex="-1" aria-labelledby="etiquetaModalUsuarios" aria-hidden="true">
         <div class="modal-dialog">
@@ -250,6 +188,10 @@
                         <li class="d-flex justify-content-between align-items-center">
                             <span>{{ miembro.usuario.email }}</span>
                             <div class="d-flex">
+                                {% if rol_usuario_actual.rol == 'Tutor'%}
+                                    <span>{{ miembro.rol }}</span>
+                                {% elif rol_usuario_actual.rol == 'Administrador del departamento'%}
+
                                 <!--cambiar rol usuario -->
                                 <form method="POST" class="me-2">
                                     {% csrf_token %}
@@ -266,21 +208,25 @@
                                 <form method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="miembro_id" value="{{ miembro.id }}">
-                                    <button type="submit" name="eliminar_usuario" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
+                                    <button type="submit" name="eliminar_usuario" class="btn btn-danger btn-sm"><i class="fa-solid fa-user-minus"></i></button>
                                 </form>
+                                {% endif %}
                             </div>
                         </li>
                         {% endfor %}
                     </ul>
                 </div>
+                {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalConfirmacion">Agregar Usuario</button>
                 </div>
+                {% endif %}
             </div>
             </div>
         </div>
     </div>
-    <!-- Modal agregar usuario -->
+    {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
+    <!-- ModalConfirmacion -->
     <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="etiquetaModalConfirmacion" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -312,6 +258,110 @@
         </div>
     </div>
     {% endif %}
+    {% endif %}
+
+    <!---ModalAnotaciones -->
+<div class="modal fade" id="modalAnotaciones" tabindex="-1" aria-labelledby="etiquetaModalAnotacion" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Anotaciones</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body" id="Anotaciones">
+                <ul class="list-group">
+                    {% for comentario in comentarios %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                        <div class="user"><span>{{ comentario.usuario.email }}</span></div>
+                        <div class="spancomm"><span>{{ comentario.comentario }}</span> </div>
+                        <div class="spandate"><span>{{ comentario.fecha_hora|date:"d/m/Y" }}</span> </div>
+                        {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
+                        <div>
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="comentario_id" value="{{ comentario.id }}">
+                                <button type="submit" name="eliminarAnotacion" class="btn btn-danger btn-sm">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="anotaciontxt" placeholder="Anotacion" required>
+                        <button type="submit" name="agregarAnotacion" class="btn btn-primary">Agregar Anotacion</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal emergente -->
+<div id="modal3" class="modal">
+    <div class="modal-content3">
+        <div class="content">
+            <div class="inputs">
+                <span class="close-btn-modal3">&times;</span>
+                <form method="POST" action="{% url 'verproyectos' id=proyecto.id %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modalito">
+                        <h2>Cargar Archivo</h2>
+                        <div class="uploadDocuments">
+                            <label for="legalDocumentModal3">Examinar...</label>
+                            <input type="file" id="legalDocumentModal3" name="legalDocument" accept="image/*,application/pdf" onchange="showFileNameModal3()" required>
+                            <input type="text" name="nombre" placeholder="Ingresa el nombre del archivo" required>
+                            <span class="file-name" id="file-name-modal3">No se ha seleccionado ningún archivo</span>
+                        </div>
+                        <button type="submit" class="btncargar">Cargar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal descripción (modal5) -->
+<div id="modal5" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1>FACULTAD ROBOT</h1>
+                <button type="button" class="btn-close close-btn-modal5" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Un robot, Nace, Crece, Se reproduce y muere...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal detalle (modal4) -->
+<div id="modal4" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detalles del documento</h3>
+                <button type="button" class="btn-close close-btn-modal4" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Subido por:</strong> Marlon Pastrana Moreno</p>
+                <p><strong>Tipo de archivo:</strong> Docs</p>
+                <p><strong>Tamaño:</strong> 250KB</p>
+                <p><strong>Fecha modificación:</strong> 22/05/2024</p>
+                <button class="btn btn-danger">Eliminar</button>
+                <button class="btn btn-primary">Descargar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
     {% include "footer.html" %}

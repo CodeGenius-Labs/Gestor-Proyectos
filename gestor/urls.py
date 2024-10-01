@@ -15,8 +15,7 @@ urlpatterns = [
     path('logout/', views.exit, name='logout'),
     path('verproyectos/<int:id>/', views.verproyectos, name='verproyectos'),
     path('actualizar_proyecto/<int:id>/', views.actualizar_proyecto, name='actualizar_proyecto'),
-    path('cargar-archivo/', views.cargar_archivo, name='cargar_archivo'),
-    path('eliminar_archivo/<int:archivo_id>/', views.eliminar_archivo, name='eliminar_archivo'),
+
 
 
 
@@ -28,4 +27,5 @@ if settings.DEBUG:
     from django.conf.urls.static import static
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.ARCHIVOS_URL, document_root=settings.ARCHIVOS_ROOT)
+    
     
