@@ -129,7 +129,7 @@ h3 {
 .modal-content {
     background-color: #fff;
     margin: 15% auto;
-    padding: 80px;
+    /* padding: 80px; */
     border: 2px solid #888;
     width: 100px;
     text-align: center;
