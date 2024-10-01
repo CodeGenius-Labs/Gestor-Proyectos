@@ -253,6 +253,15 @@ def verproyectos(request, id):
     miembro_actual = MiembrosProyectos.objects.filter(proyecto=proyecto, usuario=request.user).first()
     rol_usuario_actual = miembro_actual.rol if miembro_actual else None
 
+      # Obtener los archivos del proyecto
+    archivos = Archivos.objects.filter(proyecto=proyecto)
+
+    # Procesar los archivos para obtener tipos y tamaños
+    for archivo in archivos:
+        archivo.tipo = archivo.archivoss.url.split('.')[-1] if hasattr(archivo.archivoss, 'url') else 'desconocido'
+        archivo.tamaño = archivo.archivoss.size if hasattr(archivo.archivoss, 'size') else 0  # Tamaño en bytes
+
+
     if request.method == 'POST':
         # Cargar archivo
         if 'legalDocument' in request.FILES:  # Cambia 'legalDocument' al nombre del campo del formulario
@@ -323,6 +332,19 @@ def verproyectos(request, id):
     }
 
     return render(request, 'verproyectos.html', context)
+
+def eliminar_archivo(request, archivo_id):
+    archivo = get_object_or_404(Archivos, id=archivo_id)
+    if request.method == 'POST':
+        archivo.delete()
+        return redirect('verproyeto')
+    return render(request, 'verproyecto.html', {'archivo': archivo})
+
+def descargar_archivo(request, archivo_id):
+    archivo = get_object_or_404(Archivos, id=archivo_id)
+    response = HttpResponse(archivo.archivo, content_type='application/octet-stream')
+    response['Content-Disposition'] = f'attachment; filename="{archivo.nombre}"'
+    return response
 
 #-------------Actualizar Proyectos ---------------------------
 def actualizar_proyecto(request, id):

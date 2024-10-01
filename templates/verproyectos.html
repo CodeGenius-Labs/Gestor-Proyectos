@@ -182,43 +182,56 @@
                 
             
 
-                <section class="file-card">
-                    <div class="file-header">
-                        <span class="file-icon">E</span>
-                        <!-- Botón que abre modal4 -->
-                        <div class="file-options" onclick="openModal4()">•••</div>
-                    </div>
-                    <!-- Clic en el nombre del archivo que abre modal5 -->
-                    <div class="file-name" onclick="openModal5()">Wall-e.docs</div>
-                
-                    <!-- Modal descripcion (modal5) -->
-                    <div id="modal5" class="modal">
-                        <div class="modal-content5">
-                            <span class="close-btn-modal5">&times;</span>
-                            <div class="modalito5">
-                                <h1>FACULTAD ROBOT</h1>
-                                <p>Un robot, Nace, Crece, Se reproduce y muere, pero la verdad de la vida es ¿por qué un robot nace y no se crea?; ¿Por qué Crece y no se actualiza?; ¿Por qué se reproduce y no se clona? y por último ¿Por qué se muere y no se recicla? En fin, la hipocresía...</p>
+                <section>
+                    <h2>Archivos Cargados</h2>
+                    {% for archivo in archivos %}
+                        <div class="file-card">
+                            <div class="file-header">
+                                <span class="file-icon">{{ archivo.nombre|slice:":1" }}</span>
+                                <div class="file-options" onclick="openModal4()">•••</div>
+                            </div>
+                            <div class="file-name" onclick="openModal5()">{{ archivo.nombre }}</div>
+                            <!-- Modal detalle (modal4) -->
+                            <div id="modal4" class="modal">
+                                <div class="modal-content4">
+                                    <span class="close-btn-modal4">&times;</span>
+                                    <div class="modalito4">
+                                        <h3>Detalles del documento</h3>
+                                        <p><strong>Subido por:</strong> {{ archivo.usuario.username }}</p>
+                                        <p><strong>Tipo de archivo:</strong> {{ archivo.extension }}</p>
+                                        <p><strong>Tamaño:</strong> {{ archivo.archivoss.size }} bytes</p>
+                                        <p><strong>Fecha modificación:</strong> {{ archivo.archivoss.updated_at|date:"d/m/Y" }}</p> <!-- Asegúrate de tener un campo updated_at o similar -->
+                                        <button class="delete-btn">Eliminar</button>
+                                        <button class="delete-btn">Descargar</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                
-                    <!-- Modal detalle (modal4) -->
-                    <div id="modal4" class="modal">
-                        <div class="modal-content4">
-                            <span class="close-btn-modal4">&times;</span>
-                            <div class="modalito4">
-                                <h3>Detalles del documento</h3>
-                                <p><strong>Subido por:</strong> Marlon Pastrana Moreno</p>
-                                <p><strong>Tipo de archivo:</strong> Docs</p>
-                                <p><strong>Tamaño:</strong> 250KB</p>
-                                <p><strong>Fecha modificación:</strong> 22/05/2024</p>
-                                <button class="delete-btn">Eliminar</button>
-                                <button class="delete-btn">descargar</button>
-                            </div>
-                        </div>
-                    </div>
+                    {% empty %}
+                        <p>No hay archivos cargados para este proyecto.</p>
+                    {% endfor %}
                 </section>
                 
+                </div>
+
+                <!-- Script para abrir y cerrar los modales -->
+                <script>
+                    function openModal4(archivoId) {
+                        document.getElementById("modal4_" + archivoId).style.display = "block";
+                    }
+
+                    function closeModal4(archivoId) {
+                        document.getElementById("modal4_" + archivoId).style.display = "none";
+                    }
+
+                    document.querySelectorAll(".close-btn-modal4").forEach(function(btn) {
+                        btn.onclick = function() {
+                            const modalId = btn.parentElement.parentElement.parentElement.id;
+                            document.getElementById(modalId).style.display = "none";
+                        };
+                    });
+                </script>
+
 
                 
 
