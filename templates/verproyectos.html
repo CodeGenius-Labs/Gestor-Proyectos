@@ -36,8 +36,11 @@
 
             {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
             <button class="boton-lateral" id="openModalBtn2">Editar proyecto</button>
+            {% endif %}
+            {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
             <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuarios">Ver Usuarios</button>
-
+            {% endif %}
+            {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
                 <!--1------Inicio del modal emergente------>
                   
                 <div id="modal2" class="modal2" style="display: none;">
@@ -114,9 +117,8 @@
 
 
 
-            <!-- Botón que abre el modal de Usuarios -->
+            <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalAnotaciones">Anotaciones</button>
 
-            <button class="boton-lateral">Fechas y anotaciones</button>
             <button class="boton-lateral"><a href="{% url 'proyectos'%}" style="color: #54BCDE;">Volver</a></button>
         </aside>
 
@@ -238,7 +240,8 @@
         </main>
     </div>
 
-    {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
+    {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
+    
     <!-- Modal  mostrar usuarios -->
     <div class="modal fade" id="modalUsuarios" tabindex="-1" aria-labelledby="etiquetaModalUsuarios" aria-hidden="true">
         <div class="modal-dialog">
@@ -253,6 +256,10 @@
                         <li class="d-flex justify-content-between align-items-center">
                             <span>{{ miembro.usuario.email }}</span>
                             <div class="d-flex">
+                                {% if rol_usuario_actual.rol == 'Tutor'%}
+                                    <span>{{ miembro.rol }}</span>
+                                {% elif rol_usuario_actual.rol == 'Administrador del departamento'%}
+
                                 <!--cambiar rol usuario -->
                                 <form method="POST" class="me-2">
                                     {% csrf_token %}
@@ -269,21 +276,25 @@
                                 <form method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="miembro_id" value="{{ miembro.id }}">
-                                    <button type="submit" name="eliminar_usuario" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
+                                    <button type="submit" name="eliminar_usuario" class="btn btn-danger btn-sm"><i class="fa-solid fa-user-minus"></i></button>
                                 </form>
+                                {% endif %}
                             </div>
                         </li>
                         {% endfor %}
                     </ul>
                 </div>
+                {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalConfirmacion">Agregar Usuario</button>
                 </div>
+                {% endif %}
             </div>
             </div>
         </div>
     </div>
-    <!-- Modal agregar usuario -->
+    {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
+    <!-- ModalConfirmacion -->
     <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="etiquetaModalConfirmacion" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -315,6 +326,51 @@
         </div>
     </div>
     {% endif %}
+    {% endif %}
+
+    <!---ModalAnotaciones -->
+<div class="modal fade" id="modalAnotaciones" tabindex="-1" aria-labelledby="etiquetaModalAnotacion" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Anotaciones</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body" id="Anotaciones">
+                <ul class="list-group">
+                    {% for comentario in comentarios %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                        <div class="user"><span>{{ comentario.usuario.email }}</span></div>
+                        <div class="spancomm"><span>{{ comentario.comentario }}</span> </div>
+                        <div class="spandate"><span>{{ comentario.fecha_hora|date:"d/m/Y" }}</span> </div>
+                        {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
+                        <div>
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="comentario_id" value="{{ comentario.id }}">
+                                <button type="submit" name="eliminarAnotacion" class="btn btn-danger btn-sm">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="anotaciontxt" placeholder="Anotacion" required>
+                        <button type="submit" name="agregarAnotacion" class="btn btn-primary">Agregar Anotacion</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
     {% include "footer.html" %}

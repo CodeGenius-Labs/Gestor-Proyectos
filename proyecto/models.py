@@ -12,13 +12,11 @@ class Roles(models.Model):
     ADMIN_DEPARTAMENTO = 'Administrador del departamento'
     TUTOR = 'Tutor'
     ASISTENTE = 'Asistente'
-    SUPERADMIN = 'Superadmin'
 
     ROLE_CHOICES = [
         (ADMIN_DEPARTAMENTO, 'Administrador del departamento'),
         (TUTOR, 'Tutor'),
         (ASISTENTE, 'Asistente'),
-        (SUPERADMIN, 'Superadmin'),
     ]
 
     rol = models.CharField(max_length=50, choices=ROLE_CHOICES, default=TUTOR)

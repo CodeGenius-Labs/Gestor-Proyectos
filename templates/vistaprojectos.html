@@ -11,6 +11,7 @@
     <link rel="shortcut icon" href=" {% static 'imagenes/ico/logo-gestor-proyectos-en-azul.ico' %}">
     <link rel="stylesheet" href="{% static 'css/vistaprojectos.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -144,28 +145,45 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div class="project-title">GESTOR DE PROYECTOS</div>
             <div class="d-flex align-items-center">
-                <input type="text" class="search-bar col-md-1 " placeholder="Buscar...">
-                <button class="filter-btn ms-2">
-                    
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-        
-
-        <div class="Botonfilter">
-            <button class=" btn dropdown-toggle mp-4" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="10,20">
-                <i class="fa-solid fa-filter">  Filtros</i>
+                <form method="GET" action="{% url 'proyectos' %}" class='d-flex align-items-center'>
+                    <input type="text" class="search-bar col-md-1 " placeholder="Buscar..." name="search" value="{{ search_query }}">
+                    <button type="submit" class="filter-btn ms-2">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
                 
-                
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">A-Z</a></li>
-                <li><a class="dropdown-item" href="#">Fecha</a></li>
-            </ul>
-            </button>
-            </div>
-
-            </div>
+                <div class="Botonfilter">
+                    <button class=" btn dropdown-toggle mp-4" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="10,20">
+                        <i class="fa-solid fa-filter">  Filtros</i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" style="cursor: pointer">Nombre</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="applyFilter('nombre', 'asc')" style="cursor: pointer">Ascendente</a></li>
+                                <li><a class="dropdown-item" onclick="applyFilter('nombre', 'desc')" style="cursor: pointer">Descendente</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" style="cursor: pointer">Fecha de Inicio</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="applyFilter('fecha_inicio', 'asc')" style="cursor: pointer">Ascendente</a></li>
+                                <li><a class="dropdown-item" onclick="applyFilter('fecha_inicio', 'desc')" style="cursor: pointer">Descendente</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" style="cursor: pointer">Fecha de Finalizacion</a>
+                            
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="applyFilter('fecha_fin', 'asc')" style="cursor: pointer">Ascendente</a></li>
+                                <li><a class="dropdown-item" onclick="applyFilter('fecha_fin', 'desc')" style="cursor: pointer">Descendente</a></li>
+                            </ul>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                    </ul>
+                </div>
         </div>
+    </div>
         <!--Proyecto-barrabusqueda,botonfiltro,menudesplegable-->
 
 
@@ -230,10 +248,6 @@
                     </div>
                 </div>
             {% endfor %}
-
-
-
-           
             
             
         </div>
@@ -241,11 +255,25 @@
         <!---ProjectCards -->
 
     </div>
+    <script>
+        function applyFilter(order, direction) {
+            // Obtener la URL actual
+            const url = new URL(window.location.href);
+            
+            // Establecer los parámetros de filtro
+            url.searchParams.set('order', order);
+            url.searchParams.set('direction', direction);
+            
+            // Redirigir a la nueva URL
+            window.location.href = url.toString();
+        }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
     <script src="{% static 'js/crearproyectos.js' %}"></script>
+    <script src="{% static 'js/buscarprojectos.js' %}"></script>
 
 
 
