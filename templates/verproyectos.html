@@ -382,7 +382,8 @@ button:focus {
                 <ul class="list-group">
                     {% for comentario in comentarios %}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>{{ comentario.usuario.email }}</span>
+
+                        <div class="user"><span>{{ comentario.usuario.email }}</span></div>
                         <div class="spancomm"><span>{{ comentario.comentario }}</span> </div>
                         <div class="spandate"><span>{{ comentario.fecha_hora|date:"d/m/Y" }}</span> </div>
                         {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
