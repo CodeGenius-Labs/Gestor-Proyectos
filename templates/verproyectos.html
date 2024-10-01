@@ -132,19 +132,20 @@
             <section class="documentos">
                 <h2>Descripción</h2>
                 <p>{{ proyecto.descripcion }}</p>
-
-
-
+            
                 <!-- Nuevo modal para cargar archivos -->
-
-
-                <section class="row" id="buttons_pito">
-                    <div class="col-md-3 position-absolute top-0 start-0" id="cargar">
+            
+                <!-- Fila para el botón y los archivos -->
+                <section class="row justify-content-start" id="buttons_pito">
+                    <!-- Columna 1: Botón de cargar archivos -->
+                    <div class="col-md-3" id="cargar">
                         <div class="project-card" id="project-card-id">
-                            <button class="btn btn-view" id="openModalBtnModal3"><i class="fa-solid fa-plus fa-2x"></i></button>
+                            <button class="btn btn-view" id="openModalBtnModal3">
+                                <i class="fa-solid fa-plus fa-2x"></i>
+                            </button>
                             <h5>Cargar Archivos</h5>
-                
-                                        <!-- Modal emergente -->
+            
+                            <!-- Modal emergente -->
                             <div id="modal3" class="modal">
                                 <div class="modal-content3">
                                     <div class="content">
@@ -167,59 +168,64 @@
                                     </div>
                                 </div>
                             </div>
-
-
-                      <script>
-                        function showFileName() {
-                            const input = document.getElementById('legalDocument');
-                            const fileName = document.getElementById('file-name');
-                            fileName.textContent = input.files.length > 0 ? input.files[0].name : 'No se ha seleccionado ningun archivo';
-                        }
-                    </script>
-                   </div>
-                </section>
- 
-                
             
-
-                <section class="file-card">
-                    <div class="file-header">
-                        <span class="file-icon">E</span>
-                        <!-- Botón que abre modal4 -->
-                        <div class="file-options" onclick="openModal4()">•••</div>
-                    </div>
-                    <!-- Clic en el nombre del archivo que abre modal5 -->
-                    <div class="file-name" onclick="openModal5()">Wall-e.docs</div>
-                
-                    <!-- Modal descripcion (modal5) -->
-                    <div id="modal5" class="modal">
-                        <div class="modal-content5">
-                            <span class="close-btn-modal5">&times;</span>
-                            <div class="modalito5">
-                                <h1>FACULTAD ROBOT</h1>
-                                <p>Un robot, Nace, Crece, Se reproduce y muere, pero la verdad de la vida es ¿por qué un robot nace y no se crea?; ¿Por qué Crece y no se actualiza?; ¿Por qué se reproduce y no se clona? y por último ¿Por qué se muere y no se recicla? En fin, la hipocresía...</p>
-                            </div>
+                            <script>
+                                function showFileName() {
+                                    const input = document.getElementById('legalDocument');
+                                    const fileName = document.getElementById('file-name');
+                                    fileName.textContent = input.files.length > 0 ? input.files[0].name : 'No se ha seleccionado ningun archivo';
+                                }
+                            </script>
                         </div>
                     </div>
-                
-                    <!-- Modal detalle (modal4) -->
-                    <div id="modal4" class="modal">
-                        <div class="modal-content4">
-                            <span class="close-btn-modal4">&times;</span>
-                            <div class="modalito4">
-                                <h3>Detalles del documento</h3>
-                                <p><strong>Subido por:</strong> Marlon Pastrana Moreno</p>
-                                <p><strong>Tipo de archivo:</strong> Docs</p>
-                                <p><strong>Tamaño:</strong> 250KB</p>
-                                <p><strong>Fecha modificación:</strong> 22/05/2024</p>
-                                <button class="delete-btn">Eliminar</button>
-                                <button class="delete-btn">descargar</button>
+            
+                    <div class="col-md-3 mb-3">
+                        <div class="file-card">
+                            <div class="file-header d-flex justify-content-between">
+                                <span class="file-icon">E</span>
+                                <div class="file-options" onclick="openModal4()">•••</div>
+                            </div>
+                            <div class="file-name" onclick="openModal5()">Wall-e.docs</div>
+                        </div>
+            
+                        <!-- Modal descripción (modal5) -->
+                        <div id="modal5" class="modal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1>FACULTAD ROBOT</h1>
+                                        <button type="button" class="btn-close close-btn-modal5" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Un robot, Nace, Crece, Se reproduce y muere...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!-- Modal detalle (modal4) -->
+                        <div id="modal4" class="modal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3>Detalles del documento</h3>
+                                        <button type="button" class="btn-close close-btn-modal4" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p><strong>Subido por:</strong> Marlon Pastrana Moreno</p>
+                                        <p><strong>Tipo de archivo:</strong> Docs</p>
+                                        <p><strong>Tamaño:</strong> 250KB</p>
+                                        <p><strong>Fecha modificación:</strong> 22/05/2024</p>
+                                        <button class="btn btn-danger">Eliminar</button>
+                                        <button class="btn btn-primary">Descargar</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
-                
-
+            </section>
+            
                 
 
             <section class="progreso">

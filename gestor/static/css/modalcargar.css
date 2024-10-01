@@ -1,6 +1,6 @@
 
 #buttons_pito {
-    position: absolute; 
+    position: relative; 
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -48,7 +48,10 @@
 
 .modalito {
     position: relative;
-    padding: 20px; 
+    padding: 20px;
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px; 
 }
 
 

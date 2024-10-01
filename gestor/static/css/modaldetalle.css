@@ -1,18 +1,12 @@
 .file-card {
-    position: absolute;
-    /* Aseguramos que se posicione en su contenedor padre */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 12%;
-    /* Ajustamos el ancho para que ocupe todo el espacio del contenedor */
+    width: 150px;
     height: auto;
-    /* Ajustamos la altura para que sea flexible */
-    margin: -300px 300px;
-    /* Centramos el cuadro */
     padding: 30px 20px;
-    border: 2px solid #54BCDE;
+    border: 2px solid black;
     border-radius: 10px;
     background-color: #f9f9f9;
 }
@@ -44,7 +38,7 @@
     margin-top: 10px;
     text-align: center;
     font-size: 16px;
-}
+} 
 
 .modal {
     display: none;

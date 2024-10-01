@@ -89,7 +89,7 @@
 
 .documentos {
     text-align: center;
-    background-color: #54BCDE;
+    /* background-color: #54BCDE; */
 }
 
 .documentos h2 {
@@ -130,16 +130,14 @@
 }
 
 #project-card-id{
-    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
     height: auto;
-    margin: -300px 0px;
+    width: 150px;
     padding: 18px 24px;
-    border: 4px solid #0E2B3E;
+    border: 3px solid #0E2B3E;
     border-radius: 15px;
     background-color: #f9f9f9;
     transition: box-shadow 0.3s;
