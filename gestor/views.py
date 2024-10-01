@@ -268,6 +268,9 @@ def verproyectos(request, id):
     # Obtener los comentarios asociados al proyecto
     comentarios = Comentarios.objects.filter(proyecto=proyecto)
 
+    # Obtener los archivos asociados al proyecto
+    archivos = Archivos.objects.filter(proyecto=proyecto)
+
     # Obtener el rol del usuario actual en el proyecto
     miembro_actual = MiembrosProyectos.objects.filter(proyecto=proyecto, usuario=request.user).first()
     rol_usuario_actual = miembro_actual.rol if miembro_actual else None
@@ -352,6 +355,7 @@ def verproyectos(request, id):
         'roles': Roles.objects.exclude(rol='Administrador del departamento'),  # Pasamos los roles disponibles para el selector
         'rol_usuario_actual': rol_usuario_actual,  # Pasamos el rol del usuario actual al contexto
         'comentarios': comentarios,  # Pasamos los comentarios al contexto
+        'archivos': archivos,  # Pasamos los archivos
     }
 
     return render(request, 'verproyectos.html', context)

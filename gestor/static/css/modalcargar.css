@@ -1,12 +1,4 @@
 
-#buttons_pito {
-    position: relative; 
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 20px; 
-}
-
 .btn-view {
     border-radius: 15px;
     color: #54BCDE;
