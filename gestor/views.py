@@ -15,6 +15,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from proyecto.models import Archivos, Proyecto  # Asegúrate de que esto coincide con la ubicación de tus modelos
 from django.core.files.storage import FileSystemStorage
+import os 
+import mimetypes
 
 
 
@@ -290,20 +292,43 @@ def verproyectos(request, id):
             messages.success(request, 'Archivo cargado exitosamente.')
             return redirect('verproyectos', id=proyecto.id)
 
-        # Eliminar archivo
         if 'eliminar_archivo' in request.POST:
             archivo_id = request.POST.get('archivo_id')
             archivo = get_object_or_404(Archivos, id=archivo_id)
+            
+            # Elimina el archivo del sistema de archivos, si existe
+            if archivo.archivoss and os.path.isfile(archivo.archivoss.path):
+                os.remove(archivo.archivoss.path)
+
+            # Elimina el archivo de la base de datos
             archivo.delete()
             messages.success(request, "Archivo eliminado exitosamente.")
             return redirect('verproyectos', id=proyecto.id)
 
-        # Descargar archivo
         if 'descargar_archivo' in request.POST:
             archivo_id = request.POST.get('archivo_id')
             archivo = get_object_or_404(Archivos, id=archivo_id)
-            response = HttpResponse(archivo.archivo, content_type='application/octet-stream')
-            response['Content-Disposition'] = f'attachment; filename="{archivo.nombre}"'
+
+            # Asegúrate de que el archivo existe y se puede abrir
+            archivo.archivoss.open()
+
+            # Adivina el tipo MIME basado en la extensión del archivo
+            mime_type, _ = mimetypes.guess_type(archivo.archivoss.name)
+
+            # Prepara la respuesta con el contenido del archivo
+            response = HttpResponse(archivo.archivoss.read(), content_type=mime_type or 'application/octet-stream')
+
+            # Verifica el tipo MIME para decidir si forzar la descarga o mostrar en el navegador
+            if mime_type and ('image' in mime_type or mime_type == 'application/pdf'):
+                # Mostrar en el navegador para imágenes y PDFs
+                response['Content-Disposition'] = f'inline; filename="{archivo.nombre}"'
+            else:
+                # Forzar la descarga para otros tipos de archivo
+                response['Content-Disposition'] = f'attachment; filename="{archivo.nombre}"'
+
+            # Cierra el archivo después de leerlo
+            archivo.archivoss.close()
+
             return response
 
         # Acción para agregar un usuario

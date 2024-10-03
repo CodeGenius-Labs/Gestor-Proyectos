@@ -151,7 +151,8 @@
                     <div class="file-card">
                         <div class="file-header d-flex justify-content-between">
                             <span class="file-icon">E</span>
-                            <div class="file-options" onclick="openModal4()">•••</div>
+                            <div class="file-options" data-bs-toggle="modal" data-bs-target="#modal{{ archivo.id }}">•••</div>
+
                         </div>
                         <div class="file-name" onclick="openModal5()">{{ archivo.nombre }}</div>
                     </div>
