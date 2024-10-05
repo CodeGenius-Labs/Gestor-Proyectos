@@ -376,6 +376,11 @@
                     <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
                     <button class="btn btn-primary" name="descargar_archivo" type="submit">Descargar</button>
                 </form>
+
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
+                    <button class="btn btn-primary" name="Editar_archivos">Editar</button>  
             </div>
         </div>
     </div>

@@ -304,6 +304,8 @@ def verproyectos(request, id):
             archivo.delete()
             messages.success(request, "Archivo eliminado exitosamente.")
             return redirect('verproyectos', id=proyecto.id)
+        
+        
 
         if 'descargar_archivo' in request.POST:
             archivo_id = request.POST.get('archivo_id')
@@ -326,10 +328,11 @@ def verproyectos(request, id):
                 # Forzar la descarga para otros tipos de archivo
                 response['Content-Disposition'] = f'attachment; filename="{archivo.nombre}"'
 
-            # Cierra el archivo después de leerlo
+            # Cierra el archivo después de 
             archivo.archivoss.close()
 
             return response
+        
 
         # Acción para agregar un usuario
         if 'agregar_usuario' in request.POST:
@@ -348,7 +351,7 @@ def verproyectos(request, id):
             except Roles.DoesNotExist:
                 messages.error(request, f"El rol {rol} no existe.")
         
-        # Eliminar usuario
+        # Eliminar usuarioleerlo
         elif 'eliminar_usuario' in request.POST:
             miembro_id = request.POST.get('miembro_id')
             MiembrosProyectos.objects.filter(id=miembro_id).delete()
