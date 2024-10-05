@@ -317,7 +317,11 @@
                         <h2>Cargar Archivo</h2>
                         <div class="uploadDocuments">
                             <label for="legalDocumentModal3">Examinar...</label>
-                            <input type="file" id="legalDocumentModal3" name="legalDocument" accept="image/*,application/pdf" onchange="showFileNameModal3()" required>
+                            <input type="file" id="legalDocumentModal3" name="legalDocument" 
+       accept="image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+       application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" 
+       onchange="showFileNameModal3()" required>
+            
                             <input type="text" name="nombre" placeholder="Ingresa el nombre del archivo" required>
                             <span class="file-name" id="file-name-modal3">No se ha seleccionado ningún archivo</span>
                         </div>
@@ -434,7 +438,12 @@
 
     window.openModal4 = openModal4;
     window.openModal5 = openModal5;
+
 });
+
+
+
+
 
 </script>
 
