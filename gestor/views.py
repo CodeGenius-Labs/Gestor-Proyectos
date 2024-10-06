@@ -322,21 +322,22 @@ def verproyectos(request, id):
 
             # Verifica el tipo MIME para decidir si forzar la descarga o mostrar en el navegador
             archivo_extension = archivo.archivoss.name.split('.')[-1]
-        archivo_nombre = archivo.nombre
+            archivo_nombre = archivo.nombre  # Debe estar correctamente indentado
 
-        # Si el nombre del archivo no contiene una extensión, añádela
-        if not archivo_nombre.endswith(archivo_extension):
-            archivo_nombre += f".{archivo_extension}"
+            # Si el nombre del archivo no contiene una extensión, añádela
+            if not archivo_nombre.endswith(archivo_extension):
+                archivo_nombre += f".{archivo_extension}"
 
-        # Verifica el tipo MIME para decidir si forzar la descarga o mostrar en el navegador
-        if mime_type and ('image' in mime_type or mime_type == 'application/pdf'):
-            # Mostrar en el navegador para imágenes y PDFs
-            response['Content-Disposition'] = f'inline; filename="{archivo_nombre}"'
-        else:
-            # Forzar la descarga para otros tipos de archivo
-            response['Content-Disposition'] = f'attachment; filename="{archivo_nombre}"'
+            # Verifica el tipo MIME para decidir si forzar la descarga o mostrar en el navegador
+            if mime_type and ('image' in mime_type or mime_type == 'application/pdf'):
+                # Mostrar en el navegador para imágenes y PDFs
+                response['Content-Disposition'] = f'inline; filename="{archivo_nombre}"'
+            else:
+                # Forzar la descarga para otros tipos de archivo
+                response['Content-Disposition'] = f'attachment; filename="{archivo_nombre}"'
 
-        return response
+            return response
+
         
 
         # Acción para agregar un usuario
