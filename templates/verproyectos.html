@@ -363,29 +363,24 @@
                 <p><strong>Tamaño:</strong> {{ archivo.tamaño }}KB</p>
                 <p><strong>Fecha modificación:</strong> {{ archivo.fecha_modificacion }}</p>
 
-                <!-- Formulario para eliminar archivo -->
+                
                 <form method="POST" action="">
                     {% csrf_token %}
                     <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
-                    <button class="btn btn-danger" name="eliminar_archivo" type="submit">Eliminar</button>
-                </form>
 
-                <!-- Formulario para descargar archivo -->
-                <form method="POST" action="">
-                    {% csrf_token %}
-                    <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
-                    <button class="btn btn-primary" name="descargar_archivo" type="submit">Descargar</button>
+                    
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-danger" name="eliminar_archivo" type="submit">Eliminar</button>
+                        <button class="btn btn-primary" name="descargar_archivo" type="submit">Descargar</button>
+                        <button class="btn btn-warning" name="editar_archivo" type="submit">Editar</button>
+                    </div>
                 </form>
-
-                <form method="POST" action="">
-                    {% csrf_token %}
-                    <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
-                    <button class="btn btn-primary" name="Editar_archivos">Editar</button>  
             </div>
         </div>
     </div>
 </div>
 {% endfor %}
+
 
 
 
