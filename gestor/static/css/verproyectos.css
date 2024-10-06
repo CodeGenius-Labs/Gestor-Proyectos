@@ -146,6 +146,7 @@
     background-color: #f9f9f9;
     transition: box-shadow 0.3s;
     font-family: AngsanaUPC ;
+    text-align: center;
 }
 
 #project-card-id:hover {
