@@ -38,6 +38,16 @@ class Archivos(models.Model):
     proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    tipo = models.CharField(max_length=100, blank=True)  # Campo para el tipo de archivo
+    tamaño = models.PositiveIntegerField(default=0)  # Campo para el tamaño en KB
+
+    def save(self, *args, **kwargs):
+        # Almacenar el tipo y tamaño automáticamente al guardar el archivo
+        if self.archivoss:
+            self.tipo = self.archivoss.file.content_type
+            self.tamaño = self.archivoss.file.size // 1024  # Convertir bytes a KB
+        super().save(*args, **kwargs)
+
 
 class Comentarios(models.Model):
     comentario = models.TextField()

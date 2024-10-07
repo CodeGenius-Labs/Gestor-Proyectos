@@ -154,12 +154,19 @@
                         <div class="file-header d-flex justify-content-between">
                             <span class="file-icon">E</span>
                             <div class="file-options" data-bs-toggle="modal" data-bs-target="#modal{{ archivo.id }}">•••</div>
-
                         </div>
-                        <div class="file-name" onclick="openModal5()">{{ archivo.nombre }}</div>
+                        <!-- Agregar el enlace aquí -->
+                        <div class="file-name">
+                            <a href="{% url 'verproyectos' proyecto.id %}?archivo_id={{ archivo.id }}" 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#modal5">
+                               {{ archivo.nombre }}
+                            </a>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
+                
             </section>
             
             
@@ -335,7 +342,6 @@
     </div>
 </div>
 
-<!-- Modal descripción (modal5) -->
 <!-- Modal de previsualización (modal5) -->
 <div id="modal5" class="modal">
     <div class="modal-dialog modal-lg">
@@ -347,22 +353,19 @@
             <div class="modal-body">
                 <!-- Previsualización del archivo -->
                 <div class="file-preview">
-                    {% if archivo.tipo == "application/pdf" %}
-                        <!-- Previsualización de PDF -->
-                        <iframe src="{{ archivo.url }}" width="100%" height="500px"></iframe>
-                    {% elif archivo.tipo == "application/msword" or archivo.tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" %}
-                        <!-- Previsualización de documentos Word -->
-                        <iframe src="https://view.officeapps.live.com/op/embed.aspx?src={{ archivo.url }}" width="100%" height="500px"></iframe>
-                    {% elif archivo.tipo == "application/vnd.ms-excel" or archivo.tipo == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" %}
-                        <!-- Previsualización de archivos Excel -->
-                        <iframe src="https://view.officeapps.live.com/op/embed.aspx?src={{ archivo.url }}" width="100%" height="500px"></iframe>
+                    {% if archivo_seleccionado %}
+                        {% if archivo_seleccionado.archivoss.file.content_type == "application/pdf" %}
+                            <iframe src="{{ archivo_seleccionado.archivoss.url }}" width="100%" height="500px"></iframe>
+                        {% else %}
+                            <!-- Opción para descargar si no se puede previsualizar -->
+                            <p>Este tipo de archivo no se puede previsualizar.</p>
+                            <a href="{{ archivo_seleccionado.archivoss.url }}" download>Descargar archivo</a>
+                        {% endif %}
                     {% else %}
-                        <!-- Opción para descargar si no se puede previsualizar -->
-                        <p>Este tipo de archivo no se puede previsualizar.</p>
+                        <p>No se ha seleccionado ningún archivo para previsualizar.</p>
                     {% endif %}
                 </div>
             </div>
-            
         </div>
     </div>
 </div>
@@ -380,8 +383,8 @@
             <div class="modal-body">
                 <p><strong>Subido por:</strong> {{ archivo.usuario.username }}</p>
                 <p><strong>Tipo de archivo:</strong> {{ archivo.tipo }}</p>
-                <p><strong>Tamaño:</strong> {{ archivo.tamaño }}KB</p>
-                <p><strong>Fecha modificación:</strong> {{ archivo.fecha_modificacion }}</p>
+                <p><strong>Tamaño:</strong> {{ archivo.tamaño }} KB</p>
+                <p><strong>Fecha modificación:</strong> {{ info.fecha_modificacion }}</p>
 
                 
                 <form method="POST" action="">
