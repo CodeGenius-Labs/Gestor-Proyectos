@@ -17,6 +17,7 @@ from proyecto.models import Archivos, Proyecto  # Asegúrate de que esto coincid
 from django.core.files.storage import FileSystemStorage
 import os 
 import mimetypes
+from django.core.files.storage import default_storage
 
 
 
@@ -277,6 +278,25 @@ def verproyectos(request, id):
     miembro_actual = MiembrosProyectos.objects.filter(proyecto=proyecto, usuario=request.user).first()
     rol_usuario_actual = miembro_actual.rol if miembro_actual else None
 
+    print(archivos)
+
+
+    archivos_info = []
+    for archivo in archivos:
+        # Crear un diccionario con la información
+        archivos_info.append({
+            'archivo': archivo,
+            'tipo': archivo.tipo,  # Accede al tipo directamente del modelo
+            'tamaño': archivo.tamaño,  # Accede al tamaño directamente del modelo
+        })
+
+
+
+    archivo_id = request.GET.get('archivo_id')
+    archivo_seleccionado = None
+    if archivo_id:
+        archivo_seleccionado = get_object_or_404(Archivos, id=archivo_id)
+
     if request.method == 'POST':
         # Cargar archivo
         if 'legalDocument' in request.FILES:
@@ -316,6 +336,8 @@ def verproyectos(request, id):
 
             # Adivina el tipo MIME basado en la extensión del archivo
             mime_type, _ = mimetypes.guess_type(archivo.archivoss.name)
+            print(f"MIME Type detectado: {mime_type}")
+
 
             # Prepara la respuesta con el contenido del archivo
             response = HttpResponse(archivo.archivoss.read(), content_type=mime_type or 'application/octet-stream')
@@ -402,6 +424,8 @@ def verproyectos(request, id):
         'rol_usuario_actual': rol_usuario_actual,
         'comentarios': comentarios,
         'archivos': archivos,
+        'archivo_seleccionado': archivo_seleccionado,
+        'archivos_info': archivos_info,
     }
 
     return render(request, 'verproyectos.html', context)
