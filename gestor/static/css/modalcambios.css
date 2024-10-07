@@ -1,0 +1,93 @@
+
+
+/* Estilos del modal descripcion */
+.modal {
+    display: none;
+    /* Oculto por defecto */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 80px;
+    border: 2px solid #888;
+    width: 100px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+/* Estilo de la sección del modal */
+.modalito6 {
+    position: relative;
+    padding: 20px;
+    /* Ajustar el padding */
+    h3{
+        margin-bottom: 45px;
+        font-family: "Libre Franklin", sans-serif;
+        font-weight: 700;
+
+    }
+    p{
+        font-family: "Libre Franklin", sans-serif;
+        font-weight: 700;
+    }
+}
+
+.modal-content6{
+    background-color: #fefefe;
+     margin: 10% auto;
+       padding: 20px;
+        border: 1px solid #888;
+         width: 25%; height: 70%;
+     border-radius: 10px; 
+}
+
+.close-btn-modal6 {
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: red;
+    color: white;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    margin: -13% 0 0 270px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    z-index: 5;
+    display: block;
+
+}
+.modalito6{
+    text-align: center;
+    h1{
+        margin-bottom: 18px;
+        font-weight: 600;
+        font-size: 24px;
+       }
+       p{
+        padding: 15px 20px;
+        line-height: 30px;
+        font-size: 14px;
+        font-family: "Libre Franklin", sans-serif;
+       }
+}
+
+.cambios-btn {
+    background-color: #274960;
+    color: #54BCDE;
+    font-size: 21px;
+    font-weight: 690;
+    width: 220px;
+    height: 40px;
+    border-radius: 16px;
+    margin-top: 40px;
+    margin-left: 24%;
+}
