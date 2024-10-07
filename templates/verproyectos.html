@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{% static 'css/modaleditar.css' %}">
     <link rel="stylesheet" href="{% static 'css/modalcargar.css' %}">
     <link rel="stylesheet" href="{% static 'css/modaldetalle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modalcambios.css' %}">
+
 
 
 
@@ -209,6 +211,26 @@
                                 <p><strong>Tamaño:</strong> 250KB</p>
                                 <p><strong>Fecha modificación:</strong> 22/05/2024</p>
                                 <button class="delete-btn">Eliminar</button>
+                                <button type="button" class="btn btn-primary"  id="openModalBtnModal6">
+                                    Editar
+                                        <div id="modal6" class="modal">
+                                            <div class="modal-content6">
+                                                <div class="content">
+                                                    <div class="inputs">
+                                                        <span class="close-btn-modal6">&times;</span>
+                                                        <h2>Editar nombre del archivo</h2>
+                                
+                                                        <div class="input_campos">
+                                                            <label for="username">Nuevo nombre</label>
+                                                            <input class="input_nombre" type="text" name="username">
+                                                        </div>
+                                
+                                                        <button class="cambios-btn" type="submit" id="boton">guardar cambios</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
                             </div>
                         </div>
                     </div>
@@ -361,6 +383,33 @@
     window.openModal4 = openModal4;
     window.openModal5 = openModal5;
 });
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const modal6 = document.getElementById('modal6');
+    const openModalBtn6 = document.getElementById('openModalBtnModal6');
+    const closeModalBtn6 = document.querySelector('.close-btn-modal6');
+
+
+    // Lógica para abrir el modal
+    openModalBtn6.onclick = function () {
+        modal6.style.display = 'block';
+    }
+    
+    closeModalBtn6.onclick = function () {
+        modal6.style.display = 'none';
+    }
+
+    // Cerrar el modal al hacer clic fuera de él
+    window.onclick = function (event) {
+        if (event.target === modal6) {
+            modal6.style.display = 'none';
+        }
+    }
+});
+
+
 
 </script>
 
