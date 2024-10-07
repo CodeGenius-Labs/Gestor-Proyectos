@@ -136,6 +136,7 @@
                 <p>{{ proyecto.descripcion }}</p>
             </section>
             <section class="row">
+                {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
                 <div class="col-md-3 mb-3">
                     <div class="project-card" id="project-card-id">
                         <button class="btn btn-view" id="openModalBtnModal3">
@@ -144,6 +145,7 @@
                         <h5>Cargar Archivos</h5>
                     </div>
                 </div>
+                {% endif %}
             
                 <!-- Este es el div que contendrá las tarjetas de archivos en el futuro -->
                 {% for archivo in archivos %}
@@ -334,19 +336,37 @@
 </div>
 
 <!-- Modal descripción (modal5) -->
+<!-- Modal de previsualización (modal5) -->
 <div id="modal5" class="modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1>FACULTAD ROBOT</h1>
+                <h1>Previsualización de archivo</h1>
                 <button type="button" class="btn-close close-btn-modal5" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Un robot, Nace, Crece, Se reproduce y muere...</p>
+                <!-- Previsualización del archivo -->
+                <div class="file-preview">
+                    {% if archivo.tipo == "application/pdf" %}
+                        <!-- Previsualización de PDF -->
+                        <iframe src="{{ archivo.url }}" width="100%" height="500px"></iframe>
+                    {% elif archivo.tipo == "application/msword" or archivo.tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" %}
+                        <!-- Previsualización de documentos Word -->
+                        <iframe src="https://view.officeapps.live.com/op/embed.aspx?src={{ archivo.url }}" width="100%" height="500px"></iframe>
+                    {% elif archivo.tipo == "application/vnd.ms-excel" or archivo.tipo == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" %}
+                        <!-- Previsualización de archivos Excel -->
+                        <iframe src="https://view.officeapps.live.com/op/embed.aspx?src={{ archivo.url }}" width="100%" height="500px"></iframe>
+                    {% else %}
+                        <!-- Opción para descargar si no se puede previsualizar -->
+                        <p>Este tipo de archivo no se puede previsualizar.</p>
+                    {% endif %}
+                </div>
             </div>
+            
         </div>
     </div>
 </div>
+
 
 {% for archivo in archivos %}
 <!-- Modal detalle (modal4) -->
@@ -370,9 +390,11 @@
 
                     
                     <div class="d-flex justify-content-between">
-                        <button class="btn btn-danger" name="eliminar_archivo" type="submit">Eliminar</button>
                         <button class="btn btn-primary" name="descargar_archivo" type="submit">Descargar</button>
+                        {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
+                        <button class="btn btn-danger" name="eliminar_archivo" type="submit">Eliminar</button>
                         <button class="btn btn-warning" name="editar_archivo" type="submit">Editar</button>
+                        {% endif %}
                     </div>
                 </form>
             </div>

@@ -316,6 +316,8 @@ def verproyectos(request, id):
 
             # Adivina el tipo MIME basado en la extensión del archivo
             mime_type, _ = mimetypes.guess_type(archivo.archivoss.name)
+            print(f"MIME Type detectado: {mime_type}")
+
 
             # Prepara la respuesta con el contenido del archivo
             response = HttpResponse(archivo.archivoss.read(), content_type=mime_type or 'application/octet-stream')
