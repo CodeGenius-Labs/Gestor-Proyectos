@@ -262,6 +262,7 @@ def proyectos(request):
 #----------------Definir ver proyectos--------------------------
 @login_required(login_url="login")
 def verproyectos(request, id):
+    
     proyecto = get_object_or_404(Proyecto, id=id)
 
     # Obtener los miembros del proyecto
@@ -276,6 +277,19 @@ def verproyectos(request, id):
     # Obtener el rol del usuario actual en el proyecto
     miembro_actual = MiembrosProyectos.objects.filter(proyecto=proyecto, usuario=request.user).first()
     rol_usuario_actual = miembro_actual.rol if miembro_actual else None
+
+    if request.method == 'POST' and 'Editar_archivos' in request.POST:
+        archivo_id = request.POST.get('archivo_id')
+        nuevo_nombre = request.POST.get('nombre')
+
+        if archivo_id and nuevo_nombre:
+            archivo = get_object_or_404(Archivos, id=archivo_id)
+            archivo.nombre = nuevo_nombre
+            archivo.save()
+            # Puedes agregar un mensaje de éxito o manejo de errores si deseas
+
+        return redirect('verproyectos')  # Redirige a la misma vista después de la actualización
+
 
     if request.method == 'POST':
         # Cargar archivo

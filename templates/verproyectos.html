@@ -377,10 +377,38 @@
                     <button class="btn btn-primary" name="descargar_archivo" type="submit">Descargar</button>
                 </form>
 
+                <!-- Botón Editar -->
                 <form method="POST" action="">
                     {% csrf_token %}
                     <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
-                    <button class="btn btn-primary" name="Editar_archivos">Editar</button>  
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editArchivoModal">
+                        Editar
+                    </button> 
+                </form> 
+
+                <!-- Modal para editar el archivo -->
+                <div class="modal fade" id="editArchivoModal" tabindex="-1" aria-labelledby="editArchivoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editArchivoModalLabel">Editar nombre del archivo</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST" action="{% url 'verproyectos' id=proyecto.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
+                                    <div class="mb-3">
+                                        <label for="nombreArchivo" class="form-label">Nuevo nombre</label>
+                                        <input type="text" class="form-control" id="nombreArchivo" name="nombre" value="{{ archivo.nombre }}">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
