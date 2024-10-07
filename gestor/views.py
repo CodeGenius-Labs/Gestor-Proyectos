@@ -263,6 +263,7 @@ def proyectos(request):
 #----------------Definir ver proyectos--------------------------
 @login_required(login_url="login")
 def verproyectos(request, id):
+    
     proyecto = get_object_or_404(Proyecto, id=id)
 
     # Obtener los miembros del proyecto
@@ -277,6 +278,40 @@ def verproyectos(request, id):
     # Obtener el rol del usuario actual en el proyecto
     miembro_actual = MiembrosProyectos.objects.filter(proyecto=proyecto, usuario=request.user).first()
     rol_usuario_actual = miembro_actual.rol if miembro_actual else None
+
+    if request.method == 'POST' and 'Editar_archivos' in request.POST:
+        archivo_id = request.POST.get('archivo_id')
+        nuevo_nombre = request.POST.get('nombre')
+
+        if archivo_id and nuevo_nombre:
+            # Si archivo_id y nuevo_nombre están presentes, intenta obtener el objeto
+            archivo = get_object_or_404(Archivos, id=archivo_id)
+            archivo.nombre = nuevo_nombre
+            archivo.save()
+            messages.success(request, 'El archivo se ha actualizado correctamente.')
+        else:
+            # Aquí puedes manejar el caso donde falta alguno de los valores
+            messages.error(request, 'El ID del archivo o el nuevo nombre son inválidos.')
+
+        return redirect('verproyectos', id=id)  # Redirige a la vista del proyecto después de actualizar
+
+
+    if request.method == 'POST' and 'Editar_archivos' in request.POST:
+        archivo_id = request.POST.get('archivo_id')
+        nuevo_nombre = request.POST.get('nombre')
+
+        if archivo_id and nuevo_nombre:
+            # Si archivo_id y nuevo_nombre están presentes, intenta obtener el objeto
+            archivo = get_object_or_404(Archivos, id=archivo_id)
+            archivo.nombre = nuevo_nombre
+            archivo.save()
+            messages.success(request, 'El archivo se ha actualizado correctamente.')
+        else:
+            # Aquí puedes manejar el caso donde falta alguno de los valores
+            messages.error(request, 'El ID del archivo o el nuevo nombre son inválidos.')
+
+        return redirect('verproyectos', id=id)  # Redirige a la vista del proyecto después de actualizar
+
 
     print(archivos)
 
