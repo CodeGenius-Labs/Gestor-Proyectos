@@ -397,19 +397,11 @@
                         <button class="btn btn-primary" name="descargar_archivo" type="submit">Descargar</button>
                         {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
                         <button class="btn btn-danger" name="eliminar_archivo" type="submit">Eliminar</button>
-                        <button class="btn btn-warning" name="editar_archivo" type="submit">Editar</button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editArchivoModal{{ archivo.id }}" data-bs-archivo-id="{{ archivo.id }}" data-bs-archivo-nombre="{{ archivo.nombre }}">Editar archivo</button>
                         {% endif %}
                     </div>
                 </form>
-
-                <!-- Botón Editar -->
-                <button type="button" class="btn btn-primary" 
-                        data-bs-toggle="modal" 
-                        data-bs-target="#editArchivoModal{{ archivo.id }}" 
-                        data-bs-archivo-id="{{ archivo.id }}" 
-                        data-bs-archivo-nombre="{{ archivo.nombre }}">
-                    Editar archivo
-                </button>
+                
             </div>
         </div>
     </div>
@@ -421,7 +413,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Editar archivo</h3>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Editar</button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form method="POST" action="{% url 'verproyectos' id=proyecto.id %}">
