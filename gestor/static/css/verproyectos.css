@@ -8,7 +8,7 @@
 
 .contenedor-principal {
     display: flex;
-    height: 100vh;
+    height: 100%;
 }
 
 .barra-lateral {
@@ -129,6 +129,10 @@
     color: #555;
 }
 
+
+
+
+
 #project-card-id{
     display: flex;
     flex-direction: column;
@@ -142,6 +146,7 @@
     background-color: #f9f9f9;
     transition: box-shadow 0.3s;
     font-family: AngsanaUPC ;
+    text-align: center;
 }
 
 #project-card-id:hover {
@@ -150,4 +155,8 @@
     
 }
 
+
+#legalDocumentModal3{
+    margin-bottom: 15px;
+}
 
