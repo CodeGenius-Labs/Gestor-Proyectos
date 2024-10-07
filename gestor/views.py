@@ -283,12 +283,16 @@ def verproyectos(request, id):
         nuevo_nombre = request.POST.get('nombre')
 
         if archivo_id and nuevo_nombre:
+            # Si archivo_id y nuevo_nombre están presentes, intenta obtener el objeto
             archivo = get_object_or_404(Archivos, id=archivo_id)
             archivo.nombre = nuevo_nombre
             archivo.save()
-            # Puedes agregar un mensaje de éxito o manejo de errores si deseas
+            messages.success(request, 'El archivo se ha actualizado correctamente.')
+        else:
+            # Aquí puedes manejar el caso donde falta alguno de los valores
+            messages.error(request, 'El ID del archivo o el nuevo nombre son inválidos.')
 
-        return redirect('verproyectos')  # Redirige a la misma vista después de la actualización
+        return redirect('verproyectos', id=id)  # Redirige a la vista del proyecto después de actualizar
 
 
     if request.method == 'POST':
