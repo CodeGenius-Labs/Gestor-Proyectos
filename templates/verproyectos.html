@@ -350,6 +350,7 @@
 
 {% for archivo in archivos %}
 <!-- Modal detalle (modal4) -->
+<!-- Modal de detalles del documento -->
 <div id="modal{{ archivo.id }}" class="modal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -377,10 +378,67 @@
                     <button class="btn btn-primary" name="descargar_archivo" type="submit">Descargar</button>
                 </form>
 
-                <form method="POST" action="">
+                <!-- Botón Editar -->
+                <button type="button" class="btn btn-primary" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#editArchivoModal{{ archivo.id }}" 
+                        data-bs-archivo-id="{{ archivo.id }}" 
+                        data-bs-archivo-nombre="{{ archivo.nombre }}">
+                    Editar archivo
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para editar el archivo -->
+<div id="editArchivoModal{{ archivo.id }}" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar archivo</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Editar</button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'verproyectos' id=proyecto.id %}">
                     {% csrf_token %}
                     <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
-                    <button class="btn btn-primary" name="Editar_archivos">Editar</button>  
+                    <div class="mb-3">
+                        <label for="nombreArchivo" class="form-label">Nuevo nombre</label>
+                        <input type="text" class="form-control" id="nombreArchivo" name="nombre" value="{{ archivo.nombre }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary" name="Editar_archivos">Guardar cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+                
+
+<script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    var editArchivoModal = document.getElementById('editArchivoModal');
+                
+                    editArchivoModal.addEventListener('show.bs.modal', function (event) {
+                        var button = event.relatedTarget; // Botón que activó el modal
+                        var archivoId = button.getAttribute('data-bs-archivo-id'); // Obtiene el ID del archivo
+                        var archivoNombre = button.getAttribute('data-bs-archivo-nombre'); // Obtiene el nombre del archivo
+                
+                        // Asignar los valores obtenidos del botón a los campos del modal
+                        var inputArchivoId = editArchivoModal.querySelector('input[name="archivo_id"]');
+                        var inputNombreArchivo = editArchivoModal.querySelector('input[name="nombre"]');
+                
+                        inputArchivoId.value = archivoId; 
+                        inputNombreArchivo.value = archivoNombre; 
+                    });
+                });
+
+            </script>
+                
+
+                
+
             </div>
         </div>
     </div>
