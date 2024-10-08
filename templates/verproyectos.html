@@ -12,7 +12,7 @@
 
     <!---------Css-------->
     <link rel="stylesheet" href="{% static 'css/verproyectos.css' %}">
-    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
     <link rel="stylesheet" href="{% static 'css/agregarusuario.css' %}">
     <link rel="stylesheet" href="{% static 'css/modaleditar.css' %}">
     <link rel="stylesheet" href="{% static 'css/modalcargar.css' %}">
@@ -36,8 +36,11 @@
 
             {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
             <button class="boton-lateral" id="openModalBtn2">Editar proyecto</button>
+            {% endif %}
+            {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
             <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuarios">Ver Usuarios</button>
-
+            {% endif %}
+            {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
                 <!--1------Inicio del modal emergente------>
                   
                 <div id="modal2" class="modal2" style="display: none;">
@@ -114,9 +117,8 @@
 
 
 
-            <!-- Botón que abre el modal de Usuarios -->
+            <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalAnotaciones">Anotaciones</button>
 
-            <button class="boton-lateral">Fechas y anotaciones</button>
             <button class="boton-lateral"><a href="{% url 'proyectos'%}" style="color: #54BCDE;">Volver</a></button>
         </aside>
 
@@ -132,107 +134,42 @@
             <section class="documentos">
                 <h2>Descripción</h2>
                 <p>{{ proyecto.descripcion }}</p>
-
-
-
-                <!-- Nuevo modal para cargar archivos -->
-
-
-                <section class="row" id="buttons_pito">
-                    <div class="col-md-3 position-absolute top-0 start-0" id="cargar">
-                        <div class="project-card">
-                            <button class="btn btn-view" id="openModalBtnModal3"><i class="fa-solid fa-plus fa-2x"></i></button>
-                            <h5>Cargar Archivos</h5>
-                
-                                        <!-- Modal emergente -->
-                            <div id="modal3" class="modal">
-                                <div class="modal-content3">
-                                    <div class="content">
-                                        <div class="inputs">
-                                            <span class="close-btn-modal3">&times;</span>
-                                            <form method="POST" action="{% url 'verproyectos' id=proyecto.id %}" enctype="multipart/form-data">
-                                                {% csrf_token %}
-                                                <div class="modalito">
-                                                    <h2>Cargar Archivo</h2>
-                                                    <div class="uploadDocuments">
-                                                        <label for="legalDocumentModal3">Examinar...</label>
-                                                        <input type="file" id="legalDocumentModal3" name="legalDocument" accept="image/*,application/pdf" onchange="showFileNameModal3()" required>
-                                                        <input type="text" name="nombre" placeholder="Ingresa el nombre del archivo" required>
-                                                        <span class="file-name" id="file-name-modal3">No se ha seleccionado ningún archivo</span>
-                                                    </div>
-                                                    <button type="submit" class="btncargar">Cargar</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                      <script>
-                        function showFileName() {
-                            const input = document.getElementById('legalDocument');
-                            const fileName = document.getElementById('file-name');
-                            fileName.textContent = input.files.length > 0 ? input.files[0].name : 'No se ha seleccionado ningun archivo';
-                        }
-                    </script>
-                   </div>
-                </section>
- 
-                
-            
-
-                <section>
-                    <h2>Archivos Cargados</h2>
-                    {% for archivo in archivos %}
-                        <div class="file-card">
-                            <div class="file-header">
-                                <span class="file-icon">{{ archivo.nombre|slice:":1" }}</span>
-                                <div class="file-options" onclick="openModal4()">•••</div>
-                            </div>
-                            <div class="file-name" onclick="openModal5()">{{ archivo.nombre }}</div>
-                            <!-- Modal detalle (modal4) -->
-                            <div id="modal4" class="modal">
-                                <div class="modal-content4">
-                                    <span class="close-btn-modal4">&times;</span>
-                                    <div class="modalito4">
-                                        <h3>Detalles del documento</h3>
-                                        <p><strong>Subido por:</strong> {{ archivo.usuario.username }}</p>
-                                        <p><strong>Tipo de archivo:</strong> {{ archivo.extension }}</p>
-                                        <p><strong>Tamaño:</strong> {{ archivo.archivoss.size }} bytes</p>
-                                        <p><strong>Fecha modificación:</strong> {{ archivo.archivoss.updated_at|date:"d/m/Y" }}</p> <!-- Asegúrate de tener un campo updated_at o similar -->
-                                        <button class="delete-btn">Eliminar</button>
-                                        <button class="delete-btn">Descargar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% empty %}
-                        <p>No hay archivos cargados para este proyecto.</p>
-                    {% endfor %}
-                </section>
-                
+            </section>
+            <section class="row">
+                {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
+                <div class="col-md-3 mb-3">
+                    <div class="project-card" id="project-card-id">
+                        <button class="btn btn-view" id="openModalBtnModal3">
+                            <i class="fa-solid fa-plus fa-2x"></i>
+                        </button>
+                        <h5>Cargar Archivos</h5>
+                    </div>
                 </div>
-
-                <!-- Script para abrir y cerrar los modales -->
-                <script>
-                    function openModal4(archivoId) {
-                        document.getElementById("modal4_" + archivoId).style.display = "block";
-                    }
-
-                    function closeModal4(archivoId) {
-                        document.getElementById("modal4_" + archivoId).style.display = "none";
-                    }
-
-                    document.querySelectorAll(".close-btn-modal4").forEach(function(btn) {
-                        btn.onclick = function() {
-                            const modalId = btn.parentElement.parentElement.parentElement.id;
-                            document.getElementById(modalId).style.display = "none";
-                        };
-                    });
-                </script>
-
-
+                {% endif %}
+            
+                <!-- Este es el div que contendrá las tarjetas de archivos en el futuro -->
+                {% for archivo in archivos %}
+                <div class="col-md-3 mb-3">
+                    <div class="file-card">
+                        <div class="file-header d-flex justify-content-between">
+                            <span class="file-icon">E</span>
+                            <div class="file-options" data-bs-toggle="modal" data-bs-target="#modal{{ archivo.id }}">•••</div>
+                        </div>
+                        <!-- Agregar el enlace aquí -->
+                        <div class="file-name">
+                            <a href="{% url 'verproyectos' proyecto.id %}?archivo_id={{ archivo.id }}" 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#modal5">
+                               {{ archivo.nombre }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+            </section>
+            
+            
                 
 
             <section class="progreso">
@@ -245,7 +182,8 @@
         </main>
     </div>
 
-    {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
+    {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
+    
     <!-- Modal  mostrar usuarios -->
     <div class="modal fade" id="modalUsuarios" tabindex="-1" aria-labelledby="etiquetaModalUsuarios" aria-hidden="true">
         <div class="modal-dialog">
@@ -260,6 +198,10 @@
                         <li class="d-flex justify-content-between align-items-center">
                             <span>{{ miembro.usuario.email }}</span>
                             <div class="d-flex">
+                                {% if rol_usuario_actual.rol == 'Tutor'%}
+                                    <span>{{ miembro.rol }}</span>
+                                {% elif rol_usuario_actual.rol == 'Administrador del departamento'%}
+
                                 <!--cambiar rol usuario -->
                                 <form method="POST" class="me-2">
                                     {% csrf_token %}
@@ -276,21 +218,25 @@
                                 <form method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="miembro_id" value="{{ miembro.id }}">
-                                    <button type="submit" name="eliminar_usuario" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
+                                    <button type="submit" name="eliminar_usuario" class="btn btn-danger btn-sm"><i class="fa-solid fa-user-minus"></i></button>
                                 </form>
+                                {% endif %}
                             </div>
                         </li>
                         {% endfor %}
                     </ul>
                 </div>
+                {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalConfirmacion">Agregar Usuario</button>
                 </div>
+                {% endif %}
             </div>
             </div>
         </div>
     </div>
-    <!-- Modal agregar usuario -->
+    {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
+    <!-- ModalConfirmacion -->
     <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="etiquetaModalConfirmacion" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -322,6 +268,200 @@
         </div>
     </div>
     {% endif %}
+    {% endif %}
+
+    <!---ModalAnotaciones -->
+<div class="modal fade" id="modalAnotaciones" tabindex="-1" aria-labelledby="etiquetaModalAnotacion" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Anotaciones</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body" id="Anotaciones">
+                <ul class="list-group">
+                    {% for comentario in comentarios %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                        <div class="user"><span>{{ comentario.usuario.email }}</span></div>
+                        <div class="spancomm"><span>{{ comentario.comentario }}</span> </div>
+                        <div class="spandate"><span>{{ comentario.fecha_hora|date:"d/m/Y" }}</span> </div>
+                        {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
+                        <div>
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="comentario_id" value="{{ comentario.id }}">
+                                <button type="submit" name="eliminarAnotacion" class="btn btn-danger btn-sm">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="anotaciontxt" placeholder="Anotacion" required>
+                        <button type="submit" name="agregarAnotacion" class="btn btn-primary">Agregar Anotacion</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal emergente -->
+<div id="modal3" class="modal">
+    <div class="modal-content3">
+        <div class="content">
+            <div class="inputs">
+                <span class="close-btn-modal3">&times;</span>
+                <form method="POST" action="{% url 'verproyectos' id=proyecto.id %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modalito">
+                        <h2>Cargar Archivo</h2>
+                        <div class="uploadDocuments">
+                            <label for="legalDocumentModal3">Examinar...</label>
+                            <input type="file" id="legalDocumentModal3" name="legalDocument" 
+       accept="image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+       application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" 
+       onchange="showFileNameModal3()" required>
+            
+                            <input type="text" name="nombre" placeholder="Ingresa el nombre del archivo" required>
+                            <span class="file-name" id="file-name-modal3">No se ha seleccionado ningún archivo</span>
+                        </div>
+                        <button type="submit" class="btncargar">Cargar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de previsualización (modal5) -->
+<div id="modal5" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1>Previsualización de archivo</h1>
+                <button type="button" class="btn-close close-btn-modal5" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Previsualización del archivo -->
+                <div class="file-preview">
+                    {% if archivo_seleccionado %}
+                        {% if archivo_seleccionado.archivoss.file.content_type == "application/pdf" %}
+                            <iframe src="{{ archivo_seleccionado.archivoss.url }}" width="100%" height="500px"></iframe>
+                        {% else %}
+                            <!-- Opción para descargar si no se puede previsualizar -->
+                            <p>Este tipo de archivo no se puede previsualizar.</p>
+                            <a href="{{ archivo_seleccionado.archivoss.url }}" download>Descargar archivo</a>
+                        {% endif %}
+                    {% else %}
+                        <p>No se ha seleccionado ningún archivo para previsualizar.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% for archivo in archivos %}
+<!-- Modal detalle (modal4) -->
+<!-- Modal de detalles del documento -->
+<div id="modal{{ archivo.id }}" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detalles del documento</h3>
+                <button type="button" class="btn-close close-btn-modal4" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Subido por:</strong> {{ archivo.usuario.username }}</p>
+                <p><strong>Tipo de archivo:</strong> {{ archivo.tipo }}</p>
+                <p><strong>Tamaño:</strong> {{ archivo.tamaño }} KB</p>
+                <p><strong>Fecha modificación:</strong> {{ info.fecha_modificacion }}</p>
+
+                
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
+
+                    
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-primary" name="descargar_archivo" type="submit">Descargar</button>
+                        {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
+                        <button class="btn btn-danger" name="eliminar_archivo" type="submit">Eliminar</button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editArchivoModal{{ archivo.id }}" data-bs-archivo-id="{{ archivo.id }}" data-bs-archivo-nombre="{{ archivo.nombre }}">Editar archivo</button>
+                        {% endif %}
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para editar el archivo -->
+<div id="editArchivoModal{{ archivo.id }}" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar archivo</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'verproyectos' id=proyecto.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
+                    <div class="mb-3">
+                        <label for="nombreArchivo" class="form-label">Nuevo nombre</label>
+                        <input type="text" class="form-control" id="nombreArchivo" name="nombre" value="{{ archivo.nombre }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary" name="Editar_archivos">Guardar cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+                
+
+<script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    var editArchivoModal = document.getElementById('editArchivoModal');
+                
+                    editArchivoModal.addEventListener('show.bs.modal', function (event) {
+                        var button = event.relatedTarget; // Botón que activó el modal
+                        var archivoId = button.getAttribute('data-bs-archivo-id'); // Obtiene el ID del archivo
+                        var archivoNombre = button.getAttribute('data-bs-archivo-nombre'); // Obtiene el nombre del archivo
+                
+                        // Asignar los valores obtenidos del botón a los campos del modal
+                        var inputArchivoId = editArchivoModal.querySelector('input[name="archivo_id"]');
+                        var inputNombreArchivo = editArchivoModal.querySelector('input[name="nombre"]');
+                
+                        inputArchivoId.value = archivoId; 
+                        inputNombreArchivo.value = archivoNombre; 
+                    });
+                });
+
+            </script>
+                
+
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
 
 
     {% include "footer.html" %}
@@ -378,7 +518,12 @@
 
     window.openModal4 = openModal4;
     window.openModal5 = openModal5;
+
 });
+
+
+
+
 
 </script>
 

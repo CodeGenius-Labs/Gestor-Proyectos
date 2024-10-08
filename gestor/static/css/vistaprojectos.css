@@ -41,6 +41,21 @@ body {
     
 }
 
+/*menuchikito*/
+
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+}
 
 
 .welcome-text {
@@ -51,8 +66,6 @@ body {
     font-size: 45px;
     display: block;
     width: 90%;
-    font-family: AngsanaUPC
-    
 }
 
 
@@ -70,7 +83,6 @@ body {
     color: #0E2B3E;
     margin-bottom: 30px;
     transition: box-shadow 0.3s;
-    font-family: AngsanaUPC ;
 }
 .project-card:hover {
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);

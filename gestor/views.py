@@ -15,6 +15,9 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from proyecto.models import Archivos, Proyecto  # Asegúrate de que esto coincide con la ubicación de tus modelos
 from django.core.files.storage import FileSystemStorage
+import os 
+import mimetypes
+from django.core.files.storage import default_storage
 
 
 
@@ -192,7 +195,6 @@ def actualizarperfil(request):
 
     return render(request, 'perfilconfig.html')  # Asegúrate de que este nombre coincida con tu archivo de plantilla
 
-#----------------Vista de proyectos----------------
 @login_required(login_url="login")
 def proyectos(request):
     if request.method == 'POST':
@@ -218,7 +220,7 @@ def proyectos(request):
                 miembro_proyecto = MiembrosProyectos(
                     usuario=request.user,
                     proyecto=proyecto,
-                    rol=Roles.objects.get(rol='Administrador del departamento')  # Asigna un rol por defecto o personalizado
+                    rol=Roles.objects.get(rol='Administrador del departamento')
                 )
                 miembro_proyecto.save()
                 
@@ -234,39 +236,88 @@ def proyectos(request):
         id__in=MiembrosProyectos.objects.filter(usuario=request.user).values('proyecto')
     )
 
+    # Manejo de búsqueda
+    query = request.GET.get('search', '')
+    if query:
+        proyectos_usuario = proyectos_usuario.filter(nombre__icontains=query)
+
+    # Manejar el filtrado y ordenamiento
+    order = request.GET.get('order')
+    direction = request.GET.get('direction', 'asc')
+
+    if order in ['nombre', 'fecha_inicio', 'fecha_fin']:
+        if direction == 'asc':
+            proyectos_usuario = proyectos_usuario.order_by(order)
+        else:
+            proyectos_usuario = proyectos_usuario.order_by('-' + order)
+
     # Pasar los proyectos al contexto de la plantilla
     context = {
-        'proyectos_usuario': proyectos_usuario
+        'proyectos_usuario': proyectos_usuario,
+        'search_query': query,  # Para mantener la consulta en la barra de búsqueda
     }
 
     return render(request, 'vistaprojectos.html', context)
 
+
 #----------------Definir ver proyectos--------------------------
 @login_required(login_url="login")
 def verproyectos(request, id):
+    
     proyecto = get_object_or_404(Proyecto, id=id)
 
     # Obtener los miembros del proyecto
     miembros = MiembrosProyectos.objects.filter(proyecto=proyecto).exclude(usuario=request.user)
 
+    # Obtener los comentarios asociados al proyecto
+    comentarios = Comentarios.objects.filter(proyecto=proyecto)
+
+    # Obtener los archivos asociados al proyecto
+    archivos = Archivos.objects.filter(proyecto=proyecto)
+
     # Obtener el rol del usuario actual en el proyecto
     miembro_actual = MiembrosProyectos.objects.filter(proyecto=proyecto, usuario=request.user).first()
     rol_usuario_actual = miembro_actual.rol if miembro_actual else None
 
-      # Obtener los archivos del proyecto
-    archivos = Archivos.objects.filter(proyecto=proyecto)
-
-    # Procesar los archivos para obtener tipos y tamaños
+    archivos_info = []
     for archivo in archivos:
-        archivo.tipo = archivo.archivoss.url.split('.')[-1] if hasattr(archivo.archivoss, 'url') else 'desconocido'
-        archivo.tamaño = archivo.archivoss.size if hasattr(archivo.archivoss, 'size') else 0  # Tamaño en bytes
+        # Crear un diccionario con la información
+        archivos_info.append({
+            'archivo': archivo,
+            'tipo': archivo.tipo,  # Accede al tipo directamente del modelo
+            'tamaño': archivo.tamaño,  # Accede al tamaño directamente del modelo
+        })
 
+
+
+    archivo_id = request.GET.get('archivo_id')
+    archivo_seleccionado = None
+    if archivo_id:
+        archivo_seleccionado = get_object_or_404(Archivos, id=archivo_id)
+
+    
+    if request.method == 'POST' and 'Editar_archivos' in request.POST:
+        archivo_id = request.POST.get('archivo_id')
+        nuevo_nombre = request.POST.get('nombre')
+
+        if archivo_id and nuevo_nombre:
+            # Si archivo_id y nuevo_nombre están presentes, intenta obtener el objeto
+            archivo = get_object_or_404(Archivos, id=archivo_id)
+            archivo.nombre = nuevo_nombre
+            archivo.save()
+            messages.success(request, 'El archivo se ha actualizado correctamente.')
+        else:
+            # Aquí puedes manejar el caso donde falta alguno de los valores
+            messages.error(request, 'El ID del archivo o el nuevo nombre son inválidos.')
+
+        return redirect('verproyectos', id=id)  # Redirige a la vista del proyecto después de actualizar
+        
 
     if request.method == 'POST':
         # Cargar archivo
-        if 'legalDocument' in request.FILES:  # Cambia 'legalDocument' al nombre del campo del formulario
+        if 'legalDocument' in request.FILES:
             archivo_file = request.FILES['legalDocument']
-            nombre_archivo = request.POST.get('nombre')  # Asegúrate de que este campo esté en tu formulario
+            nombre_archivo = request.POST.get('nombre')
             nuevo_archivo = Archivos(
                 nombre=nombre_archivo,
                 archivoss=archivo_file,
@@ -276,17 +327,64 @@ def verproyectos(request, id):
             nuevo_archivo.save()
             messages.success(request, 'Archivo cargado exitosamente.')
             return redirect('verproyectos', id=proyecto.id)
+
+        if 'eliminar_archivo' in request.POST:
+            archivo_id = request.POST.get('archivo_id')
+            archivo = get_object_or_404(Archivos, id=archivo_id)
+            
+            # Elimina el archivo del sistema de archivos, si existe
+            if archivo.archivoss and os.path.isfile(archivo.archivoss.path):
+                os.remove(archivo.archivoss.path)
+
+            # Elimina el archivo de la base de datos
+            archivo.delete()
+            messages.success(request, "Archivo eliminado exitosamente.")
+            return redirect('verproyectos', id=proyecto.id)
         
-    if request.method == 'POST':
+        
+
+        if 'descargar_archivo' in request.POST:
+            archivo_id = request.POST.get('archivo_id')
+            archivo = get_object_or_404(Archivos, id=archivo_id)
+
+            # Asegúrate de que el archivo existe y se puede abrir
+            archivo.archivoss.open()
+
+            # Adivina el tipo MIME basado en la extensión del archivo
+            mime_type, _ = mimetypes.guess_type(archivo.archivoss.name)
+            print(f"MIME Type detectado: {mime_type}")
+
+
+            # Prepara la respuesta con el contenido del archivo
+            response = HttpResponse(archivo.archivoss.read(), content_type=mime_type or 'application/octet-stream')
+
+            # Verifica el tipo MIME para decidir si forzar la descarga o mostrar en el navegador
+            archivo_extension = archivo.archivoss.name.split('.')[-1]
+            archivo_nombre = archivo.nombre  # Debe estar correctamente indentado
+
+            # Si el nombre del archivo no contiene una extensión, añádela
+            if not archivo_nombre.endswith(archivo_extension):
+                archivo_nombre += f".{archivo_extension}"
+
+            # Verifica el tipo MIME para decidir si forzar la descarga o mostrar en el navegador
+            if mime_type and ('image' in mime_type or mime_type == 'application/pdf'):
+                # Mostrar en el navegador para imágenes y PDFs
+                response['Content-Disposition'] = f'inline; filename="{archivo_nombre}"'
+            else:
+                # Forzar la descarga para otros tipos de archivo
+                response['Content-Disposition'] = f'attachment; filename="{archivo_nombre}"'
+
+            return response
+
+        
+
         # Acción para agregar un usuario
         if 'agregar_usuario' in request.POST:
             correo = request.POST.get('correo')
             rol = request.POST.get('rol')
-
             try:
                 usuario = User.objects.get(email=correo)
                 rol_obj = Roles.objects.get(rol=rol)
-                # Verificar si el usuario ya está en el proyecto
                 if not MiembrosProyectos.objects.filter(usuario=usuario, proyecto=proyecto).exists():
                     MiembrosProyectos.objects.create(usuario=usuario, proyecto=proyecto, rol=rol_obj)
                     messages.success(request, f"Usuario {usuario.email} agregado al proyecto.")
@@ -297,20 +395,19 @@ def verproyectos(request, id):
             except Roles.DoesNotExist:
                 messages.error(request, f"El rol {rol} no existe.")
         
-        # Acción para eliminar un usuario
+        # Eliminar usuarioleerlo
         elif 'eliminar_usuario' in request.POST:
             miembro_id = request.POST.get('miembro_id')
             MiembrosProyectos.objects.filter(id=miembro_id).delete()
             messages.success(request, "El usuario fue eliminado del proyecto.")
 
-        # Acción para actualizar el rol de un usuario
+        # Cambiar rol de usuario
         elif 'cambiar_rol' in request.POST:
             miembro_id = request.POST.get('miembro_id')
             nuevo_rol = request.POST.get('rol')
             try:
                 miembro = MiembrosProyectos.objects.get(id=miembro_id)
                 rol_obj = Roles.objects.get(rol=nuevo_rol)
-                # Verificar si el rol actual es diferente del nuevo rol
                 if miembro.rol != rol_obj:
                     miembro.rol = rol_obj
                     miembro.save()
@@ -322,29 +419,33 @@ def verproyectos(request, id):
             except Roles.DoesNotExist:
                 messages.error(request, "El rol seleccionado no existe.")
 
+        # Agregar anotación
+        elif 'agregarAnotacion' in request.POST:
+            texto_anotacion = request.POST.get('anotaciontxt')
+            Comentarios.objects.create(comentario=texto_anotacion, proyecto=proyecto, usuario=request.user)
+            messages.success(request, "Anotación agregada con éxito.")
+
+        # Eliminar anotación
+        elif 'eliminarAnotacion' in request.POST:
+            comentario_id = request.POST.get('comentario_id')
+            Comentarios.objects.filter(id=comentario_id).delete()
+            messages.success(request, "Anotación eliminada con éxito.")
+
         return redirect('verproyectos', id=id)
 
     context = {
         'proyecto': proyecto,
         'miembros': miembros,
-        'roles': Roles.objects.exclude(rol='Administrador del departamento'),  # Pasamos los roles disponibles para el selector
-        'rol_usuario_actual': rol_usuario_actual,  # Pasamos el rol del usuario actual al contexto
+        'roles': Roles.objects.exclude(rol='Administrador del departamento'),
+        'rol_usuario_actual': rol_usuario_actual,
+        'comentarios': comentarios,
+        'archivos': archivos,
+        'archivo_seleccionado': archivo_seleccionado,
+        'archivos_info': archivos_info,
     }
 
     return render(request, 'verproyectos.html', context)
 
-def eliminar_archivo(request, archivo_id):
-    archivo = get_object_or_404(Archivos, id=archivo_id)
-    if request.method == 'POST':
-        archivo.delete()
-        return redirect('verproyeto')
-    return render(request, 'verproyecto.html', {'archivo': archivo})
-
-def descargar_archivo(request, archivo_id):
-    archivo = get_object_or_404(Archivos, id=archivo_id)
-    response = HttpResponse(archivo.archivo, content_type='application/octet-stream')
-    response['Content-Disposition'] = f'attachment; filename="{archivo.nombre}"'
-    return response
 
 #-------------Actualizar Proyectos ---------------------------
 def actualizar_proyecto(request, id):
@@ -361,5 +462,9 @@ def actualizar_proyecto(request, id):
         return redirect('verproyectos', id=id)  # Redireccionar con el id correcto
 
     return render(request, 'actualizar_proyecto.html', {'proyecto': proyecto})
+
+
+
+
 
 
