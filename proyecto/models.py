@@ -2,6 +2,7 @@ from django.db import models
 from user.models import User
 import mimetypes
 import os  
+from django.utils import timezone
 
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=100)
@@ -42,6 +43,7 @@ class Archivos(models.Model):
 
     tipo = models.CharField(max_length=100, blank=True)  # Campo para el tipo de archivo
     tamaño = models.PositiveIntegerField(default=0)  # Campo para el tamaño en KB
+    fecha_modificacion = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         # Almacenar el tipo y tamaño automáticamente al guardar el archivo
