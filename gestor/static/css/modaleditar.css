@@ -33,8 +33,8 @@
     border-radius: 50%;
     margin: -8% 0 0 400px;
     z-index: 5;
-    padding-left: 12px;
     display: block;
+    text-align: center;
 }
 
 .close-btn:hover,

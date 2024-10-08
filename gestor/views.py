@@ -17,6 +17,7 @@ from proyecto.models import Archivos, Proyecto  # Asegúrate de que esto coincid
 from django.core.files.storage import FileSystemStorage
 import os 
 import mimetypes
+from django.core.files.storage import default_storage
 
 
 
@@ -262,6 +263,7 @@ def proyectos(request):
 #----------------Definir ver proyectos--------------------------
 @login_required(login_url="login")
 def verproyectos(request, id):
+    
     proyecto = get_object_or_404(Proyecto, id=id)
 
     # Obtener los miembros del proyecto
@@ -276,6 +278,40 @@ def verproyectos(request, id):
     # Obtener el rol del usuario actual en el proyecto
     miembro_actual = MiembrosProyectos.objects.filter(proyecto=proyecto, usuario=request.user).first()
     rol_usuario_actual = miembro_actual.rol if miembro_actual else None
+
+    archivos_info = []
+    for archivo in archivos:
+        # Crear un diccionario con la información
+        archivos_info.append({
+            'archivo': archivo,
+            'tipo': archivo.tipo,  # Accede al tipo directamente del modelo
+            'tamaño': archivo.tamaño,  # Accede al tamaño directamente del modelo
+        })
+
+
+
+    archivo_id = request.GET.get('archivo_id')
+    archivo_seleccionado = None
+    if archivo_id:
+        archivo_seleccionado = get_object_or_404(Archivos, id=archivo_id)
+
+    
+    if request.method == 'POST' and 'Editar_archivos' in request.POST:
+        archivo_id = request.POST.get('archivo_id')
+        nuevo_nombre = request.POST.get('nombre')
+
+        if archivo_id and nuevo_nombre:
+            # Si archivo_id y nuevo_nombre están presentes, intenta obtener el objeto
+            archivo = get_object_or_404(Archivos, id=archivo_id)
+            archivo.nombre = nuevo_nombre
+            archivo.save()
+            messages.success(request, 'El archivo se ha actualizado correctamente.')
+        else:
+            # Aquí puedes manejar el caso donde falta alguno de los valores
+            messages.error(request, 'El ID del archivo o el nuevo nombre son inválidos.')
+
+        return redirect('verproyectos', id=id)  # Redirige a la vista del proyecto después de actualizar
+        
 
     if request.method == 'POST':
         # Cargar archivo
@@ -316,27 +352,30 @@ def verproyectos(request, id):
 
             # Adivina el tipo MIME basado en la extensión del archivo
             mime_type, _ = mimetypes.guess_type(archivo.archivoss.name)
+            print(f"MIME Type detectado: {mime_type}")
+
 
             # Prepara la respuesta con el contenido del archivo
             response = HttpResponse(archivo.archivoss.read(), content_type=mime_type or 'application/octet-stream')
 
             # Verifica el tipo MIME para decidir si forzar la descarga o mostrar en el navegador
             archivo_extension = archivo.archivoss.name.split('.')[-1]
-        archivo_nombre = archivo.nombre
+            archivo_nombre = archivo.nombre  # Debe estar correctamente indentado
 
-        # Si el nombre del archivo no contiene una extensión, añádela
-        if not archivo_nombre.endswith(archivo_extension):
-            archivo_nombre += f".{archivo_extension}"
+            # Si el nombre del archivo no contiene una extensión, añádela
+            if not archivo_nombre.endswith(archivo_extension):
+                archivo_nombre += f".{archivo_extension}"
 
-        # Verifica el tipo MIME para decidir si forzar la descarga o mostrar en el navegador
-        if mime_type and ('image' in mime_type or mime_type == 'application/pdf'):
-            # Mostrar en el navegador para imágenes y PDFs
-            response['Content-Disposition'] = f'inline; filename="{archivo_nombre}"'
-        else:
-            # Forzar la descarga para otros tipos de archivo
-            response['Content-Disposition'] = f'attachment; filename="{archivo_nombre}"'
+            # Verifica el tipo MIME para decidir si forzar la descarga o mostrar en el navegador
+            if mime_type and ('image' in mime_type or mime_type == 'application/pdf'):
+                # Mostrar en el navegador para imágenes y PDFs
+                response['Content-Disposition'] = f'inline; filename="{archivo_nombre}"'
+            else:
+                # Forzar la descarga para otros tipos de archivo
+                response['Content-Disposition'] = f'attachment; filename="{archivo_nombre}"'
 
-        return response
+            return response
+
         
 
         # Acción para agregar un usuario
@@ -401,6 +440,8 @@ def verproyectos(request, id):
         'rol_usuario_actual': rol_usuario_actual,
         'comentarios': comentarios,
         'archivos': archivos,
+        'archivo_seleccionado': archivo_seleccionado,
+        'archivos_info': archivos_info,
     }
 
     return render(request, 'verproyectos.html', context)

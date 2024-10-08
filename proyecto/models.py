@@ -1,5 +1,8 @@
 from django.db import models
 from user.models import User
+import mimetypes
+import os  
+from django.utils import timezone
 
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=100)
@@ -37,6 +40,35 @@ class Archivos(models.Model):
     archivoss = models.FileField(upload_to='archivos/')
     proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    tipo = models.CharField(max_length=100, blank=True)  # Campo para el tipo de archivo
+    tamaño = models.PositiveIntegerField(default=0)  # Campo para el tamaño en KB
+    fecha_modificacion = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        # Almacenar el tipo y tamaño automáticamente al guardar el archivo
+        if self.archivoss:
+            # Obtener la extensión del archivo
+            _, extension = os.path.splitext(self.archivoss.name)
+
+            # Determinar el tipo de archivo según la extensión
+            if extension == '.docx' or extension == '.doc':
+                self.tipo = 'Word'
+            elif extension == '.pdf':
+                self.tipo = 'PDF'
+            elif extension == '.xlsx' or extension == '.xls':
+                self.tipo = 'Excel'
+            elif extension in ['.jpg', '.jpeg', '.png', '.gif']:
+                self.tipo = 'Imagen'
+            elif extension == '.pptx' or extension == '.ppt':
+                self.tipo = 'PowerPoint'
+            else:
+                self.tipo = 'Desconocido'  # Para tipos no reconocidos
+
+            # Obtener el tamaño en KB
+            self.tamaño = self.archivoss.size // 1024  # Convertir bytes a KB
+
+        super().save(*args, **kwargs)
 
 
 class Comentarios(models.Model):

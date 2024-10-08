@@ -136,6 +136,7 @@
                 <p>{{ proyecto.descripcion }}</p>
             </section>
             <section class="row">
+                {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
                 <div class="col-md-3 mb-3">
                     <div class="project-card" id="project-card-id">
                         <button class="btn btn-view" id="openModalBtnModal3">
@@ -144,6 +145,7 @@
                         <h5>Cargar Archivos</h5>
                     </div>
                 </div>
+                {% endif %}
             
                 <!-- Este es el div que contendrá las tarjetas de archivos en el futuro -->
                 {% for archivo in archivos %}
@@ -152,12 +154,19 @@
                         <div class="file-header d-flex justify-content-between">
                             <span class="file-icon">E</span>
                             <div class="file-options" data-bs-toggle="modal" data-bs-target="#modal{{ archivo.id }}">•••</div>
-
                         </div>
-                        <div class="file-name" onclick="openModal5()">{{ archivo.nombre }}</div>
+                        <!-- Agregar el enlace aquí -->
+                        <div class="file-name">
+                            <a href="{% url 'verproyectos' proyecto.id %}?archivo_id={{ archivo.id }}" 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#modal5">
+                               {{ archivo.nombre }}
+                            </a>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
+                
             </section>
             
             
@@ -333,23 +342,38 @@
     </div>
 </div>
 
-<!-- Modal descripción (modal5) -->
+<!-- Modal de previsualización (modal5) -->
 <div id="modal5" class="modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1>FACULTAD ROBOT</h1>
+                <h1>Previsualización de archivo</h1>
                 <button type="button" class="btn-close close-btn-modal5" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Un robot, Nace, Crece, Se reproduce y muere...</p>
+                <!-- Previsualización del archivo -->
+                <div class="file-preview">
+                    {% if archivo_seleccionado %}
+                        {% if archivo_seleccionado.archivoss.file.content_type == "application/pdf" %}
+                            <iframe src="{{ archivo_seleccionado.archivoss.url }}" width="100%" height="500px"></iframe>
+                        {% else %}
+                            <!-- Opción para descargar si no se puede previsualizar -->
+                            <p>Este tipo de archivo no se puede previsualizar.</p>
+                            <a href="{{ archivo_seleccionado.archivoss.url }}" download>Descargar archivo</a>
+                        {% endif %}
+                    {% else %}
+                        <p>No se ha seleccionado ningún archivo para previsualizar.</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
 </div>
 
+
 {% for archivo in archivos %}
 <!-- Modal detalle (modal4) -->
+<!-- Modal de detalles del documento -->
 <div id="modal{{ archivo.id }}" class="modal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -360,32 +384,84 @@
             <div class="modal-body">
                 <p><strong>Subido por:</strong> {{ archivo.usuario.username }}</p>
                 <p><strong>Tipo de archivo:</strong> {{ archivo.tipo }}</p>
-                <p><strong>Tamaño:</strong> {{ archivo.tamaño }}KB</p>
-                <p><strong>Fecha modificación:</strong> {{ archivo.fecha_modificacion }}</p>
+                <p><strong>Tamaño:</strong> {{ archivo.tamaño }} KB</p>
+                <p><strong>Fecha modificación:</strong> {{ archivo.fecha_modificacion|date:"d/m/Y H:i" }}</p> <!-- Línea cambiada -->
 
-                <!-- Formulario para eliminar archivo -->
+
+                
                 <form method="POST" action="">
                     {% csrf_token %}
                     <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
-                    <button class="btn btn-danger" name="eliminar_archivo" type="submit">Eliminar</button>
+
+                    
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-primary" name="descargar_archivo" type="submit">Descargar</button>
+                        {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
+                        <button class="btn btn-danger" name="eliminar_archivo" type="submit">Eliminar</button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editArchivoModal{{ archivo.id }}" data-bs-archivo-id="{{ archivo.id }}" data-bs-archivo-nombre="{{ archivo.nombre }}">Editar</button>
+                        {% endif %}
+                    </div>
                 </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
 
-                <!-- Formulario para descargar archivo -->
-                <form method="POST" action="">
+<!-- Modal para editar el archivo -->
+<div id="editArchivoModal{{ archivo.id }}" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar archivo</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'verproyectos' id=proyecto.id %}">
                     {% csrf_token %}
                     <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
-                    <button class="btn btn-primary" name="descargar_archivo" type="submit">Descargar</button>
+                    <div class="mb-3">
+                        <label for="nombreArchivo" class="form-label">Nuevo nombre</label>
+                        <input type="text" class="form-control" id="nombreArchivo" name="nombre" value="{{ archivo.nombre }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary" name="Editar_archivos">Guardar cambios</button>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-                <form method="POST" action="">
-                    {% csrf_token %}
-                    <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
-                    <button class="btn btn-primary" name="Editar_archivos">Editar</button>  
+                
+
+<script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    var editArchivoModal = document.getElementById('editArchivoModal');
+                
+                    editArchivoModal.addEventListener('show.bs.modal', function (event) {
+                        var button = event.relatedTarget; // Botón que activó el modal
+                        var archivoId = button.getAttribute('data-bs-archivo-id'); // Obtiene el ID del archivo
+                        var archivoNombre = button.getAttribute('data-bs-archivo-nombre'); // Obtiene el nombre del archivo
+                
+                        // Asignar los valores obtenidos del botón a los campos del modal
+                        var inputArchivoId = editArchivoModal.querySelector('input[name="archivo_id"]');
+                        var inputNombreArchivo = editArchivoModal.querySelector('input[name="nombre"]');
+                
+                        inputArchivoId.value = archivoId; 
+                        inputNombreArchivo.value = archivoNombre; 
+                    });
+                });
+
+            </script>
+                
+
+                
+
             </div>
         </div>
     </div>
 </div>
 {% endfor %}
+
 
 
 
