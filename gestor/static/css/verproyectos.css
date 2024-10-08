@@ -160,3 +160,7 @@
     margin-bottom: 15px;
 }
 
+.file-name a {
+    color: #54BCDE; /* Cambiar el color del enlace */
+    text-decoration: none; /* Opcional: quitar el subrayado del enlace */
+}
