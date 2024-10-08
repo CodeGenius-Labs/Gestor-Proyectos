@@ -1,5 +1,6 @@
 from django.db import models
 from user.models import User
+import mimetypes
 
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=100)
@@ -44,8 +45,12 @@ class Archivos(models.Model):
     def save(self, *args, **kwargs):
         # Almacenar el tipo y tamaño automáticamente al guardar el archivo
         if self.archivoss:
-            self.tipo = self.archivoss.file.content_type
-            self.tamaño = self.archivoss.file.size // 1024  # Convertir bytes a KB
+            # Obtener la ruta del archivo
+            file_path = self.archivoss.path
+            # Usar mimetypes para determinar el tipo
+            self.tipo, _ = mimetypes.guess_type(file_path)
+            # Obtener el tamaño en KB
+            self.tamaño = self.archivoss.size // 1024  # Convertir bytes a KB
         super().save(*args, **kwargs)
 
 
