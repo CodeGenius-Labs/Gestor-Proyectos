@@ -385,7 +385,8 @@
                 <p><strong>Subido por:</strong> {{ archivo.usuario.username }}</p>
                 <p><strong>Tipo de archivo:</strong> {{ archivo.tipo }}</p>
                 <p><strong>Tamaño:</strong> {{ archivo.tamaño }} KB</p>
-                <p><strong>Fecha modificación:</strong> {{ info.fecha_modificacion }}</p>
+                <p><strong>Fecha modificación:</strong> {{ archivo.fecha_modificacion|date:"d/m/Y H:i" }}</p> <!-- Línea cambiada -->
+
 
                 
                 <form method="POST" action="">
