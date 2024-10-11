@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from . import views
+from django.conf import settings
+
 
 
 urlpatterns = [
@@ -15,10 +17,6 @@ urlpatterns = [
     path('logout/', views.exit, name='logout'),
     path('verproyectos/<int:id>/', views.verproyectos, name='verproyectos'),
     path('actualizar_proyecto/<int:id>/', views.actualizar_proyecto, name='actualizar_proyecto'),
-    
-
-
-
     
 ]
 

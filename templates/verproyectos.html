@@ -182,7 +182,7 @@
         </main>
     </div>
 
-    {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
+   
     
     <!-- Modal  mostrar usuarios -->
     <div class="modal fade" id="modalUsuarios" tabindex="-1" aria-labelledby="etiquetaModalUsuarios" aria-hidden="true">
@@ -268,7 +268,7 @@
         </div>
     </div>
     {% endif %}
-    {% endif %}
+    
 
     <!---ModalAnotaciones -->
 <div class="modal fade" id="modalAnotaciones" tabindex="-1" aria-labelledby="etiquetaModalAnotacion" aria-hidden="true">
@@ -348,23 +348,24 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1>Previsualización de archivo</h1>
-                <button type="button" class="btn-close close-btn-modal5" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                {% for archivo in archivos %}
+                <div class="d-flex justify-content-between">
+                    <form method="POST" action="{% url 'verproyectos' id=proyecto.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
+                        <button type="submit" name="descargar_archivo" class="btn btn-primary">Ver Archivo</button>
+                    </form>
+                </div>
+            {% endfor %}
+
+
+                
             </div>
             <div class="modal-body">
+                <form action="{% url 'verproyectos' id=proyecto.id %}" method="POST" enctype="multipart/form-data"></form>
                 <!-- Previsualización del archivo -->
-                <div class="file-preview">
-                    {% if archivo_seleccionado %}
-                        {% if archivo_seleccionado.archivoss.file.content_type == "application/pdf" %}
-                            <iframe src="{{ archivo_seleccionado.archivoss.url }}" width="100%" height="500px"></iframe>
-                        {% else %}
-                            <!-- Opción para descargar si no se puede previsualizar -->
-                            <p>Este tipo de archivo no se puede previsualizar.</p>
-                            <a href="{{ archivo_seleccionado.archivoss.url }}" download>Descargar archivo</a>
-                        {% endif %}
-                    {% else %}
-                        <p>No se ha seleccionado ningún archivo para previsualizar.</p>
-                    {% endif %}
-                </div>
+                
             </div>
         </div>
     </div>
