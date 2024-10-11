@@ -464,7 +464,9 @@ def actualizar_proyecto(request, id):
     return render(request, 'actualizar_proyecto.html', {'proyecto': proyecto})
 
 
+def superadmin(request):
+    return render(request, 'superadmin.html')
 
 
-
-
+def superproyecto(request):
+    return render(request, 'superproyecto.html')
