@@ -20,7 +20,7 @@ p{
 
 
 .avisocookies{
-    top: 20%;
+    top: 15%;
     display: none;
     background: #ffff;
     padding: 80px;
@@ -100,3 +100,4 @@ p{
 .fondoavisocookies.activo{
     display: block;
 }
+
