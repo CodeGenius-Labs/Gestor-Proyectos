@@ -350,17 +350,17 @@
                 <h1>Previsualización de archivo</h1>
 
                 {% for archivo in archivos %}
-                <div class="d-flex justify-content-between">
-                    <form method="POST" action="{% url 'verproyectos' id=proyecto.id %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
-                        <button type="submit" name="descargar_archivo" class="btn btn-primary">Ver Archivo</button>
-                    </form>
-                </div>
-            {% endfor %}
+                    {% if forloop.first %}
+                    <div class="d-flex justify-content-between">
+                        <form method="POST" action="{% url 'verproyectos' id=proyecto.id %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
+                            <button type="submit" name="descargar_archivo" class="btn btn-primary">Ver Archivo</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                {% endfor %}
 
-
-                
             </div>
             <div class="modal-body">
                 <form action="{% url 'verproyectos' id=proyecto.id %}" method="POST" enctype="multipart/form-data"></form>
@@ -370,6 +370,7 @@
         </div>
     </div>
 </div>
+
 
 
 {% for archivo in archivos %}
