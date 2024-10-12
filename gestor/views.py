@@ -54,9 +54,14 @@ def registro(request):
         
 
         # Validar que el nombre de usuario no contenga números
-        if any(char.isdigit() for char in username):
-            messages.error(request, 'El nombre de usuario no puede contener números.')
+        # Validar que el nombre tenga entre 8 y 50 caracteres  
+        if any(char.isdigit() for char in username) or len(username) < 8 or len(username) > 50:
+            if any(char.isdigit() for char in username):
+                messages.error(request, 'El nombre de usuario no puede contener números.')
+            else:
+                messages.error(request, 'El nombre de usuario debe tener entre 8 y 50 caracteres.')
             return render(request, 'registro.html')
+
 
         # Validar que la contraseña tenga entre 7 y 20 caracteres
         if len(password) < 7 or len(password) > 20:
