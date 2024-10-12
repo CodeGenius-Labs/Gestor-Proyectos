@@ -18,6 +18,8 @@ from django.core.files.storage import FileSystemStorage
 import os 
 import mimetypes
 from django.core.files.storage import default_storage
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.decorators import user_passes_test
 
 
 
@@ -35,8 +37,13 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             auth_login(request, user)
-            messages.success(request, 'Inicio sesion correctamente.')
-            return redirect('home')  # Redirige a la vista de proyectos si el login es exitoso
+            messages.success(request, 'Inicio sesión correctamente.')
+
+            # Verifica si el usuario es superadmin
+            if user.is_superuser:  # Si tienes otro campo o atributo para el rol superadmin, reemplázalo aquí
+                return redirect('superadmin')  # Redirige a la vista superadmin.html
+            else:
+                return redirect('home')  # Redirige a home si no es superadmin
         else:
             messages.error(request, 'Credenciales inválidas. Por favor, inténtalo de nuevo.')
     return render(request, 'login.html')
