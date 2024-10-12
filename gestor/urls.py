@@ -15,7 +15,10 @@ urlpatterns = [
     path('logout/', views.exit, name='logout'),
     path('verproyectos/<int:id>/', views.verproyectos, name='verproyectos'),
     path('actualizar_proyecto/<int:id>/', views.actualizar_proyecto, name='actualizar_proyecto'),
-    
+    path('superadmin/', views.superadmin, name='superadmin'),
+    path('superproyecto/', views.superproyecto, name='superproyecto'),
+
+
 
 
 
