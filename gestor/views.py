@@ -26,6 +26,9 @@ from django.contrib.auth.decorators import user_passes_test
 
 #----------------Inicio----------------
 def home(request):
+    if request.user.is_superuser:
+        return redirect('superadmin')
+
     return render(request, 'index.html')
 
 #----------------Login----------------
@@ -117,8 +120,9 @@ def verusuarios(request):
 
 #----------------LOGOUT----------------
 def exit(request):
-        logout(request)
-        return redirect('home')
+    logout(request)
+    messages.success(request, 'Sesión cerrada correctamente.')  # Añadir mensaje de cierre de sesión
+    return redirect('home')  # Redirigir al home
 
 
 def actualizar_proyecto(request, proyecto_id):
@@ -476,9 +480,11 @@ def actualizar_proyecto(request, id):
     return render(request, 'actualizar_proyecto.html', {'proyecto': proyecto})
 
 
+@login_required(login_url="login")
 def superadmin(request):
     return render(request, 'superadmin.html')
 
 
+@login_required(login_url="login")
 def superproyecto(request):
     return render(request, 'superproyecto.html')

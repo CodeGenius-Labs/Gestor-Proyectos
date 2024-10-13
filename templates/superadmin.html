@@ -36,7 +36,7 @@
 
             <button class="boton-lateral" id="openModalBtn2">Gestion de proyectos</button>
             <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuarios">Gestion de usuarios</button>
-            <button class="boton-lateral"><a href="{% url 'proyectos'%}" style="color: #54BCDE;">Cerrar sesion</a></button>
+            <button class="boton-lateral"><a href="{% url 'logout'%}" style="color: #54BCDE;">Cerrar sesion</a></button>
         </aside>
 
         <div class="content">
@@ -54,46 +54,7 @@
 
 
 
-    
+    {% include "footer.html" %}
 </body>
 
 </html>
-<footer class="footer mb-0" >
-
-    <hr class="barra">
-    <!---------Logo----y titulo--Gestorproyectos-------->
-    <div class="container">
-        <div class="row w-100">
-            <div class="col-md-4 mb-4 mb-md-0 text-center">
-                <h5 class="text-uppercase text-center">GESTOR PROYECTOS</h5>
-                <img  src="{% static 'imagenes/logo_gestor.png' %}" alt="Logo" class="logo2 img-fluid" >
-            </div>
-
-            <!----------Redes sociales---------------->
-            <div class="col-md-4 mb-4 mb-md-0 text-center">
-                <h5 class="text-uppercase text-center">REDES SOCIALES</h5>
-                <a href="#" class="text-primary mx-3"><i class="fa-brands fa-square-facebook fa-3x"></i></a>
-                <a href="#" class="text-primary mx-3"><i class="fa-brands fa-instagram fa-3x"></i></a>
-                <a href="#" class="text-primary mx-3"><i class="fa-brands fa-whatsapp fa-3x"></i></a>
-            </div>
-
-            <!------------------Sobre Nosotros------------------------>
-            <div class="col-md-4 mb-4 mb-md-0 text-center">
-                <h5 class="text-uppercase">NOSOTROS</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text">Home</a></li>
-                    <li><a href="#" class="text">Quienes somos</a></li>
-                    <li><a href="#" class="text">Preguntas frecuentes</a></li>
-                    <li><a href="#" class="text">Términos y condiciones</a></li>
-                </ul>
-            </div>
-        </div>
-        <!----------la linea ----------->
-        <hr class="txtfooter my-1">
-        <div class="text-center">
-            <p class="pfooter mb-0  mt-0">© 2024 Gestor de proyectos company. Reservados todos los derechos</p>
-        </div>
-    </div>
-
-
-</footer>
