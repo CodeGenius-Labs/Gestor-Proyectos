@@ -550,53 +550,28 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>NOMBRE USUARIO</th>
                             <th>NOMBRE DEL PROYECTO</th>
-                            <th>FECHA CREACION PROYECTO</th>
+                            <th>DESCRIPCIÓN</th>
+                            <th>FECHA DE CREACIÓN</th>
                             <th>ACCIONES</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% for proyecto in proyectos %}
                         <tr>
-                            <td>Jose Luis Gomez</td>
-                            <td>E-comers shoes</td>
-                            <td>22/02/2022</td>
+                            <td>{{ proyecto.nombre }}</td>  <!-- Nombre del proyecto -->
+                            <td>{{ proyecto.descripcion }}</td>  <!-- Descripción del proyecto -->
+                            <td>{{ proyecto.fecha_inicio|date:"d/m/Y" }}</td>  <!-- Fecha de creación -->
                             <td class="action-buttons">
                                 <button id="openModalBtn7">Editar</button>
                                 <button>Eliminar</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Otro Usuario</td>
-                            <td>Otro Proyecto</td>
-                            <td>01/03/2023</td>
-                            <td class="action-buttons">
-                                <button id="openModalBtn7">Editar</button>
-                                <button>Eliminar</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Otro Usuario</td>
-                            <td>Otro Proyecto</td>
-                            <td>01/03/2023</td>
-                            <td class="action-buttons">
-                                <button id="openModalBtn7">Editar</button>
-                                <button>Eliminar</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Otro Usuario</td>
-                            <td>Otro Proyecto</td>
-                            <td>01/03/2023</td>
-                            <td class="action-buttons">
-                                <button id="openModalBtn7">Editar</button>
-                                <button>Eliminar</button>
-                            </td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
+                
+                
             </div>
         </div>
 
