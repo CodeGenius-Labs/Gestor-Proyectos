@@ -18,12 +18,17 @@ from django.core.files.storage import FileSystemStorage
 import os 
 import mimetypes
 from django.core.files.storage import default_storage
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.decorators import user_passes_test
 
 
 
 
 #----------------Inicio----------------
 def home(request):
+    if request.user.is_superuser:
+        return redirect('superadmin')
+
     return render(request, 'index.html')
 
 #----------------Login----------------
@@ -35,8 +40,13 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             auth_login(request, user)
-            messages.success(request, 'Inicio sesion correctamente.')
-            return redirect('home')  # Redirige a la vista de proyectos si el login es exitoso
+            messages.success(request, 'Inicio sesión correctamente.')
+
+            # Verifica si el usuario es superadmin
+            if user.is_superuser:  # Si tienes otro campo o atributo para el rol superadmin, reemplázalo aquí
+                return redirect('superadmin')  # Redirige a la vista superadmin.html
+            else:
+                return redirect('home')  # Redirige a home si no es superadmin
         else:
             messages.error(request, 'Credenciales inválidas. Por favor, inténtalo de nuevo.')
     return render(request, 'login.html')
@@ -110,8 +120,9 @@ def verusuarios(request):
 
 #----------------LOGOUT----------------
 def exit(request):
-        logout(request)
-        return redirect('home')
+    logout(request)
+    messages.success(request, 'Sesión cerrada correctamente.')  # Añadir mensaje de cierre de sesión
+    return redirect('home')  # Redirigir al home
 
 
 def actualizar_proyecto(request, proyecto_id):
@@ -469,7 +480,11 @@ def actualizar_proyecto(request, id):
     return render(request, 'actualizar_proyecto.html', {'proyecto': proyecto})
 
 
+@login_required(login_url="login")
+def superadmin(request):
+    return render(request, 'superadmin.html')
 
 
-
-
+@login_required(login_url="login")
+def superproyecto(request):
+    return render(request, 'superproyecto.html')
