@@ -567,12 +567,16 @@
                                 <button>Eliminar</button>
                             </td>
                         </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4">No hay proyectos disponibles.</td>
+                        </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-                
-                
             </div>
+            
+            
         </div>
 
 

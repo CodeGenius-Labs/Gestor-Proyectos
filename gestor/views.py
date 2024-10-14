@@ -490,7 +490,7 @@ def superproyecto(request):
     return render(request, 'superproyecto.html')
 
 
-def ver_proyectos(request):
+def superproyecto(request):
     # Obtener todos los proyectos
     proyectos = Proyecto.objects.all()  # Obtiene todos los proyectos
 
