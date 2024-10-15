@@ -159,7 +159,7 @@
                         <div class="file-name">
                             <a href="{% url 'verproyectos' proyecto.id %}?archivo_id={{ archivo.id }}" 
                                data-bs-toggle="modal" 
-                               data-bs-target="#modal5">
+                               data-bs-target="#modal5{{ archivo.id }}">
                                {{ archivo.nombre }}
                             </a>
                         </div>
@@ -182,7 +182,7 @@
         </main>
     </div>
 
-    {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
+   
     
     <!-- Modal  mostrar usuarios -->
     <div class="modal fade" id="modalUsuarios" tabindex="-1" aria-labelledby="etiquetaModalUsuarios" aria-hidden="true">
@@ -268,7 +268,7 @@
         </div>
     </div>
     {% endif %}
-    {% endif %}
+    
 
     <!---ModalAnotaciones -->
 <div class="modal fade" id="modalAnotaciones" tabindex="-1" aria-labelledby="etiquetaModalAnotacion" aria-hidden="true">
@@ -343,32 +343,29 @@
 </div>
 
 <!-- Modal de previsualización (modal5) -->
-<div id="modal5" class="modal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1>Previsualización de archivo</h1>
-                <button type="button" class="btn-close close-btn-modal5" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Previsualización del archivo -->
-                <div class="file-preview">
-                    {% if archivo_seleccionado %}
-                        {% if archivo_seleccionado.archivoss.file.content_type == "application/pdf" %}
-                            <iframe src="{{ archivo_seleccionado.archivoss.url }}" width="100%" height="500px"></iframe>
-                        {% else %}
-                            <!-- Opción para descargar si no se puede previsualizar -->
-                            <p>Este tipo de archivo no se puede previsualizar.</p>
-                            <a href="{{ archivo_seleccionado.archivoss.url }}" download>Descargar archivo</a>
-                        {% endif %}
-                    {% else %}
-                        <p>No se ha seleccionado ningún archivo para previsualizar.</p>
-                    {% endif %}
+
+{% for archivo in archivos %}
+    <!-- Modal para cada archivo -->
+    <div id="modal5{{ archivo.id }}" class="modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1>Previsualización de archivo</h1>
+                    <form method="POST" action="{% url 'verproyectos' id=proyecto.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
+                        <button type="submit" name="ver_archivo" class="btn btn-primary">Ver Archivo</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
+{% endfor %}
+
+
+
+
+
 
 
 {% for archivo in archivos %}
