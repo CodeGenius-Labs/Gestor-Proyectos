@@ -563,7 +563,7 @@
                             <td>{{ proyecto.descripcion }}</td>  <!-- Descripción del proyecto -->
                             <td>{{ proyecto.fecha_inicio|date:"d/m/Y" }}</td>  <!-- Fecha de creación -->
                             <td class="action-buttons">
-                                <button id="openModalBtn7">Editar</button>
+                                <button id="openModalBtn7 {{ archivo.id }}">Editar</button>
                                 <button>Eliminar</button>
                             </td>
                         </tr>
@@ -587,24 +587,24 @@
                     <div class="inputs">
                         <span class="close-btn7">&times;</span>
                         <h4>Configurar proyecto</h4>
-
+        
                         <form method="POST">
                             <!-- Campo de nombre -->
                             <div class="input_campos">
                                 <label for="nombre">Nombre</label>
                                 <input class="input_nombre" placeholder="Nombre del proyecto" name="nombre" required>
                             </div>
-
+        
                             <!-- Campo de Descripcion -->
                             <div class="input_campos">
                                 <label for="descripcion" class="form-label">Descripcion</label>
                                 <input class="input_descripcion" type="text" name="descripcion" required>
                             </div>
-
+        
                             <div class="form-container">
                                 <label for="fecha_inicio">Fecha de Inicio</label>
                                 <input type="date" class="fecha" id="startDate" name="fecha_inicio" required>
-
+        
                                 <label for="fecha_fin">Fecha de Fin</label>
                                 <input type="date" class="fecha" id="endDate" name="fecha_fin" required>
                             </div>
@@ -614,6 +614,7 @@
                 </div>
             </div>
         </div>
+        
 
         <!--Fin de modal emergente-->
     </div>

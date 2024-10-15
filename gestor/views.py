@@ -517,13 +517,35 @@ def actualizar_proyecto(request, id):
 def superadmin(request):
     return render(request, 'superadmin.html')
 
-
 @login_required(login_url="login")
 def superproyecto(request):
-    # Obtener todos los proyectos
-    proyectos = Proyecto.objects.all()  # Obtiene todos los proyectos
+    proyectos = Proyecto.objects.all()
 
-    # Renderiza la plantilla con la lista de proyectos
-    return render(request, 'superproyecto.html', {
-        'proyectos': proyectos,
-    })
+    # Editar proyecto
+    if request.method == 'POST' and 'editar_proyecto' in request.POST:
+        proyecto_id = request.POST.get('proyecto_id')
+        proyecto = get_object_or_404(Proyecto, id=proyecto_id)
+
+        # Obtener los valores del formulario
+        proyecto.nombre = request.POST.get('nombre')
+        proyecto.descripcion = request.POST.get('descripcion')
+        proyecto.fecha_inicio = request.POST.get('fecha_inicio')
+        proyecto.fecha_fin = request.POST.get('fecha_fin')
+
+        # Guardar los cambios
+        proyecto.save()
+        return redirect('verproyectos')  # Redirige a la vista de proyectos después de editar
+
+    # Eliminar proyecto
+    if request.method == 'POST' and 'eliminar_proyecto' in request.POST:
+        proyecto_id = request.POST.get('proyecto_id')
+        proyecto = get_object_or_404(Proyecto, id=proyecto_id)
+
+        # Eliminar el proyecto
+        proyecto.delete()
+        return redirect('verproyectos')  # Redirige a la vista de proyectos después de eliminar
+
+    context = {
+        'proyectos': proyectos
+    }
+    return render(request, 'superproyecto.html', context)
