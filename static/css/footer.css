@@ -1,0 +1,44 @@
+
+
+.footer .logo2 {
+    background-color: #ffffff; 
+    color: #54BCDE;
+    width: 100px;
+    
+
+}
+
+.container .logo2{
+    margin-top: 15px;
+    width: 100px;
+    height: auto;
+}
+
+a{
+    display: contents;
+}
+
+.footer h5 {
+    color: #54BCDE;
+    font-weight: bold;
+}
+
+.footer a {
+    color: #54BCDE;
+    text-decoration: none;
+    text-align: left;
+    
+}
+.footer i{
+    color: #54bcde;
+    margin-top: 25px;
+}
+
+
+
+
+hr .txtfooter,
+.text-center p{
+    color: #54BCDE;
+
+}
