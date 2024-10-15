@@ -1,0 +1,113 @@
+
+/*Vista Ver usuarios   #modalUsuarios*/
+
+#modalUsuarios span{
+    color: #0E2B3E;
+}
+
+#modalUsuarios .modal-dialog{
+    max-width: 600px;
+}
+#modalUsuarios .modal-title{
+    color:#0E2B3E;
+    font-weight: bold;
+}
+#modalUsuarios .miembro_id{
+    color: #0E2B3E;
+}
+#modalUsuarios .modal-body form{
+    display: inline;
+    
+}
+
+
+
+#modalUsuarios li{
+    
+    margin: 10px 10px;
+}
+#modalUsuarios .selectbtn{
+    display: contents;
+}
+#modalUsuarios .form-select{
+    display: inline;
+    width: auto;
+    margin-left:5px;
+    color: #0E2B3E;
+    
+}
+#modalUsuarios .btn-primary{
+    background-color: #0E2B3E;
+    color: #54BCDE;
+}
+
+#modalUsuarios .btn-secondary{
+    background-color: #0E2B3E;
+    color: #54BCDE;
+    height: 30px;
+    
+}
+
+#modalUsuarios .btn-danger{
+    background-color: #FF4C4C;
+    color: #0E2B3E;
+    height: 30px;
+}
+
+/*Vista agregar usuarios   #modalConfirmacion*/
+
+#modalConfirmacion .btn-primary{
+    background-color: #0E2B3E;
+    color: #54BCDE;
+}
+
+/*vista modal Anotaciones #modalAnotaciones*/
+#modalAnotaciones .btn-primary {
+    background-color: #0E2B3E;
+    color: #54BCDE;
+}
+
+#modalAnotaciones .modal-dialog {
+    max-width: 850px;
+    max-height: auto;
+}
+
+#modalAnotaciones .modal-title {
+    font-weight: bold;
+    color: #0E2B3E;
+}
+
+#modalAnotaciones .modal-body {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#modalAnotaciones .user {
+    width: 250px;
+    text-align: left;
+    padding: 5px;
+}
+
+#modalAnotaciones .spancomm {
+    flex: 1;
+    text-align: justify;
+    margin-left: 10px;
+}
+
+#modalAnotaciones .spandate {
+    flex: 0 0 100px;
+    color: #3232328f;
+    text-align: center;
+    margin-left: 30px;
+}
+
+#modalAnotaciones .modal-footer {
+    display: block;
+}
+
+#modalAnotaciones .btn-danger {
+    background-color: #FF4C4C;
+    color: #0E2B3E;
+    height: 30px;
+    margin-left: 30px;
+}

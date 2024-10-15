@@ -1,0 +1,51 @@
+/* Cambiar el fondo de la barra lateral */
+.module {
+   
+    color: white;
+}
+
+/* Mejorar la apariencia de la tabla */
+.model-user th, .model-user td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+/* Efecto hover en las filas de la tabla */
+.model-user tr:hover {
+    background-color: #333333; /* Cambia el color de fondo al pasar el cursor */
+}
+
+/* Botones estilizados */
+.button {
+    background-color: #008cba;
+    color: white;
+    padding: 10px;
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s ease;
+}
+
+/* Efecto hover en los botones */
+.button:hover {
+    background-color: #005f5f; /* Color más oscuro en hover */
+}
+
+/* Efecto hover para las filas de la lista de usuarios */
+#result_list tr:hover {
+    background-color: #333333; /* Color de fondo al pasar el cursor */
+    color: white; /* Cambia el color del texto */
+}
+
+/* Cambiar el color del filtro */
+#changelist-filter {
+    background-color: #111111;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Efecto hover para elementos de filtro */
+#changelist-filter a:hover {
+    color: #00bfff; /* Cambia el color del texto al pasar el cursor */
+}
+
