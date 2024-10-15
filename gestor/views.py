@@ -520,10 +520,6 @@ def superadmin(request):
 
 @login_required(login_url="login")
 def superproyecto(request):
-    return render(request, 'superproyecto.html')
-
-
-def superproyecto(request):
     # Obtener todos los proyectos
     proyectos = Proyecto.objects.all()  # Obtiene todos los proyectos
 
