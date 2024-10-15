@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from . import views
+from django.conf import settings
+
 
 
 urlpatterns = [
@@ -17,6 +19,7 @@ urlpatterns = [
     path('actualizar_proyecto/<int:id>/', views.actualizar_proyecto, name='actualizar_proyecto'),
     path('superadmin/', views.superadmin, name='superadmin'),
     path('superproyecto/', views.superproyecto, name='superproyecto'),
+    
 
 
 
