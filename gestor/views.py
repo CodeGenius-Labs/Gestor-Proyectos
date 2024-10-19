@@ -18,12 +18,17 @@ from django.core.files.storage import FileSystemStorage
 import os 
 import mimetypes
 from django.core.files.storage import default_storage
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.decorators import user_passes_test
 
 
 
 
 #----------------Inicio----------------
 def home(request):
+    if request.user.is_superuser:
+        return redirect('superadmin')
+
     return render(request, 'index.html')
 
 #----------------Login----------------
@@ -35,8 +40,13 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             auth_login(request, user)
-            messages.success(request, 'Inicio sesion correctamente.')
-            return redirect('home')  # Redirige a la vista de proyectos si el login es exitoso
+            messages.success(request, 'Inicio sesión correctamente.')
+
+            # Verifica si el usuario es superadmin
+            if user.is_superuser:  # Si tienes otro campo o atributo para el rol superadmin, reemplázalo aquí
+                return redirect('superadmin')  # Redirige a la vista superadmin.html
+            else:
+                return redirect('home')  # Redirige a home si no es superadmin
         else:
             messages.error(request, 'Credenciales inválidas. Por favor, inténtalo de nuevo.')
     return render(request, 'login.html')
@@ -54,9 +64,14 @@ def registro(request):
         
 
         # Validar que el nombre de usuario no contenga números
-        if any(char.isdigit() for char in username):
-            messages.error(request, 'El nombre de usuario no puede contener números.')
+        # Validar que el nombre tenga entre 8 y 50 caracteres  
+        if any(char.isdigit() for char in username) or len(username) < 8 or len(username) > 50:
+            if any(char.isdigit() for char in username):
+                messages.error(request, 'El nombre de usuario no puede contener números.')
+            else:
+                messages.error(request, 'El nombre de usuario debe tener entre 8 y 50 caracteres.')
             return render(request, 'registro.html')
+
 
         # Validar que la contraseña tenga entre 7 y 20 caracteres
         if len(password) < 7 or len(password) > 20:
@@ -105,8 +120,9 @@ def verusuarios(request):
 
 #----------------LOGOUT----------------
 def exit(request):
-        logout(request)
-        return redirect('home')
+    logout(request)
+    messages.success(request, 'Sesión cerrada correctamente.')  # Añadir mensaje de cierre de sesión
+    return redirect('home')  # Redirigir al home
 
 
 def actualizar_proyecto(request, proyecto_id):
@@ -375,6 +391,39 @@ def verproyectos(request, id):
                 response['Content-Disposition'] = f'attachment; filename="{archivo_nombre}"'
 
             return response
+        
+        if 'ver_archivo' in request.POST:
+            archivo_id = request.POST.get('archivo_id')
+            archivo = get_object_or_404(Archivos, id=archivo_id)
+
+            # Asegúrate de que el archivo existe y se puede abrir
+            archivo.archivoss.open()
+
+            # Adivina el tipo MIME basado en la extensión del archivo
+            mime_type, _ = mimetypes.guess_type(archivo.archivoss.name)
+            print(f"MIME Type detectado: {mime_type}")
+
+
+            # Prepara la respuesta con el contenido del archivo
+            response = HttpResponse(archivo.archivoss.read(), content_type=mime_type or 'application/octet-stream')
+
+            # Verifica el tipo MIME para decidir si forzar la descarga o mostrar en el navegador
+            archivo_extension = archivo.archivoss.name.split('.')[-1]
+            archivo_nombre = archivo.nombre  # Debe estar correctamente indentado
+
+            # Si el nombre del archivo no contiene una extensión, añádela
+            if not archivo_nombre.endswith(archivo_extension):
+                archivo_nombre += f".{archivo_extension}"
+
+            # Verifica el tipo MIME para decidir si forzar la descarga o mostrar en el navegador
+            if mime_type and ('image' in mime_type or mime_type == 'application/pdf'):
+                # Mostrar en el navegador para imágenes y PDFs
+                response['Content-Disposition'] = f'inline; filename="{archivo_nombre}"'
+            else:
+                # Forzar la descarga para otros tipos de archivo
+                response['Content-Disposition'] = f'attachment; filename="{archivo_nombre}"'
+
+            return response
 
         
 
@@ -464,7 +513,39 @@ def actualizar_proyecto(request, id):
     return render(request, 'actualizar_proyecto.html', {'proyecto': proyecto})
 
 
+@login_required(login_url="login")
+def superadmin(request):
+    return render(request, 'superadmin.html')
 
+@login_required(login_url="login")
+def superproyecto(request):
+    proyectos = Proyecto.objects.all()
 
+    # Editar proyecto
+    if request.method == 'POST' and 'editar_proyecto' in request.POST:
+        proyecto_id = request.POST.get('proyecto_id')
+        proyecto = get_object_or_404(Proyecto, id=proyecto_id)
 
+        # Obtener los valores del formulario
+        proyecto.nombre = request.POST.get('nombre')
+        proyecto.descripcion = request.POST.get('descripcion')
+        proyecto.fecha_inicio = request.POST.get('fecha_inicio')
+        proyecto.fecha_fin = request.POST.get('fecha_fin')
 
+        # Guardar los cambios
+        proyecto.save()
+        return redirect('verproyectos')  # Redirige a la vista de proyectos después de editar
+
+    # Eliminar proyecto
+    if request.method == 'POST' and 'eliminar_proyecto' in request.POST:
+        proyecto_id = request.POST.get('proyecto_id')
+        proyecto = get_object_or_404(Proyecto, id=proyecto_id)
+
+        # Eliminar el proyecto
+        proyecto.delete()
+        return redirect('verproyectos')  # Redirige a la vista de proyectos después de eliminar
+
+    context = {
+        'proyectos': proyectos
+    }
+    return render(request, 'superproyecto.html', context)

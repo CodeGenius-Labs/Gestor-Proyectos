@@ -4,12 +4,17 @@ import mimetypes
 import os  
 from django.utils import timezone
 
+
+
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField(null=True, blank=True)
     progreso = models.IntegerField(default=0)
+
+    def __str__(self):
+            return self.nombre  # Esto hará que se muestre el nombre del proyecto
 
 class Roles(models.Model):
     ADMIN_DEPARTAMENTO = 'Administrador del departamento'
