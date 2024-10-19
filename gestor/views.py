@@ -534,7 +534,7 @@ def superproyecto(request):
 
         # Guardar los cambios
         proyecto.save()
-        return redirect('verproyectos')  # Redirige a la vista de proyectos después de editar
+        return redirect('superproyecto')  # Redirige a la vista de proyectos después de editar
 
     # Eliminar proyecto
     if request.method == 'POST' and 'eliminar_proyecto' in request.POST:
@@ -543,9 +543,10 @@ def superproyecto(request):
 
         # Eliminar el proyecto
         proyecto.delete()
-        return redirect('verproyectos')  # Redirige a la vista de proyectos después de eliminar
+        return redirect('superproyecto')  # Redirige a la vista de proyectos después de eliminar
 
     context = {
         'proyectos': proyectos
     }
     return render(request, 'superproyecto.html', context)
+

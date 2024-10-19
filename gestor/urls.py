@@ -20,6 +20,7 @@ urlpatterns = [
     path('superadmin/', views.superadmin, name='superadmin'),
     path('superproyecto/', views.superproyecto, name='superproyecto'),
     
+    
 
 
 
