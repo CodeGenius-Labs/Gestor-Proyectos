@@ -176,7 +176,7 @@
             padding: 10px 20px;
             background-color: #0E2B3E;
             color: white;
-            margin-top: -720px;
+            margin-top: -3700px;
             margin-left: 130px;
 
         }
@@ -190,7 +190,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: -720px;
+            margin-top: -3700px;
 
 
         }
@@ -200,13 +200,14 @@
             border-radius: 15px;
             margin-left: 10px;
             margin-right: auto;
-            margin-top: -720px;
+            margin-top: -3700px;
 
 
         }
 
         .Botonfilter i {
             color: #54BCDE;
+            
 
 
         }
@@ -563,8 +564,15 @@
                             <td>{{ proyecto.descripcion }}</td>  <!-- Descripción del proyecto -->
                             <td>{{ proyecto.fecha_inicio|date:"d/m/Y" }}</td>  <!-- Fecha de creación -->
                             <td class="action-buttons">
-                                <button id="openModalBtn7 {{ archivo.id }}">Editar</button>
-                                <button>Eliminar</button>
+                                <!-- Botón de Editar -->
+                                <button type="button" class="openModalBtn7" data-id="{{ proyecto.id }}" data-nombre="{{ proyecto.nombre }}" data-descripcion="{{ proyecto.descripcion }}" data-fecha-inicio="{{ proyecto.fecha_inicio|date:'Y-m-d' }}" data-fecha-fin="{{ proyecto.fecha_fin|date:'Y-m-d' }}">Editar</button>
+            
+                                <!-- Botón de Eliminar -->
+                                <form method="POST" style="display:inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="proyecto_id" value="{{ proyecto.id }}">
+                                    <button type="submit" name="eliminar_proyecto">Eliminar</button>
+                                </form>
                             </td>
                         </tr>
                         {% empty %}
@@ -576,44 +584,86 @@
                 </table>
             </div>
             
+            <!-- Modal emergente para editar -->
+            <div id="modal7" class="modal">
+                <div class="modal-content">
+                    <div class="content">
+                        <div class="inputs">
+                            <span class="close-btn7">&times;</span>
+                            <h4>Configurar proyecto</h4>
             
-        </div>
-
-
-        <!--Modal emergente-->
-        <div id="modal7" class="modal">
-            <div class="modal-content">
-                <div class="content">
-                    <div class="inputs">
-                        <span class="close-btn7">&times;</span>
-                        <h4>Configurar proyecto</h4>
-        
-                        <form method="POST">
-                            <!-- Campo de nombre -->
-                            <div class="input_campos">
-                                <label for="nombre">Nombre</label>
-                                <input class="input_nombre" placeholder="Nombre del proyecto" name="nombre" required>
-                            </div>
-        
-                            <!-- Campo de Descripcion -->
-                            <div class="input_campos">
-                                <label for="descripcion" class="form-label">Descripcion</label>
-                                <input class="input_descripcion" type="text" name="descripcion" required>
-                            </div>
-        
-                            <div class="form-container">
-                                <label for="fecha_inicio">Fecha de Inicio</label>
-                                <input type="date" class="fecha" id="startDate" name="fecha_inicio" required>
-        
-                                <label for="fecha_fin">Fecha de Fin</label>
-                                <input type="date" class="fecha" id="endDate" name="fecha_fin" required>
-                            </div>
-                            <button class="btncrear" type="submit" id="boton">Modificar</button>
-                        </form>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="proyecto_id" id="proyecto_id"> <!-- Input oculto para el ID del proyecto -->
+            
+                                <!-- Campo de nombre -->
+                                <div class="input_campos">
+                                    <label for="nombre">Nombre</label>
+                                    <input class="input_nombre" placeholder="Nombre del proyecto" name="nombre" id="nombre" required>
+                                </div>
+            
+                                <!-- Campo de Descripcion -->
+                                <div class="input_campos">
+                                    <label for="descripcion" class="form-label">Descripcion</label>
+                                    <input class="input_descripcion" type="text" name="descripcion" id="descripcion" required>
+                                </div>
+            
+                                <div class="form-container">
+                                    <label for="fecha_inicio">Fecha de Inicio</label>
+                                    <input type="date" class="fecha" id="fecha_inicio" name="fecha_inicio" required>
+            
+                                    <label for="fecha_fin">Fecha de Fin</label>
+                                    <input type="date" class="fecha" id="fecha_fin" name="fecha_fin" required>
+                                </div>
+                                <button class="btncrear" type="submit" name="editar_proyecto">Modificar</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            
+
+            <script>
+                // Obtener los botones de "Editar" y el modal
+                const openModalBtns = document.querySelectorAll('.openModalBtn7');
+                const modal = document.getElementById('modal7');
+                const closeModalBtn = document.querySelector('.close-btn7');
+            
+                // Cuando se hace clic en un botón "Editar", se abre el modal y se cargan los datos
+                openModalBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        // Obtener los atributos data-* del botón de editar
+                        const proyectoId = this.getAttribute('data-id');
+                        const nombre = this.getAttribute('data-nombre');
+                        const descripcion = this.getAttribute('data-descripcion');
+                        const fechaInicio = this.getAttribute('data-fecha-inicio');
+                        const fechaFin = this.getAttribute('data-fecha-fin');
+            
+                        // Cargar los valores en el modal
+                        document.getElementById('proyecto_id').value = proyectoId;
+                        document.getElementById('nombre').value = nombre;
+                        document.getElementById('descripcion').value = descripcion;
+                        document.getElementById('fecha_inicio').value = fechaInicio;
+                        document.getElementById('fecha_fin').value = fechaFin;
+            
+                        // Mostrar el modal
+                        modal.style.display = 'block';
+                    });
+                });
+            
+                // Cuando se hace clic en el botón de cerrar, se oculta el modal
+                closeModalBtn.addEventListener('click', function() {
+                    modal.style.display = 'none';
+                });
+            
+                // Ocultar el modal si se hace clic fuera del contenido del modal
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = 'none';
+                    }
+                };
+            </script>
+            
         
 
         <!--Fin de modal emergente-->
