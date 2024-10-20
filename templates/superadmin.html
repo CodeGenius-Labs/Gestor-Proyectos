@@ -32,9 +32,8 @@
 
     <div class="contenedor-principal">
         <aside class="barra-lateral">
-            <!-- This button will open the SuperProyecto page -->
             <button class="boton-lateral" id="openProyectoBtn">Gestion de proyectos</button>
-            <button class="boton-lateral" onclick="window.location.href='http://127.0.0.1:8000/admin/user/'">Gestion de usuarios</button>
+            <button class="boton-lateral" onclick="window.location.href='http://127.0.0.1:8000/admin/user/user'">Gestion de usuarios</button>
             <button class="boton-lateral">
                 <a href="{% url 'logout'%}" style="color: #54BCDE;">Cerrar sesion</a>
             </button>
@@ -48,9 +47,8 @@
     </div>
     
     <script>
-        // This script redirects to the SuperProyecto page when the button is clicked
         document.getElementById('openProyectoBtn').addEventListener('click', function() {
-            window.location.href = '{% url "superproyecto" %}';  // Replace "superproyecto" with your actual URL name
+            window.location.href = '{% url "superproyecto" %}';  
         });
     </script>
     
