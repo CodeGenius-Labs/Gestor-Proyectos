@@ -33,10 +33,8 @@
     <div class="contenedor-principal">
         <aside class="barra-lateral">
             <button class="boton-lateral" id="openProyectoBtn">Gestion de proyectos</button>
-            <button class="boton-lateral" onclick="window.location.href='http://127.0.0.1:8000/admin/user/user'">Gestion de usuarios</button>
-            <button class="boton-lateral">
-                <a href="{% url 'logout'%}" style="color: #54BCDE;">Cerrar sesion</a>
-            </button>
+            <button class="boton-lateral"><a href="{% url 'superusuario'%}" style="color: #54BCDE;">Gestion de usuarios</a></button>
+            <button class="boton-lateral"><a href="{% url 'logout'%}" style="color: #54BCDE;">Cerrar sesion</a></button>
         </aside>
     
         <div class="content">
