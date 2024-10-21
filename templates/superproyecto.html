@@ -169,6 +169,12 @@
 
         }
 
+        .buscador {
+            display: flex;
+            align-items: center; 
+            margin: 10px 0; 
+        }
+
         .search-bar {
             width: 600px;
             border-radius: 30px;
@@ -176,7 +182,7 @@
             padding: 10px 20px;
             background-color: #0E2B3E;
             color: white;
-            margin-top: -3700px;
+            margin-top: 20px;
             margin-left: 130px;
 
         }
@@ -190,7 +196,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: -3700px;
+            margin-top: 20px;
 
 
         }
@@ -200,16 +206,13 @@
             border-radius: 15px;
             margin-left: 10px;
             margin-right: auto;
-            margin-top: -3700px;
+            margin-top: 20px;
 
 
         }
 
         .Botonfilter i {
             color: #54BCDE;
-            
-
-
         }
 
         /*menuchikito*/
@@ -293,58 +296,35 @@
 
         }
 
-
-
         .table-container {
-            margin-top: 10px;
+            margin: 0 auto; /* Centra el contenedor horizontalmente */
+            padding: 10px;
+            height: 500px; /* Establece una altura fija */
+            overflow-y: auto; /* Habilita el scroll vertical */
+            border: 1px solid #ccc; /* Asegura que el contenedor tenga bordes visibles */
+            max-width: 90%; /* Ajusta el ancho máximo del contenedor al 80% de la pantalla */
             text-align: center;
-            padding: 50px;
-
-
-        }
-
-        h3 {
-            color: #54BCDE;
-            text-align: center;
-            margin-left: -830px;
-            margin-top: 120px;
-            font-weight: bold;
-
-
         }
 
         table {
-            width: 700px; /* Ajusta la tabla para que ocupe todo el ancho del contenedor */
+            width: 100%; /* La tabla ocupa todo el ancho del contenedor */
             border-collapse: collapse;
-            margin-bottom: 20px;
-            text-align: center;
+            margin: 0 auto; /* Asegura que la tabla esté centrada */
         }
 
-        table,
-        th,
-        td {
-            border: 1px solid #ccc;
-
-
-        }
-
-        th,
-        td {
+        th, td {
             padding: 10px;
             text-align: center;
             word-wrap: break-word;  
-            white-space: normal;    
-            max-width: 500px;  
-
+            white-space: normal; /* Permite que el texto se ajuste dentro de las celdas */
         }
 
         th {
             background-color: #e0e0e0;
-
         }
 
         .action-buttons button {
-            width: 80px;;
+            width: 80px;
             background-color: #0E2B3E;
             color: #54BCDE;
             border: none;
@@ -357,7 +337,6 @@
             background-color: #54BCDE;
             color: #0E2B3E;
         }
-
 
 
         /* Modal */
@@ -519,58 +498,60 @@
             <button class="boton-lateral"><a href="{% url 'logout'%}" style="color: #54BCDE;">Cerrar sesion</a></button>
         </aside>
 
-        <div class="d-flex align-items-center">
-            <form method="GET" action="{% url 'proyectos' %}" class='d-flex align-items-center'>
-                <input type="text" class="search-bar col-md-1 " placeholder="Buscar..." name="search">
-                <button type="submit" class="filter-btn ms-2">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-            </form>
-
-            <div class="Botonfilter">
-                <button class=" btn dropdown-toggle mp-4" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-                    data-bs-offset="10,20">
-                    <i class="fa-solid fa-filter"> Filtros</i>
-                </button>
-                <ul class="dropdown-menu">
-                    <li class="dropdown-submenu">
-                        <a class="dropdown-item dropdown-toggle" style="cursor: pointer">Nombre</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" onclick="applyFilter('nombre', 'asc')"
-                                    style="cursor: pointer">Ascendente</a></li>
-                            <li><a class="dropdown-item" onclick="applyFilter('nombre', 'desc')"
-                                    style="cursor: pointer">Descendente</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a class="dropdown-item dropdown-toggle" style="cursor: pointer">Fecha de Inicio</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" onclick="applyFilter('fecha_inicio', 'asc')"
-                                    style="cursor: pointer">Ascendente</a></li>
-                            <li><a class="dropdown-item" onclick="applyFilter('fecha_inicio', 'desc')"
-                                    style="cursor: pointer">Descendente</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a class="dropdown-item dropdown-toggle" style="cursor: pointer">Fecha de Finalizacion</a>
-
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" onclick="applyFilter('fecha_fin', 'asc')"
-                                    style="cursor: pointer">Ascendente</a></li>
-                            <li><a class="dropdown-item" onclick="applyFilter('fecha_fin', 'desc')"
-                                    style="cursor: pointer">Descendente</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                </ul>
+        <div class="d-flex flex-column align-items-center w-100">
+            <div class="buscador">
+                <form method="GET" action="{% url 'proyectos' %}" class='d-flex align-items-center'>
+                    <input type="text" class="search-bar col-md-1 " placeholder="Buscar..." name="search">
+                    <button type="submit" class="filter-btn ms-2">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+                
+                <div class="Botonfilter">
+                    <button class=" btn dropdown-toggle mp-4" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                        data-bs-offset="10,20">
+                        <i class="fa-solid fa-filter"> Filtros</i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" style="cursor: pointer">Nombre</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="applyFilter('nombre', 'asc')"
+                                        style="cursor: pointer">Ascendente</a></li>
+                                <li><a class="dropdown-item" onclick="applyFilter('nombre', 'desc')"
+                                        style="cursor: pointer">Descendente</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" style="cursor: pointer">Fecha de Inicio</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="applyFilter('fecha_inicio', 'asc')"
+                                        style="cursor: pointer">Ascendente</a></li>
+                                <li><a class="dropdown-item" onclick="applyFilter('fecha_inicio', 'desc')"
+                                        style="cursor: pointer">Descendente</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" style="cursor: pointer">Fecha de Finalizacion</a>
+                
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="applyFilter('fecha_fin', 'asc')"
+                                        style="cursor: pointer">Ascendente</a></li>
+                                <li><a class="dropdown-item" onclick="applyFilter('fecha_fin', 'desc')"
+                                        style="cursor: pointer">Descendente</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                    </ul>
+                </div>
             </div>
 
 
 
             <div class="table-container">
-                <h3>PROYECTOS</h3>
+                <h3 class="mx-auto">PROYECTOS</h3>
                 <table>
                     <thead>
                         <tr>
