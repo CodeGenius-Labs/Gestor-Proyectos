@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Proyectos</title>
+    {% load static %}
+
+
+
+    <!---------Css-------->
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+
+
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href=" {% static 'imagenes/ico/logo-gestor-proyectos-en-azul.ico' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        .contenedor-principal {
+            display: flex;
+            height: 100%;
+        }
+
+        .barra-lateral {
+            width: 280px;
+            background-color: #FFFFFF;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-right: 2px solid #0E2B3E;
+        }
+
+
+
+        .boton-lateral {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #0E2B3E;
+            border-radius: 20px;
+            color: #54BCDE;
+            cursor: pointer;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-top: 80px;
+        }
+
+        .boton-lateral:hover {
+            background-color: #54BCDE;
+            color: #0E2B3E;
+        }
+
+        .boton-lateral a {
+            text-decoration: none;
+        }
+
+        .contenido-principal {
+            flex: 1;
+            padding: 20px;
+            background-color: #FFFFFF;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+
+        .encabezado {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            border-bottom: 2px solid #0E2B3E;
+            padding-bottom: 10px;
+        }
+
+        .encabezado h1 {
+            color: #0E2B3E;
+            font-size: 30px;
+        }
+
+
+
+        #project-card-id {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            width: 150px;
+            padding: 18px 24px;
+            border: 3px solid #0E2B3E;
+            border-radius: 15px;
+            background-color: #f9f9f9;
+            transition: box-shadow 0.3s;
+            font-family: AngsanaUPC;
+            text-align: center;
+        }
+
+        #project-card-id:hover {
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+            background-color: #dcdcdc;
+
+        }
+
+
+        #legalDocumentModal3 {
+            margin-bottom: 15px;
+        }
+
+        .file-name a {
+            color: #54BCDE;
+            /* Cambiar el color del enlace */
+            text-decoration: none;
+            /* Opcional: quitar el subrayado del enlace */
+        }
+
+        .content {
+            width: 70%;
+            float: right;
+            text-align: center;
+            margin-top: 10px;
+
+            color: #54BCDE;
+        }
+
+
+        .content h2 {
+            font-size: 28px;
+            color: #54BCDE;
+            margin-top: 50px;
+
+        }
+
+
+
+
+        body {
+            background-color: #ffffff;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin-top: 40px;
+
+        }
+
+        .buscador {
+            display: flex;
+            align-items: center; 
+            margin: 10px 0; 
+        }
+
+        .search-bar {
+            width: 600px;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            padding: 10px 20px;
+            background-color: #0E2B3E;
+            color: white;
+            margin-top: 20px;
+            margin-left: 130px;
+
+        }
+
+        .filter-btn {
+            background-color: #0E2B3E;
+            color: #54BCDE;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+
+
+        }
+
+        .Botonfilter {
+            background-color: #0E2B3E;
+            border-radius: 15px;
+            margin-left: 10px;
+            margin-right: auto;
+            margin-top: 20px;
+
+
+        }
+
+        .Botonfilter i {
+            color: #54BCDE;
+        }
+
+        /*menuchikito*/
+
+        .dropdown-toggle::after {
+            display: none !important;
+        }
+
+        .dropdown-submenu {
+            position: relative;
+        }
+
+        .dropdown-submenu .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -1px;
+        }
+
+
+        .welcome-text {
+            font-size: 24px;
+            color: #54BCDE;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 45px;
+            display: block;
+            width: 90%;
+        }
+
+
+        .project-title {
+            font-size: 30px;
+            font-weight: bold;
+            color: #54BCDE;
+
+        }
+
+        .project-card {
+            border: 4px solid #0E2B3E;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            color: #0E2B3E;
+            margin-bottom: 30px;
+            transition: box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+            background-color: #dcdcdc;
+
+        }
+
+        .project-card h5 {
+            font-weight: lighter;
+            border-bottom: 30px;
+            color: #000;
+        }
+
+        .project-card p {
+            color: #000;
+            font-weight: bolder;
+        }
+
+        .btn-view {
+            border-radius: 15px;
+            color: #54BCDE;
+            ;
+
+            padding: 10px 20px;
+            background-color: #0E2B3E;
+
+        }
+
+
+        .btn-view:hover {
+            background-color: #031d2e;
+            color: #ffffff;
+            transform: scale(1.1);
+            transition: 0.2s ease-in;
+
+        }
+
+        .table-container {
+            margin: 0 auto; /* Centra el contenedor horizontalmente */
+            padding: 10px;
+            height: 500px; /* Establece una altura fija */
+            overflow-y: auto; /* Habilita el scroll vertical */
+            border: 1px solid #ccc; /* Asegura que el contenedor tenga bordes visibles */
+            max-width: 90%; /* Ajusta el ancho máximo del contenedor al 80% de la pantalla */
+            text-align: center;
+        }
+
+        table {
+            width: 100%; /* La tabla ocupa todo el ancho del contenedor */
+            border-collapse: collapse;
+            margin: 0 auto; /* Asegura que la tabla esté centrada */
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            word-wrap: break-word;  
+            white-space: normal; /* Permite que el texto se ajuste dentro de las celdas */
+        }
+
+        th {
+            background-color: #e0e0e0;
+        }
+
+        .action-buttons button {
+            width: 80px;
+            background-color: #0E2B3E;
+            color: #54BCDE;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 5%;
+        }
+
+        .action-buttons button:hover {
+            background-color: #54BCDE;
+            color: #0E2B3E;
+        }
+
+
+        /* Modal */
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            transition: .8s;
+            
+        }
+
+        /* Contenido del Modal */
+        .modal-content {
+            background-color: #fff;
+            margin: 9% auto;
+            padding: 40px;
+            border: 1px solid #888;
+            width: 400px; /* Ajustado el ancho */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            position: relative;
+            align-items: center;
+        }
+
+        /* Botón para cerrar el Modal */
+        .close-btn7 {
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: red;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .close-btn7:hover,
+        .close-btn7:focus {
+            color: #000;
+            text-decoration: none;
+        }
+
+        /* Inputs */
+        .input_campos {
+            margin-bottom: 20px;
+        }
+
+        .input_campos label {
+            display: block;
+            margin-bottom: 8px;
+            color: #0E2B3E;
+            font-family: "Libre Franklin", sans-serif;
+            font-weight: 600;
+        }
+
+        .input_campos input {
+            background-color: #0E2B3E;
+            color: white;
+            width: 100%; 
+            padding: 8px;
+            border: solid 1px white;
+            border-radius: 4px;
+        }
+
+        .input_campos input::placeholder {
+            color: white;
+        }
+
+        .input_fecha {
+            background-color: #0E2B3E;
+            color: white;
+            width: 100%; 
+            padding: 10px;
+            border: solid 1px white;
+            border-radius: 4px;
+        }
+
+        .input_descripcion {
+            background-color: #0E2B3E;
+            color: white;
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: solid 1px white;
+            border-radius: 4px;
+            resize: vertical; 
+            overflow-y: auto; 
+            white-space: pre-wrap; 
+        }
+
+        /* Fecha */
+        .form-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-container input {
+            background-color: #0E2B3E;
+            color: white;
+            border: solid 1px white;
+            padding: 10px;
+            width: 100%; 
+            border-radius: 4px;
+        }
+
+        .fecha {
+            padding-left: 5px;
+        }
+
+        /* Título del Modal */
+        h4 {
+            font-size: 25px;
+            color: #0E2B3E;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        /* Botón */
+        .btncrear {
+            background-color: #0E2B3E;
+            color: #54BCDE;
+            width: 100%;
+            height: 40px;
+            font-family: "Libre Franklin", sans-serif;
+            font-weight: 700;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btncrear:hover {
+            background-color: #54BCDE;
+            color: #0E2B3E;
+        }
+
+    </style>
+
+    <div class="contenedor-principal">
+        <aside class="barra-lateral">
+
+            <button class="boton-lateral" id="openProyectoBtn">Gestion de proyectos</button>
+            <button class="boton-lateral"><a href="{% url 'logout'%}" style="color: #54BCDE;">Cerrar sesion</a></button>
+        </aside>
+
+        <div class="d-flex flex-column align-items-center w-100">
+            <div class="buscador">
+                <form method="GET" action="{% url 'proyectos' %}" class='d-flex align-items-center'>
+                    <input type="text" class="search-bar col-md-1 " placeholder="Buscar..." name="search">
+                    <button type="submit" class="filter-btn ms-2">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+                
+                <div class="Botonfilter">
+                    <button class=" btn dropdown-toggle mp-4" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                        data-bs-offset="10,20">
+                        <i class="fa-solid fa-filter"> Filtros</i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" style="cursor: pointer">Nombre</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="applyFilter('nombre', 'asc')"
+                                        style="cursor: pointer">Ascendente</a></li>
+                                <li><a class="dropdown-item" onclick="applyFilter('nombre', 'desc')"
+                                        style="cursor: pointer">Descendente</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" style="cursor: pointer">Fecha de Inicio</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="applyFilter('fecha_inicio', 'asc')"
+                                        style="cursor: pointer">Ascendente</a></li>
+                                <li><a class="dropdown-item" onclick="applyFilter('fecha_inicio', 'desc')"
+                                        style="cursor: pointer">Descendente</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" style="cursor: pointer">Fecha de Finalizacion</a>
+                
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="applyFilter('fecha_fin', 'asc')"
+                                        style="cursor: pointer">Ascendente</a></li>
+                                <li><a class="dropdown-item" onclick="applyFilter('fecha_fin', 'desc')"
+                                        style="cursor: pointer">Descendente</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div class="table-container">
+                <h3 class="mx-auto">USUARIOS</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>USUARIO</th>
+                            <th>CORREO ELECTRÓNICO</th>
+                            <th>ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in usuarios %}
+                        <tr>
+                            <td>{{ user.username }}</td>  <!-- Nombre de usuario -->
+                            <td>{{ user.email }}</td>  <!-- Correo del usuario -->
+                            <td class="action-buttons">
+                                <!-- Botón de Editar -->
+                                <button type="button" class="openModalBtn7" data-id="{{ user.id }}" data-username="{{ user.username }}" data-email="{{ user.email }}">
+                                    Editar
+                                </button>
+            
+                                <!-- Botón de Eliminar -->
+                                <form method="POST" style="display:inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                                    <button type="submit" name="eliminar_usuario">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6">No hay usuarios disponibles.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            
+            <!-- Modal emergente para editar -->
+            <div id="modal7" class="modal">
+                <div class="modal-content">
+                    <div class="content">
+                        <div class="inputs">
+                            <span class="close-btn7">&times;</span>
+                            <h4>Configurar proyecto</h4>
+            
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="proyecto_id" id="proyecto_id"> <!-- Input oculto para el ID del proyecto -->
+            
+                                <!-- Campo de nombre -->
+                                <div class="input_campos">
+                                    <label for="nombre">Nombre</label>
+                                    <input class="input_nombre" placeholder="Nombre del proyecto" name="nombre" id="nombre" required>
+                                </div>
+            
+                                <!-- Campo de Descripcion -->
+                                <div class="input_campos">
+                                    <label for="descripcion" class="form-label">Descripción</label>
+                                    <textarea class="input_descripcion" name="descripcion" id="descripcion" rows="4" required></textarea>
+                                </div>                                
+            
+                                <div class="form-container">
+                                    <div class="input_campos">
+                                        <label for="fecha_inicio">Fecha de Inicio</label>
+                                        <input type="date" id="fecha_inicio" name="fecha_inicio" class="input_fecha" required>
+                                    </div>
+                                    
+                                    <div class="input_campos">
+                                        <label for="fecha_fin">Fecha de Fin</label>
+                                        <input type="date" id="fecha_fin" name="fecha_fin" class="input_fecha" required>
+                                    </div>
+                                    
+                                </div>
+                                <button class="btncrear" type="submit" name="editar_proyecto">Modificar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <script>
+                // Obtener los botones de "Editar" y el modal
+                const openModalBtns = document.querySelectorAll('.openModalBtn7');
+                const modal = document.getElementById('modal7');
+                const closeModalBtn = document.querySelector('.close-btn7');
+            
+                // Cuando se hace clic en un botón "Editar", se abre el modal y se cargan los datos
+                openModalBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        // Obtener los atributos data-* del botón de editar
+                        const proyectoId = this.getAttribute('data-id');
+                        const nombre = this.getAttribute('data-nombre');
+                        const descripcion = this.getAttribute('data-descripcion');
+                        const fechaInicio = this.getAttribute('data-fecha-inicio');
+                        const fechaFin = this.getAttribute('data-fecha-fin');
+            
+                        // Cargar los valores en el modal
+                        document.getElementById('proyecto_id').value = proyectoId;
+                        document.getElementById('nombre').value = nombre;
+                        document.getElementById('descripcion').value = descripcion;
+                        document.getElementById('fecha_inicio').value = fechaInicio;
+                        document.getElementById('fecha_fin').value = fechaFin;
+            
+                        // Mostrar el modal
+                        modal.style.display = 'block';
+                    });
+                });
+            
+                // Cuando se hace clic en el botón de cerrar, se oculta el modal
+                closeModalBtn.addEventListener('click', function() {
+                    modal.style.display = 'none';
+                });
+            
+                // Ocultar el modal si se hace clic fuera del contenido del modal
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = 'none';
+                    }
+                };
+            </script>
+            
+        
+
+        <!--Fin de modal emergente-->
+    </div>
+    </div>
+
+
+    </div>
+    </div>
+
+
+
+
+    {% include "footer.html" %}
+
+    <script>
+        document.getElementById('openProyectoBtn').addEventListener('click', function() {
+            window.location.href = '{% url "superproyecto" %}';  
+        });
+    </script>
+
+
+    <script src="{% static 'js/proyecto.js' %}"></script>
+    
+
+
+</body>
+
+</html>

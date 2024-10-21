@@ -550,3 +550,8 @@ def superproyecto(request):
     }
     return render(request, 'superproyecto.html', context)
 
+
+@login_required(login_url="login")
+def superusuario(request):
+    usuarios = User.objects.all()  # Obtener todos los usuarios
+    return render(request, 'superusuario.html', {'usuarios': usuarios})
