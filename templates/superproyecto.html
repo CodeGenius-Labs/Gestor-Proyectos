@@ -635,8 +635,7 @@
                 </div>
             </div>
       
-
-            <!-- Modal emergente para crear proyecto -->
+<!-- Modal emergente para crear proyecto -->
 <div id="modalCrearProyecto" class="modal">
     <div class="modal-content">
         <div class="content">
@@ -644,7 +643,8 @@
                 <span class="close-btn">&times;</span>
                 <h4>Crear Proyecto</h4>
 
-                <form method="POST">
+                <!-- Formulario para crear proyecto -->
+                <form method="POST" action="{% url 'crear_proyecto' %}">
                     {% csrf_token %}
                     
                     <!-- Campo de nombre -->
@@ -679,6 +679,7 @@
         </div>
     </div>
 </div>
+
 
 
 
