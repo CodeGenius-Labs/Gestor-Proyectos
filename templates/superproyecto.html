@@ -465,12 +465,21 @@
             color: #0E2B3E;
         }
 
+        .modal-content span {
+            color: red;
+            font-size: 30px;
+            padding: 250px;
+            font-weight: bold;
+        }
+        
+
     </style>
 
     <div class="contenedor-principal">
         <aside class="barra-lateral">
 
-            <button class="boton-lateral"><a href="{% url 'superusuario'%}" style="color: #54BCDE;">Gestion de usuarios</a></button>
+            <button class="boton-lateral" onclick="window.location.href='http://127.0.0.1:8000/admin/user/user'">Gestion de usuarios</button>
+            <button class="boton-lateral" id="abrirModal" style="color: #54BCDE;">Crear Proyecto</button>
             <button class="boton-lateral"><a href="{% url 'logout'%}" style="color: #54BCDE;">Cerrar sesion</a></button>
         </aside>
 
@@ -597,6 +606,85 @@
                     </div>
                 </div>
             </div>
+      
+<!-- Modal emergente para crear proyecto -->
+<div id="modalCrearProyecto" class="modal">
+    <div class="modal-content">
+        <div class="content">
+            <div class="inputs">
+                <span class="close-btn">&times;</span>
+                <h4>Crear Proyecto</h4>
+
+                <!-- Formulario para crear proyecto -->
+                <form method="POST" action="{% url 'crear_proyecto' %}">
+                    {% csrf_token %}
+                    
+                    <!-- Campo de nombre -->
+                    <div class="input_campos">
+                        <label for="nombre">Nombre</label>
+                        <input class="input_nombre" placeholder="Nombre del proyecto" name="nombre" id="nombre" required>
+                    </div>
+
+                    <!-- Campo de Descripcion -->
+                    <div class="input_campos">
+                        <label for="descripcion" class="form-label">Descripción</label>
+                        <textarea class="input_descripcion" name="descripcion" id="descripcion" rows="4" required></textarea>
+                    </div>
+
+                    <!-- Fechas -->
+                    <div class="form-container">
+                        <div class="input_campos">
+                            <label for="fecha_inicio">Fecha de Inicio</label>
+                            <input type="date" id="fecha_inicio" name="fecha_inicio" class="input_fecha" required>
+                        </div>
+                        
+                        <div class="input_campos">
+                            <label for="fecha_fin">Fecha de Fin</label>
+                            <input type="date" id="fecha_fin" name="fecha_fin" class="input_fecha" required>
+                        </div>
+                    </div>
+
+                    <!-- Botón para crear el proyecto -->
+                    <button class="btncrear" type="submit" name="crear_proyecto">Crear Proyecto</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    // Obtener el modal
+    var modalCrear = document.getElementById("modalCrearProyecto");
+    
+    // Obtener el botón que abre el modal
+    var btnAbrirModal = document.getElementById("abrirModal");
+    
+    // Obtener el botón de cierre del modal
+    var closeBtn = document.getElementsByClassName("close-btn")[0];
+    
+    // Cuando el usuario haga clic en el botón, abre el modal
+    btnAbrirModal.onclick = function() {
+        modalCrear.style.display = "block";
+    }
+    
+    // Cuando el usuario haga clic en la 'X', cierra el modal
+    closeBtn.onclick = function() {
+        modalCrear.style.display = "none";
+    }
+    
+    // Cuando el usuario haga clic fuera del modal, también lo cierra
+    window.onclick = function(event) {
+        if (event.target == modalCrear) {
+            modalCrear.style.display = "none";
+        }
+    }
+    </script>
+    
+
+            
             
 
             <script>

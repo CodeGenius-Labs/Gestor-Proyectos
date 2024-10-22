@@ -670,3 +670,29 @@ def crearuser(request):
 
     return render(request, 'crear_usuario.html')  
 
+
+
+
+
+def crear_proyecto(request):
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        descripcion = request.POST.get('descripcion')
+        fecha_inicio = request.POST.get('fecha_inicio')
+        fecha_fin = request.POST.get('fecha_fin')
+        
+        # Crear el nuevo proyecto
+        nuevo_proyecto = Proyecto.objects.create(
+            nombre=nombre,
+            descripcion=descripcion,
+            fecha_inicio=fecha_inicio,
+            fecha_fin=fecha_fin
+        )
+        
+        # Mostrar un mensaje de éxito
+        messages.success(request, 'El proyecto ha sido creado correctamente.')
+        
+        # Redireccionar a la pestaña superproyecto
+        return redirect('superproyecto')  # Asegúrate de que esta URL esté configurada en urls.py
+    
+    return render(request, 'superproyecto.html')

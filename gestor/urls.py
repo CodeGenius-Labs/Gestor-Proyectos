@@ -21,6 +21,7 @@ urlpatterns = [
     path('superproyecto/', views.superproyecto, name='superproyecto'),
     path('superusuario/', views.superusuario, name='superusuario'),
     path('crear-usuario/', views.crearuser, name='crear_usuario'),
+    path('crear_proyecto/', views.crear_proyecto, name='crear_proyecto'),
     
     
 
