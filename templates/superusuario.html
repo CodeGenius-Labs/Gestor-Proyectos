@@ -438,7 +438,7 @@
 
         <div class="d-flex flex-column align-items-center w-100">
             <div class="buscador">
-                <form method="GET" action="{% url 'proyectos' %}" class='d-flex align-items-center'>
+                <form method="GET" action="{% url 'superusuario' %}" class='d-flex align-items-center'>
                     <input type="text" class="search-bar col-md-1 " placeholder="Buscar..." name="search">
                     <button type="submit" class="filter-btn ms-2">
                         <i class="fa-solid fa-magnifying-glass"></i>
@@ -461,21 +461,11 @@
                             </ul>
                         </li>
                         <li class="dropdown-submenu">
-                            <a class="dropdown-item dropdown-toggle" style="cursor: pointer">Fecha de Inicio</a>
+                            <a class="dropdown-item dropdown-toggle" style="cursor: pointer">Correo</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="applyFilter('fecha_inicio', 'asc')"
+                                <li><a class="dropdown-item" onclick="applyFilter('email', 'asc')"
                                         style="cursor: pointer">Ascendente</a></li>
-                                <li><a class="dropdown-item" onclick="applyFilter('fecha_inicio', 'desc')"
-                                        style="cursor: pointer">Descendente</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-submenu">
-                            <a class="dropdown-item dropdown-toggle" style="cursor: pointer">Fecha de Finalizacion</a>
-                
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="applyFilter('fecha_fin', 'asc')"
-                                        style="cursor: pointer">Ascendente</a></li>
-                                <li><a class="dropdown-item" onclick="applyFilter('fecha_fin', 'desc')"
+                                <li><a class="dropdown-item" onclick="applyFilter('email', 'desc')"
                                         style="cursor: pointer">Descendente</a></li>
                             </ul>
                         </li>
@@ -587,6 +577,19 @@
         document.getElementById('openProyectoBtn').addEventListener('click', function() {
             window.location.href = '{% url "superproyecto" %}';  
         });
+    </script>
+    <script>
+        function applyFilter(order, direction) {
+            // Obtener la URL actual
+            const url = new URL(window.location.href);
+            
+            // Establecer los parámetros de filtro
+            url.searchParams.set('order', order);
+            url.searchParams.set('direction', direction);
+            
+            // Redirigir a la nueva URL
+            window.location.href = url.toString();
+        }
     </script>
 
 
