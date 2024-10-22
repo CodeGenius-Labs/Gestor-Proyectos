@@ -534,7 +534,7 @@ def superproyecto(request):
 
         # Guardar los cambios
         proyecto.save()
-        return redirect('verproyectos')  # Redirige a la vista de proyectos después de editar
+        return redirect('superproyecto')  # Redirige a la vista de proyectos después de editar
 
     # Eliminar proyecto
     if request.method == 'POST' and 'eliminar_proyecto' in request.POST:
@@ -543,9 +543,37 @@ def superproyecto(request):
 
         # Eliminar el proyecto
         proyecto.delete()
-        return redirect('verproyectos')  # Redirige a la vista de proyectos después de eliminar
+        return redirect('superproyecto')  # Redirige a la vista de proyectos después de eliminar
 
     context = {
         'proyectos': proyectos
     }
     return render(request, 'superproyecto.html', context)
+
+
+@login_required(login_url="login")
+def superusuario(request):
+    # Obtener todos los usuarios
+    usuarios = User.objects.all()
+    
+    if request.method == 'POST':
+        # Actualizar el usuario seleccionado si se envía el formulario
+        user_id = request.POST.get('user_id')
+        user = User.objects.get(id=user_id)
+        
+        # Modificar nombre de usuario y correo electrónico
+        new_username = request.POST.get('username')
+        new_email = request.POST.get('email')
+        
+        user.username = new_username
+        user.email = new_email
+        user.save()
+
+    if request.method == 'POST':
+        # Eliminar el usuario si se presiona el botón de eliminar
+        if 'eliminar_usuario' in request.POST:
+            user_id = request.POST.get('user_id')
+            user = User.objects.get(id=user_id)
+            user.delete()
+
+    return render(request, 'superusuario.html', {'usuarios': usuarios})

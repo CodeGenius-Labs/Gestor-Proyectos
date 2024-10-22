@@ -1,0 +1,17 @@
+/* Cambia el fondo de la barra lateral */
+.module {
+    background-color: #2e2e2e;
+    color: white;
+}
+
+/* Mejorar la apariencia de la tabla */
+.model-user th, .model-user td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+/* Acentuar los botones */
+.button {
+    background-color: #008cba;
+    color: white;
+}
