@@ -20,6 +20,9 @@ import mimetypes
 from django.core.files.storage import default_storage
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import user_passes_test
+from django.core.exceptions import ValidationError
+from datetime import datetime, timedelta
+
 
 
 
@@ -527,14 +530,49 @@ def superproyecto(request):
         proyecto = get_object_or_404(Proyecto, id=proyecto_id)
 
         # Obtener los valores del formulario
-        proyecto.nombre = request.POST.get('nombre')
-        proyecto.descripcion = request.POST.get('descripcion')
-        proyecto.fecha_inicio = request.POST.get('fecha_inicio')
-        proyecto.fecha_fin = request.POST.get('fecha_fin')
+        nombre = request.POST.get('nombre')
+        descripcion = request.POST.get('descripcion')
+        fecha_inicio = request.POST.get('fecha_inicio')
+        fecha_fin = request.POST.get('fecha_fin')
+
+        # Validación de nombre (mínimo 3 y máximo 20 caracteres, sin caracteres especiales)
+        if not re.match(r'^[a-zA-Z0-9_-]{3,20}$', nombre):
+            return HttpResponse("Error: El nombre debe tener entre 3 y 20 caracteres y solo puede contener letras, números, guiones bajos y guiones.")
+
+        # Validación de descripción (máximo 500 caracteres)
+        if len(descripcion) > 500:
+            return HttpResponse("Error: La descripción no puede tener más de 500 caracteres.")
+
+        # Validación de fechas
+        try:
+            fecha_inicio_dt = datetime.strptime(fecha_inicio, "%Y-%m-%d")
+            fecha_fin_dt = datetime.strptime(fecha_fin, "%Y-%m-%d")
+        except ValueError:
+            return HttpResponse("Error: Formato de fecha inválido.")
+
+        # Comprobar que la fecha de fin sea coherente con la fecha de inicio
+        if fecha_fin_dt < fecha_inicio_dt:
+            return HttpResponse("Error: La fecha de fin no puede ser anterior a la fecha de inicio.")
+
+        # Validar que la fecha de fin no sea más de 10 años después de la fecha de inicio
+        max_fecha_fin = fecha_inicio_dt + timedelta(days=365*10)  # 10 años
+        if fecha_fin_dt > max_fecha_fin:
+            return HttpResponse("Error: La fecha de fin no puede ser más de 10 años después de la fecha de inicio.")
+
+        # Si todas las validaciones pasan, guarda los cambios
+        proyecto.nombre = nombre
+        proyecto.descripcion = descripcion
+        proyecto.fecha_inicio = fecha_inicio
+        proyecto.fecha_fin = fecha_fin
 
         # Guardar los cambios
         proyecto.save()
         return redirect('superproyecto')  # Redirige a la vista de proyectos después de editar
+
+    context = {
+        'proyectos': proyectos
+    }
+    return render(request, 'superproyecto.html', context)
 
     # Eliminar proyecto
     if request.method == 'POST' and 'eliminar_proyecto' in request.POST:
