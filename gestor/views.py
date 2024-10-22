@@ -555,3 +555,6 @@ def superproyecto(request):
 def superusuario(request):
     usuarios = User.objects.all()  # Obtener todos los usuarios
     return render(request, 'superusuario.html', {'usuarios': usuarios})
+
+
+
