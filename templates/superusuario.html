@@ -433,6 +433,7 @@
         <aside class="barra-lateral">
 
             <button class="boton-lateral" id="openProyectoBtn">Gestion de proyectos</button>
+            <button class="boton-lateral" id="openModalsuBtn">Crear Usuario</button>
             <button class="boton-lateral"><a href="{% url 'logout'%}" style="color: #54BCDE;">Cerrar sesion</a></button>
         </aside>
 
@@ -545,6 +546,29 @@
                     </form>
                 </div>
             </div>
+
+
+            <!-- El modal para crear usuarios-->
+            <div id="modalsu" class="modal">
+                <div class="modal-content">
+                    <span id="closeModalsuBtn" class="close">&times;</span>
+                    <h2>Crear Usuario</h2>
+                    <form action="{% url 'crear_usuario' %}" method="POST">
+                        {% csrf_token %}
+                        <label for="nombre">Nombre de Usuario:</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                        
+                        <label for="correo">Correo Electrónico:</label>
+                        <input type="email" id="correo" name="correo" required>
+                        
+                        <label for="password">Contraseña:</label>
+                        <input type="password" id="password" name="password" required>
+                        
+                        <button type="submit" class="save-btn">Guardar Cambios</button>
+                    </form>
+                    
+                </div>
+            </div>
             
             <script>
             // Obtener el botón que abre el modal y los datos del usuario
@@ -553,18 +577,40 @@
                     var modal = document.getElementById('modal8');
                     modal.style.display = 'block';
             
-                    // Pasar datos al modal
+                    
                     document.getElementById('user_id').value = this.getAttribute('data-id');
                     document.getElementById('username').value = this.getAttribute('data-username');
                     document.getElementById('email').value = this.getAttribute('data-email');
                 });
             });
             
-            // Cerrar el modal
+            
             document.querySelector('.closeModalBtn8').addEventListener('click', function() {
                 document.getElementById('modal8').style.display = 'none';
             });
             </script>
+
+            <script>
+            
+            document.getElementById('openModalsuBtn').addEventListener('click', function() {
+                document.getElementById('modalsu').style.display = 'block';
+            });
+
+            
+            document.getElementById('closeModalsuBtn').addEventListener('click', function() {
+                document.getElementById('modalsu').style.display = 'none';
+            });
+
+            
+            window.onclick = function(event) {
+                var modal = document.getElementById('modalsu');
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            };
+            </script>
+
+
             
             
             

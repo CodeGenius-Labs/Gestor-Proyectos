@@ -577,3 +577,50 @@ def superusuario(request):
             user.delete()
 
     return render(request, 'superusuario.html', {'usuarios': usuarios})
+
+
+def crearuser(request):
+    if request.method == 'POST':
+        
+        username = request.POST['nombre']  
+        email = request.POST['correo']  
+        password = request.POST['password'] 
+
+        # Validar que el nombre tenga entre 8 y 50 caracteres y que no contenga números
+        if any(char.isdigit() for char in username) or len(username) < 8 or len(username) > 50:
+            if any(char.isdigit() for char in username):
+                messages.error(request, 'El nombre de usuario no puede contener números.')
+            else:
+                messages.error(request, 'El nombre de usuario debe tener entre 8 y 50 caracteres.')
+            return redirect('superusuario')
+
+        # Validar que la contraseña tenga entre 7 y 20 caracteres
+        if len(password) < 7 or len(password) > 20:
+            messages.error(request, 'La contraseña debe tener entre 7 y 20 caracteres.')
+            return redirect('superusuario')
+
+        # Validar que el email sea válido
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request, 'El correo electrónico no es válido.')
+            return redirect('superusuario')
+
+        # Verificar si el nombre de usuario o correo ya están en uso
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'El nombre de usuario ya está en uso. Por favor, elige otro.')
+        elif User.objects.filter(email=email).exists():
+            messages.error(request, 'El correo electrónico ya está registrado. Por favor, usa otro.')
+        else:
+            
+            user = User.objects.create_user(username=username, email=email, password=password)
+            user.save()
+
+            
+            auth_login(request, user)
+
+            messages.success(request, 'Usuario creado exitosamente.')
+            return redirect('superusuario')  
+
+    return render(request, 'crear_usuario.html')  
+
