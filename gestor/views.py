@@ -553,8 +553,78 @@ def superproyecto(request):
 
 @login_required(login_url="login")
 def superusuario(request):
-    usuarios = User.objects.all()  # Obtener todos los usuarios
+    # Obtener todos los usuarios
+    usuarios = User.objects.all()
+    
+    if request.method == 'POST':
+        # Actualizar el usuario seleccionado si se envía el formulario
+        user_id = request.POST.get('user_id')
+        user = User.objects.get(id=user_id)
+        
+        # Modificar nombre de usuario y correo electrónico
+        new_username = request.POST.get('username')
+        new_email = request.POST.get('email')
+        
+        user.username = new_username
+        user.email = new_email
+        user.save()
+
+    if request.method == 'POST':
+        # Eliminar el usuario si se presiona el botón de eliminar
+        if 'eliminar_usuario' in request.POST:
+            user_id = request.POST.get('user_id')
+            user = User.objects.get(id=user_id)
+            user.delete()
+
     return render(request, 'superusuario.html', {'usuarios': usuarios})
+
+
+def crearuser(request):
+    if request.method == 'POST':
+        
+        username = request.POST['nombre']  
+        email = request.POST['correo']  
+        password = request.POST['password'] 
+
+        # Validar que el nombre tenga entre 8 y 50 caracteres y que no contenga números
+        if any(char.isdigit() for char in username) or len(username) < 8 or len(username) > 50:
+            if any(char.isdigit() for char in username):
+                messages.error(request, 'El nombre de usuario no puede contener números.')
+            else:
+                messages.error(request, 'El nombre de usuario debe tener entre 8 y 50 caracteres.')
+            return redirect('superusuario')
+
+        # Validar que la contraseña tenga entre 7 y 20 caracteres
+        if len(password) < 7 or len(password) > 20:
+            messages.error(request, 'La contraseña debe tener entre 7 y 20 caracteres.')
+            return redirect('superusuario')
+
+        # Validar que el email sea válido
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request, 'El correo electrónico no es válido.')
+            return redirect('superusuario')
+
+        # Verificar si el nombre de usuario o correo ya están en uso
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'El nombre de usuario ya está en uso. Por favor, elige otro.')
+        elif User.objects.filter(email=email).exists():
+            messages.error(request, 'El correo electrónico ya está registrado. Por favor, usa otro.')
+        else:
+            
+            user = User.objects.create_user(username=username, email=email, password=password)
+            user.save()
+
+            
+            auth_login(request, user)
+
+            messages.success(request, 'Usuario creado exitosamente.')
+            return redirect('superusuario')  
+
+    return render(request, 'crear_usuario.html')  
+
+
 
 
 
