@@ -335,8 +335,8 @@ def verproyectos(request, id):
             archivo_file = request.FILES['legalDocument']
             nombre_archivo = request.POST.get('nombre')
             nuevo_archivo = Archivos(
-                nombre=nombre_archivo,
-                archivoss=archivo_file,
+                nombre=request.nombre_archivo,
+                archivoss=request.archivo_file,
                 proyecto=proyecto,
                 usuario=request.user
             )
