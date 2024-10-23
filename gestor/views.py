@@ -517,7 +517,7 @@ def actualizar_proyecto(request, id):
 def superadmin(request):
     if not request.user.is_staff:
         return redirect('home')  # Redirigir a "home" si no es staff
-    return render(request, 'superadmin.html')
+    return render(request, 'vista_superadmin_main.html')
 
 @login_required(login_url="login")
 def superproyecto(request):
@@ -570,7 +570,7 @@ def superproyecto(request):
         'proyectos': proyectos,
         'search_query': query  # Para mantener la consulta en la barra de búsqueda
     }
-    return render(request, 'superproyecto.html', context)
+    return render(request, 'gestion_proyectos_superadmin.html', context)
 
 
 @login_required(login_url="login")

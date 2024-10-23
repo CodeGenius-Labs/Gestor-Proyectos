@@ -1,0 +1,239 @@
+*{
+    background-color: #ffff;
+    padding: 0;
+    margin: 0;
+
+}
+
+.container-fluid{
+    position: relative;
+}
+
+.botones-laterales{
+    border-right: #0E2B3E 3px solid ;
+    
+}
+
+.botones-laterales a{
+    text-decoration: none;
+    background-color: #0E2B3E;
+    color: #54BCDE;
+
+}
+
+.botones-laterales .btn{
+    border-radius: 8px;
+    margin: 40px 40px;
+    height: 50px;
+
+}
+
+
+#btn-proyectos,
+#btn-gestor-usuarios,
+#btn-crear-proyecto,
+#btn-cerrar-sesion,
+#btn-crear-usuario{
+    background-color:#0E2B3E;
+    color: #54BCDE;
+    
+}
+
+
+
+#btn-cerrar-sesion{
+    margin-top: 300px;
+    margin-bottom: 0px;
+}
+
+
+
+.titulo{
+    text-align: center;
+    color: #54BCDE;
+    font-weight: bolder;
+    
+}
+
+
+#img-logo{
+    width: 100px;
+    height: auto;
+    max-width: 100%;
+    margin-right: 10px;
+    margin-top: 20px;
+}
+
+#titulo-gestor{
+    font-weight: bolder;
+    color: #54BCDE;
+    margin-top: 20px;
+}
+
+
+.saludo{
+    text-align: center;
+    color: #54BCDE;
+
+    font-size: 50px;
+    font-weight: lighter;
+    margin-top: 150px;
+}
+
+.saludo span{
+    font-weight: bolder;
+}
+ 
+
+
+/* PAGINA TABLAS GESTION PROYECTOS */
+
+
+
+#busqueda{
+    border-bottom: #0E2B3E 3px solid;
+    padding-bottom: 15px;
+}
+#input-buscar{
+    background-color: #0E2B3E;
+    color: #54BCDE;
+    width: 50%;
+    margin-right: 20px;
+    
+}
+
+
+
+#input-buscar::placeholder{
+    color: #54BCDE;
+    opacity: 0.5;
+}
+
+
+
+
+
+
+
+#btn-buscar{
+    color: #54BCDE;
+    background-color: #0E2B3E;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    padding: 10px;
+}
+
+
+
+
+.filtro{
+    margin-left: 20px;
+}
+.filtro, #btn-filtroicon, span{
+    background-color: #0E2B3E;
+    color: #54BCDE;
+    border-radius: 8px;
+    font-size: 18px;
+    
+    
+}
+
+/* Estilo del menú desplegable */
+
+
+
+
+.filtro .dropdown-toggle::after {
+    display: none; 
+}
+
+
+
+
+
+
+/* tablas css */
+
+/* Aplica estilos al contenedor de la tabla */
+.tabla.table-responsive {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+/* Anchos fijos */
+.col-proyecto {
+    width: 100px; 
+}
+
+.col-descripcion {
+    width: 350px;
+    white-space: normal;
+}
+
+.col-fecha {
+    width: 100px;
+}
+
+.col-acciones {
+    width: 40px;
+}
+
+/* Botones */
+#btn-editar, #btn-borrar {
+    background-color: #0E2B3E;
+    color: #54BCDE;
+}
+
+
+
+.tabla .table th{
+    background-color: #0e2b3e;
+    color: #54bcde80;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    text-align: center;
+    
+    align-items: center;
+    justify-content: center;
+    
+    
+}
+
+
+.tabla .table tr{
+    border: #0E2B3E 2px solid;
+}
+
+
+
+
+
+
+#btn-editar,#btn-borrar{
+    background-color: #0E2B3E;
+    color: #54BCDE;
+}
+
+#btn-editar,#btn-borrar, i{
+    background-color: #0E2B3E;
+}
+
+
+/* VISTA GESTION USUARIOS */
+
+/* Anchos fijos */
+.col-usuario {
+    width: 100px; 
+}
+
+.col-correo {
+    width:200px  ;
+    
+}
+.col-acciones {
+    width: 40px;
+}
+
+

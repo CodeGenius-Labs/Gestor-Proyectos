@@ -1,0 +1,168 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Proyectos</title>
+
+    <link rel="stylesheet" href="/static/admin/vista_superadmin_main.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" 
+    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+</head>
+
+<body>
+    <div class="container-fluid  <">
+        <div class="row">
+            <div class="col-3 p-0">
+                <div class="botones-laterales">
+                    <div class="d-flex flex-column">
+                        <button id="btn-proyectos"class="btn btn-proyectos"><a href="gestionpro.html">Gestión de proyectos </a></button>
+                        <button id="btn-gestor-usuarios"class="btn btn-gestor-usuarios"><a href="gestion_usuarios.html">Gestión de Usuarios </a></button>
+                        <button  id="btn-crear-proyecto"class="btn btn-proyectos"><a href="gestionpro.html">Crear Proyecto</a></button>
+                        <button  id="btn-cerrar-sesion"class="btn btn-proyectos"><a href="{% url 'logout'%}">Cerrar Sesion </a></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-9">
+                
+                    <div class="imagen-titulo">
+                        <div class="titulo-gestor d-flex justify-content-center align-items-center">
+                            <img id="img-logo" class="img-fluid"src="/imagenes/logo-gestor-proyectos-en-azul.ico" alt="">
+                            <h1 id="titulo-gestor">GESTOR DE PROYECTOS</h1>
+                        </div>
+                    </div>
+
+
+                
+                    <div id="busqueda" class="row">
+                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                    <input id="input-buscar"type="search" class="form-control w-50"placeholder="Buscar....">
+                                    <i id="btn-buscar"class="fa-solid fa-magnifying-glass btn  "></i>
+
+
+
+                                    <div class="dropdown">
+                                        <div class="filtro">
+                                            <button id="btn-filtro "class="btn btn-filtro d-flex        justify-content-center align-items-center  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i id="btn-filtroicon"class="fa-solid fa-list-ul me-2"></i>
+                                                <span>Filtros</span>
+                                        </button>
+
+
+                                        <!-- menu chikito --> 
+                                            <ul class="dropdown-menu ">
+                                                <li><a class="dropdown-item" href="#">Proyecto</a></li>
+                                                <li><a class="dropdown-item" href="#">Usuario</a></li>
+                                                
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                    
+                            </div>
+                            
+                    </div>
+                
+
+
+
+
+
+
+
+
+                        <div class="titulo mt-2 ">
+                            <h2>PROYECTOS</h2>
+                        </div>
+
+                        <div class="tabla table-responsive">
+                            <table class="table table-bordered text-center align-middle">
+                                
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="col-proyecto">PROYECTO</th>
+                                        <th scope="col" class="col-descripcion">DESCRIPCION</th>
+                                        <th scope="col" class="col-fecha">FECHA CREACION</th>
+                                        <th scope="col" class="col-acciones">ACCIONES</th>
+                                    </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                        <tr class="fila">
+                                            <td class="td-proyecto">Valorant</td>
+                                            <td class="td-descripcion"> Valorant es un shooter táctico en primera persona de estilo hero shooter, desarrollado y publicado por Riot </td>
+                                            <td class="td-fecha">21/01/2004</td>
+                                            <td class="td-acciones">
+                                                <button id="btn-editar"class=" btn btn-editar"><i class="fa-solid fa-pen"></i></button>
+                                                <button id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+
+
+                                        <tr class="fila">
+                                            <td class="td-proyecto">Jeinnert</td>
+                                            <td class="td-descripcion"> Los atacantes llevan una bomba llamada «Spike», que deben plantar en uno de los sitios designados. Si logran proteger la Spike durante 40 segundos y hacerla detonar, obtienen un punto. Los defensores ganan un punto si desactivan la Spike o si el temporizador de la ronda de 100 segundos expira sin que la bomba haya explotado. También se puede ganar un punto al eliminar a todos los miembros del equipo contrario. Después de doce rondas, los equipos cambian de rol, y el primero en alcanzar 13 rondas ganadas </td>
+                                            <td class="td-fecha">21/01/2004</td>
+                                            <td class="td-acciones">
+                                                <button id="btn-editar"class=" btn btn-editar"><i class="fa-solid fa-pen"></i></button>
+                                                <button id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="fila">
+                                            <td class="td-proyecto">Paragon: The Overprime</td>
+                                            <td class="td-descripcion"> Paragon: The Overprime es un MOBA de acción en tercera persona gratuito basado en equipos. Elige uno de los muchos poderosos héroes con habilidades exclusivas y trabaja con tus compañeros de equipo para conquistar el campo de batalla de Prime.</td>
+                                            <td class="td-fecha">21/01/2004</td>
+                                            <td class="td-acciones">
+                                                <button id="btn-editar"class=" btn btn-editar"><i class="fa-solid fa-pen"></i></button>
+                                                <button id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr class="fila">
+                                            <td class="td-proyecto">Halo Infinite</td>
+                                            <td class="td-descripcion">Halo Infinite es un videojuego de disparos en primera persona de la franquicia de videojuegos de ciencia ficción creada por Bungie Studios y actualmente desarrollada por 343 Industries. Es exclusivo para las plataformas Xbox One, Microsoft Windows y Xbox Series X|S..</td>
+                                            <td class="td-fecha">21/01/2004</td>
+                                            <td class="td-acciones">
+                                                <button id="btn-editar"class=" btn btn-editar"><i class="fa-solid fa-pen"></i></button>
+                                                <button id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr class="fila">
+                                            <td class="td-proyecto">Halo Infinite</td>
+                                            <td class="td-descripcion">Halo Infinite es un videojuego de disparos en primera persona de la franquicia de videojuegos de ciencia ficción creada por Bungie Studios y actualmente desarrollada por 343 Industries. Es exclusivo para las plataformas Xbox One, Microsoft Windows y Xbox Series X|S..</td>
+                                            <td class="td-fecha">21/01/2004</td>
+                                            <td class="td-acciones">
+                                                <button id="btn-editar"class=" btn btn-editar"><i class="fa-solid fa-pen"></i></button>
+                                                <button id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        
+                                        
+                                    </tbody>
+                                    
+                                </table>
+                        </div>
+
+
+
+
+                    </div>
+
+                    
+                    
+                    
+                
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
