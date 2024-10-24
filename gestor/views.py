@@ -622,4 +622,4 @@ def superusuario(request):
         'search_query': query  # Para mantener la consulta en la barra de búsqueda
     }
 
-    return render(request, 'superusuario.html', context)
+    return render(request, 'gestion_usuarios_superadmin.html', context)

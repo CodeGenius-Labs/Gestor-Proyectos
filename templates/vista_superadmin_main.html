@@ -13,17 +13,17 @@
 <body>
     <div class="container-fluid  ">
         <div class="row">
-            <div class="col-3  p-0">
+            <div class="col-2  p-0">
                 <div class="botones-laterales">
                     <div class="d-flex flex-column">
                         <button id="btn-proyectos"class="btn btn-proyectos"><a href="{% url 'superproyecto'%}">Gestión de proyectos </a></button>
-                        <button id="btn-gestor-usuarios"class="btn btn-gestor-usuarios"><a href="gestion_usuarios.html">Gestión de Usuarios </a></button>
+                        <button id="btn-gestor-usuarios"class="btn btn-gestor-usuarios"><a href="{% url "superusuario" %}">Gestión de Usuarios </a></button>
                         <button  id="btn-cerrar-sesion"class="btn btn-proyectos"><a href="{% url 'logout'%}">Cerrar Sesion </a></button>
                     </div>
                 </div>
             </div>
             
-            <div class="col-9">
+            <div class="col-10">
                 
                     <div class="imagen-titulo">
                         <div class="titulo-gestor d-flex justify-content-center align-items-center">
