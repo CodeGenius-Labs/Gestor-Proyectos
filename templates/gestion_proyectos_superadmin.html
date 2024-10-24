@@ -35,46 +35,47 @@
                 
                     <div class="imagen-titulo">
                         <div class="titulo-gestor d-flex justify-content-center align-items-center">
-                            <img id="img-logo" class="img-fluid"src="/imagenes/logo-gestor-proyectos-en-azul.ico" alt="">
+                            <img id="img-logo" class="img-fluid"src="{% static '/imagenes/ico/logo-gestor-proyectos-en-azul.ico' %}" alt="">
                             <h1 id="titulo-gestor">GESTOR DE PROYECTOS</h1>
                         </div>
                     </div>
 
-
-                
+                    
                     <div id="busqueda" class="row">
-                            <div class="d-flex justify-content-center align-items-center mt-3">
-                                    <input id="input-buscar"type="search" class="form-control w-50"placeholder="Buscar....">
-                                    <i id="btn-buscar"class="fa-solid fa-magnifying-glass btn  "></i>
+                        <div class="d-flex justify-content-center align-items-center mt-3">
+                                <input id="input-buscar"type="search" class="form-control w-50"placeholder="Buscar....">
+                                <i id="btn-buscar"class="fa-solid fa-magnifying-glass btn  "></i>
 
 
 
-                                    <div class="dropdown">
-                                        <div class="filtro">
-                                            <button id="btn-filtro "class="btn btn-filtro d-flex        justify-content-center align-items-center  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i id="btn-filtroicon"class="fa-solid fa-list-ul me-2"></i>
-                                                <span>Filtros</span>
+                                <div class="dropdown">
+                                    <div class="filtro">
+                                        <button id="btn-filtro" class="btn btn-filtro d-flex justify-content-center align-items-center dropdown-toggle" type="button" aria-expanded="false">
+                                            <i id="btn-filtroicon" class="fa-solid fa-list-ul me-2"></i>
+                                            <span>Filtros</span>
                                         </button>
-
-
-                                        <!-- menu chikito --> 
-                                            <ul class="dropdown-menu ">
-                                                <li><a class="dropdown-item" href="#">Proyecto</a></li>
-                                                <li><a class="dropdown-item" href="#">Usuario</a></li>
-                                                
-                                            </ul>
-
-                                        </div>
+                                
+                                        <!-- menú principal -->
+                                        <ul class="dropdown-menu">
+                                            <li class="dropdown-submenu">
+                                                <a class="dropdown-item dropdown-toggle" href="#" style="cursor: pointer;">Nombre y</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="ola">Opción 1</a></li>
+                                                    <li><a class="dropdown-item" href="#">Opción 2</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#">Usuario</a></li>
+                                        </ul>
                                     </div>
-                                    
-                            </div>
-                            
-                    </div>
+                                </div>
+                                
+                        </div>
+                        
+                </div>
                 
 
 
-
-
+                    
 
 
 
@@ -164,5 +165,7 @@
         </div>
 
     </div>
+
+    <script src="{% static 'js/dropdown.js' %}"></script>
 </body>
 </html>
