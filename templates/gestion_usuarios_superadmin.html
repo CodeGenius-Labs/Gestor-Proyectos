@@ -92,47 +92,17 @@
                                     </thead>
                                     
                                     <tbody>
+                                        {% for user in usuarios %}
                                         <tr class="fila">
-                                            <td class="td-usuario">MeowMeowCatLover</td>
-                                            <td class="td-correo">Jeinnert123@gmail.com </td>
+                                            <td class="td-usuario">{{ user.username }}</td>
+                                            <td class="td-correo">{{ user.email }}</td>
                                             
                                             <td class="td-acciones">
                                                 <button id="btn-editar"class=" btn btn-editar"><i class="fa-solid fa-pen"></i></button>
                                                 <button id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
                                             </td>
                                         </tr>
-
-
-                                        <tr class="fila">
-                                            <td class="td-usuario">MeowMeowCatLover</td>
-                                            <td class="td-correo">Jeinnert123@gmail.com </td>
-                                            
-                                            <td class="td-acciones">
-                                                <button id="btn-editar"class=" btn btn-editar"><i class="fa-solid fa-pen"></i></button>
-                                                <button id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-
-
-                                        <tr class="fila">
-                                            <td class="td-usuario">MeowMeowCatLover</td>
-                                            <td class="td-correo">Jeinnert123@gmail.com </td>
-                                            
-                                            <td class="td-acciones">
-                                                <button id="btn-editar"class=" btn btn-editar"><i class="fa-solid fa-pen"></i></button>
-                                                <button id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-
-                                        <tr class="fila">
-                                            <td class="td-usuario">MeowMeowCatLover</td>
-                                            <td class="td-correo">Jeinnert123@gmail.com </td>
-                                            
-                                            <td class="td-acciones">
-                                                <button id="btn-editar"class=" btn btn-editar"><i class="fa-solid fa-pen"></i></button>
-                                                <button id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
-                                            </td>
-                                        </tr>
+                                        {% endfor %}
 
 
                                         <tr class="fila">
@@ -146,37 +116,6 @@
                                         </tr>
 
 
-                                        <tr class="fila">
-                                            <td class="td-usuario">MeowMeowCatLover</td>
-                                            <td class="td-correo">Jeinnert123@gmail.com </td>
-                                            
-                                            <td class="td-acciones">
-                                                <button id="btn-editar"class=" btn btn-editar"><i class="fa-solid fa-pen"></i></button>
-                                                <button id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-
-                                        <tr class="fila">
-                                            <td class="td-usuario">MeowMeowCatLover</td>
-                                            <td class="td-correo">Jeinnert123@gmail.com </td>
-                                            
-                                            <td class="td-acciones">
-                                                <button id="btn-editar"class=" btn btn-editar"><i class="fa-solid fa-pen"></i></button>
-                                                <button id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-
-
-                                        <tr class="fila">
-                                            <td class="td-usuario">MeowMeowCatLover</td>
-                                            <td class="td-correo">Jeinnert123@gmail.com </td>
-                                            
-                                            <td class="td-acciones">
-                                                <button id="btn-editar"class=" btn btn-editar"><i class="fa-solid fa-pen"></i></button>
-                                                <button id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                        
                                     </tbody>
                                     
                                 </table>

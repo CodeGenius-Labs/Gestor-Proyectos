@@ -100,54 +100,18 @@
                                     </thead>
                                     
                                     <tbody>
+                                        {% for proyecto in proyectos %}
                                         <tr class="fila">
-                                            <td class="td-proyecto">Valorant</td>
-                                            <td class="td-descripcion"> Valorant es un shooter táctico en primera persona de estilo hero shooter, desarrollado y publicado por Riot </td>
-                                            <td class="td-fecha">21/01/2004</td>
+                                            <td class="td-proyecto">{{ proyecto.nombre }}</td>
+                                            <td class="td-descripcion">{{ proyecto.descripcion }}</td>
+                                            <td class="td-fecha">{{ proyecto.fecha_inicio|date:"d/m/Y" }}</td>
                                             <td class="td-acciones">
                                                 <button id="btn-editar"class=" btn btn-editar"><i class="fa-solid fa-pen"></i></button>
                                                 <button id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
                                             </td>
                                         </tr>
+                                        {% endfor %}
 
-
-                                        <tr class="fila">
-                                            <td class="td-proyecto">Jeinnert</td>
-                                            <td class="td-descripcion"> Los atacantes llevan una bomba llamada «Spike», que deben plantar en uno de los sitios designados. Si logran proteger la Spike durante 40 segundos y hacerla detonar, obtienen un punto. Los defensores ganan un punto si desactivan la Spike o si el temporizador de la ronda de 100 segundos expira sin que la bomba haya explotado. También se puede ganar un punto al eliminar a todos los miembros del equipo contrario. Después de doce rondas, los equipos cambian de rol, y el primero en alcanzar 13 rondas ganadas </td>
-                                            <td class="td-fecha">21/01/2004</td>
-                                            <td class="td-acciones">
-                                                <button id="btn-editar"class=" btn btn-editar"><i class="fa-solid fa-pen"></i></button>
-                                                <button id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-
-                                        <tr class="fila">
-                                            <td class="td-proyecto">Paragon: The Overprime</td>
-                                            <td class="td-descripcion"> Paragon: The Overprime es un MOBA de acción en tercera persona gratuito basado en equipos. Elige uno de los muchos poderosos héroes con habilidades exclusivas y trabaja con tus compañeros de equipo para conquistar el campo de batalla de Prime.</td>
-                                            <td class="td-fecha">21/01/2004</td>
-                                            <td class="td-acciones">
-                                                <button id="btn-editar"class=" btn btn-editar"><i class="fa-solid fa-pen"></i></button>
-                                                <button id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr class="fila">
-                                            <td class="td-proyecto">Halo Infinite</td>
-                                            <td class="td-descripcion">Halo Infinite es un videojuego de disparos en primera persona de la franquicia de videojuegos de ciencia ficción creada por Bungie Studios y actualmente desarrollada por 343 Industries. Es exclusivo para las plataformas Xbox One, Microsoft Windows y Xbox Series X|S..</td>
-                                            <td class="td-fecha">21/01/2004</td>
-                                            <td class="td-acciones">
-                                                <button id="btn-editar"class=" btn btn-editar"><i class="fa-solid fa-pen"></i></button>
-                                                <button id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr class="fila">
-                                            <td class="td-proyecto">Halo Infinite</td>
-                                            <td class="td-descripcion">Halo Infinite es un videojuego de disparos en primera persona de la franquicia de videojuegos de ciencia ficción creada por Bungie Studios y actualmente desarrollada por 343 Industries. Es exclusivo para las plataformas Xbox One, Microsoft Windows y Xbox Series X|S..</td>
-                                            <td class="td-fecha">21/01/2004</td>
-                                            <td class="td-acciones">
-                                                <button id="btn-editar"class=" btn btn-editar"><i class="fa-solid fa-pen"></i></button>
-                                                <button id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
-                                            </td>
-                                        </tr>
                                         
                                         
                                     </tbody>

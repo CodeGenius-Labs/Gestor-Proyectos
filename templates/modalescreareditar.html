@@ -1,0 +1,43 @@
+<!-- modal.html -->
+<!-- Modal emergente para editar proyecto-->
+<div id="modal7" class="modal">
+    <div class="modal-content">
+        <div class="content">
+            <div class="inputs">
+                <span class="close-btn7">&times;</span>
+                <h4>Configurar proyecto</h4>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="proyecto_id" id="proyecto_id"> <!-- Input oculto para el ID del proyecto -->
+
+                    <!-- Campo de nombre -->
+                    <div class="input_campos">
+                        <label for="nombre">Nombre</label>
+                        <input class="input_nombre" placeholder="Nombre del proyecto" name="nombre" id="nombre" required>
+                    </div>
+
+                    <!-- Campo de Descripcion -->
+                    <div class="input_campos">
+                        <label for="descripcion" class="form-label">Descripción</label>
+                        <textarea class="input_descripcion" name="descripcion" id="descripcion" rows="4" required></textarea>
+                    </div>                                
+
+                    <div class="form-container">
+                        <div class="input_campos">
+                            <label for="fecha_inicio">Fecha de Inicio</label>
+                            <input type="date" id="fecha_inicio" name="fecha_inicio" class="input_fecha" required>
+                        </div>
+                        
+                        <div class="input_campos">
+                            <label for="fecha_fin">Fecha de Fin</label>
+                            <input type="date" id="fecha_fin" name="fecha_fin" class="input_fecha" required>
+                        </div>
+                        
+                    </div>
+                    <button class="btncrear" type="submit" name="editar_proyecto">Modificar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
