@@ -1,0 +1,45 @@
+<!------Contenedor--Titulo- iconologin------->
+
+    
+    <div class="containermain">
+
+        <div class="tittle mb-2  ">
+        <h1>Crear Proyecto</h1>
+        </div>
+
+        <div class="profileicon   float-lg-end">
+            {% comment %} <i  class="hola fa-regular fa-user fa-2x" ></i> {% endcomment %}
+            <img id="fotoperfil" src="{{ user.picture.url }}" alt="">
+
+        </div>
+        
+    <div>
+
+    <!-------contenedor formulario---------------------->
+
+    <div class="container   ">
+        <!--------formulario------------->
+        <form class="input row " method="POST" action="{% url 'crear_proyecto' %}"  >
+            {% csrf_token %} <!-------Seguridad ataques CSRF----------------------->
+            <!-------contenedor label--inputs----------------------->
+            <div class="input-group"  >
+                <label for="" class="col-form-label">Nombre del proyecto:</label>
+                <input type="text" class="form-control  " name="username" value="{{ user.username }}"  required>
+            </div>
+
+            <div class="input-group"  >
+                <label for="" class="form-label">Descripcion:</label>
+                <input type="text" class="form-control" name="description" required>
+            </div>
+
+
+            <!--------------boton-actualizar------------------->
+            <button type="submit" class="Boton  ">Crear</button>
+            
+        
+        </form>
+    </div>
+        
+    </div>
+
+</div>
