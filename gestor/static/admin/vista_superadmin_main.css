@@ -203,6 +203,10 @@
     color: #54BCDE;
 }
 
+#btn-editar-usu, #btn-borrar-usu, i {
+    background-color: #0E2B3E;
+    color: #54BCDE;
+}
 
 
 .tabla .table th{
@@ -237,6 +241,8 @@
 #btn-editar,#btn-borrar, i{
     background-color: #0E2B3E;
 }
+
+
 
 
 /* VISTA GESTION USUARIOS */
