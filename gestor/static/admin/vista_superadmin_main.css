@@ -33,13 +33,17 @@
 #btn-gestor-usuarios,
 #btn-crear-proyecto,
 #btn-cerrar-sesion,
+#btn-cerrar-sesion-main,
 #btn-crear-usuario{
     background-color:#0E2B3E;
     color: #54BCDE;
     
 }
 
-
+#btn-cerrar-sesion-main{
+    margin-top: 430px;
+    margin-bottom: 0;
+}
 
 #btn-cerrar-sesion{
     margin-top: 300px;
