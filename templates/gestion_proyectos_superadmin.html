@@ -29,7 +29,7 @@
                     <div class="d-flex flex-column">
                         <button id="btn-proyectos"class="btn btn-proyectos"><a href="{% url "superproyecto" %}">Gestión de proyectos </a></button>
                         <button id="btn-gestor-usuarios"class="btn btn-gestor-usuarios"><a href="{% url 'superusuario' %}">Gestión de Usuarios </a></button>
-                        <button  id="btn-crear-proyecto"class="btn btn-proyectos"><a href="gestionpro.html">Crear Proyecto</a></button>
+                        <button  id="btn-crear-proyecto"class="btn btn-proyectos">Crear Proyecto</a></button>
                         <button  id="btn-cerrar-sesion"class="btn btn-proyectos"><a href="{% url 'logout'%}">Cerrar Sesion </a></button>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
 
                 {% comment %} modales  {% endcomment %}
                  {% include "modalescreareditar.html" %}
-
+                 {% include "crearproyectosuperadmin.html" %}
 
 
 
@@ -148,6 +148,7 @@
 
     </div>
 
+    
     <script src="{% static 'js/dropdown.js' %}"></script>
     <script src="{% static 'js/modales.js' %}"></script>
 </body>

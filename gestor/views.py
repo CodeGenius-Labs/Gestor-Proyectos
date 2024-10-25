@@ -669,7 +669,7 @@ def crearuser(request):
             messages.success(request, 'Usuario creado exitosamente.')
             return redirect('superusuario')  
 
-    return render(request, 'crear_usuario.html')  
+    return render(request, 'gestion_usuarios_superadmin.html')  
 
 
 
