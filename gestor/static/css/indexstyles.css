@@ -41,6 +41,15 @@ header img{
 
 }
 
+
+.botonlogout span,
+.botonproyectos span,
+.botonlogin span{
+    color: #54BCDE;
+    text-decoration: none;
+
+}
+
 .botonproyectos i,
 .botonlogout i,
 .botonlogin i{
