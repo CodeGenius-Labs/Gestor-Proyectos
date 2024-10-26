@@ -46,8 +46,12 @@
                     
                     <div id="busqueda" class="row">
                         <div class="d-flex justify-content-center align-items-center mt-3">
-                                <input id="input-buscar"type="search" class="form-control w-50"placeholder="Buscar....">
-                                <i id="btn-buscar"class="fa-solid fa-magnifying-glass btn  "></i>
+                            <form method="GET" action="{% url 'superproyecto' %}" class='d-flex align-items-center'>
+                                <input id="input-buscar"type="search" class="form-control w-50" placeholder="Buscar...." name="search" value="{{ search_query }}">
+                                <button type="submit" class="filter-btn ms-2">
+                                    <i id="btn-buscar"class="fa-solid fa-magnifying-glass btn  "></i>
+                                </button>
+                            </form>
 
 
 
@@ -63,22 +67,22 @@
                                             <li class="dropdown-submenu">
                                                 <a class="dropdown-item dropdown-toggle" href="#">Nombre</a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item" href="ola">Ascendente </a></li>
-                                                    <li><a class="dropdown-item" href="#">Descendente</a></li>
+                                                    <li><a class="dropdown-item" onclick="applyFilter('nombre', 'asc')" style="cursor: pointer">Ascendente</a></li>
+                                                    <li><a class="dropdown-item" onclick="applyFilter('nombre', 'desc')" style="cursor: pointer">Descendente</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
-                                                <a class="dropdown-item dropdown-toggle" href="#">Fecha de Creacion</a>
+                                                <a class="dropdown-item dropdown-toggle" href="#">Fecha de Inicio</a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item" href="ola">Ascendente </a></li>
-                                                    <li><a class="dropdown-item" href="#">Descendente</a></li>
+                                                    <li><a class="dropdown-item" onclick="applyFilter('fecha_inicio', 'asc')" style="cursor: pointer">Ascendente</a></li>
+                                                    <li><a class="dropdown-item" onclick="applyFilter('fecha_inicio', 'desc')" style="cursor: pointer">Descendente</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
-                                                <a class="dropdown-item dropdown-toggle" href="#">Fecha de Creacion</a>
+                                                <a class="dropdown-item dropdown-toggle" href="#">Fecha de Fin</a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item" href="ola">Ascendente </a></li>
-                                                    <li><a class="dropdown-item" href="#">Descendente</a></li>
+                                                    <li><a class="dropdown-item" onclick="applyFilter('fecha_fin', 'asc')" style="cursor: pointer">Ascendente</a></li>
+                                                    <li><a class="dropdown-item" onclick="applyFilter('fecha_fin', 'desc')" style="cursor: pointer">Descendente</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -122,8 +126,17 @@
                                                 <button id="btn-editar" class="btn btn-editar"data-id="{{ proyecto.id }}" data-nombre="{{ proyecto.nombre }}" data-descripcion="{{ proyecto.descripcion }}" data-fecha-inicio="{{ proyecto.fecha_inicio|date:'Y-m-d' }}" data-fecha-fin="{{ proyecto.fecha_fin|date:'Y-m-d' }}">
                                                     <i class="fa-solid fa-pen"></i>
                                                 </button>
-                                                <button id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
+                                                <!-- Botón de Eliminar -->
+                                                <form method="POST" style="display:inline;">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="proyecto_id" value="{{ proyecto.id }}">
+                                                    <button type="submit" name="eliminar_proyecto" id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
+                                                </form>
                                             </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="4">No hay proyectos disponibles.</td>
                                         </tr>
                                         {% endfor %}
 
@@ -151,5 +164,18 @@
     
     <script src="{% static 'js/dropdown.js' %}"></script>
     <script src="{% static 'js/modales.js' %}"></script>
+    <script>
+        function applyFilter(order, direction) {
+            // Obtener la URL actual
+            const url = new URL(window.location.href);
+            
+            // Establecer los parámetros de filtro
+            url.searchParams.set('order', order);
+            url.searchParams.set('direction', direction);
+            
+            // Redirigir a la nueva URL
+            window.location.href = url.toString();
+        }
+    </script>
 </body>
 </html>

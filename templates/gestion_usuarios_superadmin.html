@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <link rel="stylesheet" href="{% static '/admin/vista_superadmin_main.css' %}">
-    <link rel="stylesheet" href="{% static "/css/modaleditarusuario.css" %}">
+    <link rel="stylesheet" href="{% static '/css/modaleditarusuario.css' %}">
 </head>
 
 <body>
@@ -41,8 +41,12 @@
                 
                     <div id="busqueda" class="row">
                             <div class="d-flex justify-content-center align-items-center mt-3">
-                                    <input id="input-buscar"type="search" class="form-control w-50"placeholder="Buscar....">
-                                    <i id="btn-buscar"class="fa-solid fa-magnifying-glass btn  "></i>
+                                <form method="GET" action="{% url 'superusuario' %}" class='d-flex align-items-center'>
+                                    <input id="input-buscar"type="search" class="form-control w-50" placeholder="Buscar...." name="search" value="{{ search_query }}">
+                                    <button type="submit" class="filter-btn ms-2">
+                                        <i id="btn-buscar"class="fa-solid fa-magnifying-glass btn  "></i>
+                                    </button>
+                                </form>
 
 
 
@@ -56,13 +60,23 @@
                                             <!-- menú principal -->
                                             <ul class="dropdown-menu">
                                                 <li class="dropdown-submenu">
-                                                    <a class="dropdown-item dropdown-toggle" href="#" style="cursor: pointer;">Nombre y</a>
+                                                    <a class="dropdown-item dropdown-toggle" href="#" style="cursor: pointer;">Nombre</a>
                                                     <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="ola">Opción 1</a></li>
-                                                        <li><a class="dropdown-item" href="#">Opción 2</a></li>
+                                                        <li><a class="dropdown-item" onclick="applyFilter('username', 'asc')"
+                                                            style="cursor: pointer">Ascendente</a></li>
+                                                        <li><a class="dropdown-item" onclick="applyFilter('username', 'desc')"
+                                                                style="cursor: pointer">Descendente</a></li>
                                                     </ul>
                                                 </li>
-                                                <li><a class="dropdown-item" href="#">Usuario</a></li>
+                                                <li class="dropdown-submenu">
+                                                    <a class="dropdown-item dropdown-toggle" href="#" style="cursor: pointer;">Correo</a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" onclick="applyFilter('email', 'asc')"
+                                                                style="cursor: pointer">Ascendente</a></li>
+                                                        <li><a class="dropdown-item" onclick="applyFilter('email', 'desc')"
+                                                                style="cursor: pointer">Descendente</a></li>
+                                                    </ul>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -101,8 +115,17 @@
                                             <td class="td-acciones">
                                                 <button id="btn-editar-usu" class="btn btn-editar" data-id="{{ user.id }}"
                                                 data-username="{{ user.username }}" data-email="{{ user.email }}"><i class="fa-solid fa-pen"></i></button>
-                                                <button id="btn-borrar-usu"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
+                                                <form method="POST" action="{% url 'superusuario' %}" style="display:inline;">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                                                    <button type="submit" name="eliminar_usuario" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?');" id="btn-borrar-usu"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
+                                                </form>
+                                                
                                             </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="3">No hay usuarios disponibles.</td>
                                         </tr>
                                         {% endfor %}
 
@@ -129,5 +152,18 @@
     <script src="{% static 'js/modales.js' %}"></script>
     <script src="{% static 'js/modaleditarusu.js' %}"></script>
     <script src="{% static 'js/modalcrearusu.js' %}"></script>
+    <script>
+        function applyFilter(order, direction) {
+            // Obtener la URL actual
+            const url = new URL(window.location.href);
+            
+            // Establecer los parámetros de filtro
+            url.searchParams.set('order', order);
+            url.searchParams.set('direction', direction);
+            
+            // Redirigir a la nueva URL
+            window.location.href = url.toString();
+        }
+    </script>
 </body>
 </html>

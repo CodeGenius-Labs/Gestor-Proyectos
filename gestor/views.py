@@ -608,7 +608,7 @@ def superusuario(request):
     order = request.GET.get('order')
     direction = request.GET.get('direction', 'asc')
 
-    if order in ['nombre', 'email']:
+    if order in ['username', 'email']:
         if direction == 'asc':
             usuarios = usuarios.order_by(order)
         else:
