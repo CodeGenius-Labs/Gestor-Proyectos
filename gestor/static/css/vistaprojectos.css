@@ -6,7 +6,7 @@ body {
     margin-top: 40px;
 }
 .search-bar {
-    width: 400px;
+    
     border-radius: 30px;
     border: 1px solid #ccc;
     padding: 10px 20px;
@@ -38,7 +38,12 @@ body {
 .Botonfilter i{
     color: #54BCDE;
     
-    
+}
+
+.Botonfilter span{
+    color: #54BCDE;
+    font-weight: bolder;
+    font-size: 18px;
 }
 
 /*menuchikito*/
@@ -64,8 +69,8 @@ body {
     text-align: center;
     margin-bottom: 30px;
     font-size: 45px;
-    display: block;
-    width: 90%;
+    display: flexbox;
+    width: 100%;
 }
 
 
@@ -90,9 +95,9 @@ body {
     
 }
 .project-card h5 {
-    font-weight: lighter;
+    font-weight: bold;
     border-bottom: 30px;
-    color: #000;
+    
 }
 .project-card p {
     color: #000;
@@ -101,18 +106,28 @@ body {
 .btn-view {
     border-radius: 15px;
     color: #54BCDE;    ;
-    
-    padding: 10px 20px;
+    padding: 10px 10px;
     background-color: #0E2B3E;
 
 }
+
+.btn-crear{
+    color: #0E2B3E;
+    border: #0E2B3E 3px solid;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 13px;
+    padding: 0;
+}
+
 
 
 .btn-view:hover {
     background-color: #031d2e;
     color: #ffffff;
-    transform: scale(1.1);
-    transition: 0.2s ease-in;
+    transform: scale(1.03);
+    transition: 0.2s ease-in-out;
 
 }
 .profile-icon {

@@ -518,10 +518,14 @@ def actualizar_proyecto(request, id):
 
 @login_required(login_url="login")
 def superadmin(request):
-    return render(request, 'superadmin.html')
+    if not request.user.is_staff:
+        return redirect('home')  # Redirigir a "home" si no es staff
+    return render(request, 'vista_superadmin_main.html')
 
 @login_required(login_url="login")
 def superproyecto(request):
+    if not request.user.is_staff:
+        return redirect('home')  # Redirigir a "home" si no es staff
     proyectos = Proyecto.objects.all()
 
     # Editar proyecto
@@ -582,15 +586,35 @@ def superproyecto(request):
         # Eliminar el proyecto
         proyecto.delete()
         return redirect('superproyecto')  # Redirige a la vista de proyectos después de eliminar
+    # Manejo de búsqueda
+    query = request.GET.get('search', '')
+    if query:
+        proyectos = proyectos.filter(nombre__icontains=query)
+
+    # Manejar el filtrado y ordenamiento
+    order = request.GET.get('order')
+    direction = request.GET.get('direction', 'asc')
+
+    if order in ['nombre', 'fecha_inicio', 'fecha_fin']:
+        if direction == 'asc':
+            proyectos = proyectos.order_by(order)
+        else:
+            proyectos = proyectos.order_by('-' + order)
+
+
+    # Pasar los proyectos al contexto de la plantilla
 
     context = {
-        'proyectos': proyectos
+        'proyectos': proyectos,
+        'search_query': query  # Para mantener la consulta en la barra de búsqueda
     }
-    return render(request, 'superproyecto.html', context)
+    return render(request, 'gestion_proyectos_superadmin.html', context)
 
 
 @login_required(login_url="login")
 def superusuario(request):
+    if not request.user.is_staff:
+        return redirect('home')  # Redirigir a "home" si no es staff
     # Obtener todos los usuarios
     usuarios = User.objects.all()
     
@@ -613,8 +637,31 @@ def superusuario(request):
             user_id = request.POST.get('user_id')
             user = User.objects.get(id=user_id)
             user.delete()
+    
+    query = request.GET.get('search', '')
+    if query:
+        usuarios = usuarios.filter(username__icontains=query)
 
-    return render(request, 'superusuario.html', {'usuarios': usuarios})
+    # Manejar el filtrado y ordenamiento
+    order = request.GET.get('order')
+    direction = request.GET.get('direction', 'asc')
+
+    if order in ['username', 'email']:
+        if direction == 'asc':
+            usuarios = usuarios.order_by(order)
+        else:
+            usuarios = usuarios.order_by('-' + order)
+
+
+    # Pasar los proyectos al contexto de la plantilla
+
+    context = {
+        'usuarios': usuarios,
+        'search_query': query  # Para mantener la consulta en la barra de búsqueda
+    }
+
+    return render(request, 'gestion_usuarios_superadmin.html', context)
+
 
 
 def crearuser(request):
@@ -660,5 +707,31 @@ def crearuser(request):
             messages.success(request, 'Usuario creado exitosamente.')
             return redirect('superusuario')  
 
-    return render(request, 'crear_usuario.html')  
+    return render(request, 'gestion_usuarios_superadmin.html')  
 
+
+
+
+
+def crear_proyecto(request):
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        descripcion = request.POST.get('descripcion')
+        fecha_inicio = request.POST.get('fecha_inicio')
+        fecha_fin = request.POST.get('fecha_fin')
+        
+        # Crear el nuevo proyecto
+        nuevo_proyecto = Proyecto.objects.create(
+            nombre=nombre,
+            descripcion=descripcion,
+            fecha_inicio=fecha_inicio,
+            fecha_fin=fecha_fin
+        )
+        
+        # Mostrar un mensaje de éxito
+        messages.success(request, 'El proyecto ha sido creado correctamente.')
+        
+        # Redireccionar a la pestaña superproyecto
+        return redirect('superproyecto')  # Asegúrate de que esta URL esté configurada en urls.py
+    
+    return render(request, 'superproyecto.html')

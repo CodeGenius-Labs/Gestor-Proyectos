@@ -150,11 +150,11 @@
 
 
         <!--Proyecto-barrabusqueda,botonfiltro,menudesplegable --> 
-        <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
             <div class="project-title">GESTOR DE PROYECTOS</div>
             <div class="d-flex align-items-center">
                 <form method="GET" action="{% url 'proyectos' %}" class='d-flex align-items-center'>
-                    <input type="text" class="search-bar col-md-1 " placeholder="Buscar..." name="search" value="{{ search_query }}">
+                    <input type="text" class="search-bar col-lg-10 col-md-6 col-sm-6 " placeholder="Buscar..." name="search" value="{{ search_query }}">
                     <button type="submit" class="filter-btn ms-2">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
@@ -162,7 +162,8 @@
                 
                 <div class="Botonfilter">
                     <button class=" btn dropdown-toggle mp-4" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="10,20">
-                        <i class="fa-solid fa-filter">  Filtros</i>
+                        <i class="fa-solid fa-filter"></i>
+                        <span>Filtros</span>
                     </button>
                     <ul class="dropdown-menu">
                         <li class="dropdown-submenu">
@@ -190,7 +191,7 @@
                         <li><hr class="dropdown-divider"></li>
                     </ul>
                 </div>
-        </div>
+            </div>
     </div>
         <!--Proyecto-barrabusqueda,botonfiltro,menudesplegable-->
 
@@ -202,7 +203,7 @@
             <div class="col-md-3">
                 <div class="project-card">
 
-                    <button class="btn btn-view " id="openModalBtn"><i class="fa-solid fa-plus fa-2x"></i></button>
+                    <button class="btn btn-crear " id="openModalBtn"><i class="fa-solid fa-plus fa-2x"></i></button>
                     <h5>Crear Nuevo Proyecto</h5>
 
                     <!--Modal emergente--> 
