@@ -44,19 +44,20 @@
 
                 <div class="collapse navbar-collapse   ">
                     {% if request.user.is_authenticated %}
-                    <div class="botonlogout">
-                        <a href="{% url 'logout' %}" class="w-100" style="text-decoration: none;">
-                            <button class="buttonlogout btn w-100">
-                                <i class="fa-solid fa-right-from-bracket d-inline-block"></i>
-                                <span class="d-none d-md-inline">Cerrar Sesión</span>
-                            </button>
-                        </a>
-                    </div>
+                    
                     <div class="botonproyectos">
                         <a href="{% url 'proyectos' %}" class="w-100" style="text-decoration: none;">
                             <button class="buttonproyectos btn w-100">
                                 <i class="fa-regular fa-folder d-inline-block"></i>
                                 <span class="d-none d-md-inline">Proyectos</span>
+                            </button>
+                        </a>
+                    </div>
+                    <div class="botonlogout">
+                        <a href="{% url 'logout' %}" class="w-100" style="text-decoration: none;">
+                            <button class="buttonlogout btn w-100">
+                                <i class="fa-solid fa-right-from-bracket d-inline-block"></i>
+                                <span class="d-none d-md-inline">Cerrar Sesión</span>
                             </button>
                         </a>
                     </div>
