@@ -573,11 +573,6 @@ def superproyecto(request):
         proyecto.save()
         return redirect('superproyecto')  # Redirige a la vista de proyectos después de editar
 
-    context = {
-        'proyectos': proyectos
-    }
-    return render(request, 'superproyecto.html', context)
-
     # Eliminar proyecto
     if request.method == 'POST' and 'eliminar_proyecto' in request.POST:
         proyecto_id = request.POST.get('proyecto_id')
@@ -700,9 +695,6 @@ def crearuser(request):
             
             user = User.objects.create_user(username=username, email=email, password=password)
             user.save()
-
-            
-            auth_login(request, user)
 
             messages.success(request, 'Usuario creado exitosamente.')
             return redirect('superusuario')  
