@@ -100,8 +100,8 @@
 #input-buscar{
     background-color: #0E2B3E;
     color: #54BCDE;
-    width: 50%;
     margin-right: 20px;
+    width: 31.25rem;
     
 }
 
@@ -118,6 +118,7 @@
 
 
 
+
 #btn-buscar{
     color: #54BCDE;
     background-color: #0E2B3E;
@@ -125,6 +126,9 @@
     width: 40px;
     border-radius: 50%;
     padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
@@ -153,16 +157,34 @@
 
 .filtro .dropdown-menu{
     background-color: #0E2B3E;
+    top: 90%;
+    margin-top: 0;
+    border-radius: 8px;
 }
 
 
 
 .filtro .dropdown-submenu .dropdown-menu{
-    background-color: #0099ff;
     left: 100%;
     top: 0;
     margin-top: 0;
 }
+
+.filtro .dropdown-submenu .dropdown-item{
+    color: #54BCDE;
+}
+
+.filtro .dropdown-submenu .dropdown-item:hover{
+    background-color: #54BCDE;
+    color: #0E2B3E;
+    
+}
+
+.filtro .dropdown-submenu .dropdown-item:focus{
+    background-color: #54BCDE;
+    color: #0E2B3E;
+}
+
 
 
 
