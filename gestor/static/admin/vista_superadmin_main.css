@@ -51,6 +51,87 @@
 
 
 
+/* botones-main-movil  */
+
+
+#btn-proyectos-movil,
+#btn-gestor-usuarios-movil
+{
+    background-color:#0E2B3E;
+    color: #54BCDE;
+    
+    margin:10px 20px;
+    border-radius: 8px;
+    height: 50px;
+    
+}
+
+#btn-proyectos-movil a,
+#btn-gestor-usuarios-movil a,
+#btn-cerrar-sesion-main-movil a{
+    color: #54BCDE;
+    text-decoration: none;
+}
+
+#btn-cerrar-sesion-main-movil{
+    background-color:#0E2B3E;
+    color: #54BCDE;
+    margin-top: 200px;
+    margin-right: 20px;
+    margin-left: 20px;
+    border-radius: 8px;
+    height: 50px;
+}
+
+
+/* Media Query para pantallas pequeñas (menos de 576px) */
+@media (max-width: 576px) { /* Pantallas muy pequeñas (móviles) */
+
+
+    .saludo{
+        margin: 0;
+    }
+    .saludo p{
+        text-align: center;
+        color: #54BCDE;
+        margin-top: 0px;
+        font-size: 40px;
+        font-weight: lighter;
+        
+    }
+}
+
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 768px) {
+
+    .saludo{
+        margin: 0;
+    }
+
+    .saludo p{
+        text-align: center;
+        color: #54BCDE;
+        font-size: 40px;
+        font-weight: lighter;
+        margin-bottom: 40px;
+
+        
+    }
+
+    #titulo-gestor{
+        font-size: 22px;
+    }
+
+    #img-logo{
+        width: 80px;
+        height: auto;
+        max-width: 100%;
+    }
+    
+}
+
+
 .titulo{
     text-align: center;
     color: #54BCDE;
@@ -77,16 +158,12 @@
 .saludo{
     text-align: center;
     color: #54BCDE;
-
+    margin-top: 100px;
     font-size: 50px;
     font-weight: lighter;
-    margin-top: 150px;
 }
 
-.saludo span{
-    font-weight: bolder;
-}
- 
+
 
 
 /* PAGINA TABLAS GESTION PROYECTOS */
