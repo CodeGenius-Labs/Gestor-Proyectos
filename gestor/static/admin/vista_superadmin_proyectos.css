@@ -1,0 +1,381 @@
+*{
+    padding: 0;
+    margin: 0;
+
+}
+
+.container-fluid{
+    position: relative;
+}
+
+.botones-laterales{
+    border-right: #0E2B3E 3px solid ;
+    
+}
+
+.botones-laterales a{
+    text-decoration: none;
+    background-color: #0E2B3E;
+    color: #54BCDE;
+
+}
+
+.botones-laterales .btn{
+    border-radius: 8px;
+    margin: 40px 20px;
+    height: 50px;
+    
+    
+
+}
+
+
+#btn-proyectos,
+#btn-gestor-usuarios,
+#btn-crear-proyecto,
+#btn-cerrar-sesion,
+#btn-cerrar-sesion-main,
+#btn-crear-usuario{
+    background-color:#0E2B3E;
+    color: #54BCDE;
+    
+    
+}
+
+
+#btn-proyectos-side,
+#btn-gestor-usuarios-side,
+#btn-crear-proyectos-side,
+#btn-crear-usuario-side{
+    background-color:#0E2B3E;
+    color: #54BCDE;
+
+    margin: 20px 40px;
+}
+
+#btn-cerrar-sesion-side{
+    background-color:#0E2B3E;
+    color: #54BCDE;
+
+    margin-top: 350px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+
+
+
+
+
+
+
+
+#btn-cerrar-sesion-main{
+    margin-top: 430px;
+    margin-bottom: 0;
+}
+
+#btn-cerrar-sesion{
+    margin-top: 300px;
+    margin-bottom: 0px;
+}
+
+
+
+#btn-hamburguesa{
+    background-color: #0E2B3E;
+    margin-right: 50px;
+}
+
+
+
+.titulo{
+    text-align: center;
+    color: #54BCDE;
+    font-weight: bolder;
+    
+}
+
+
+#img-logo{
+    width: 100px;
+    height: auto;
+    max-width: 100%;
+    margin-right: 10px;
+    margin-top: 20px;
+}
+
+#titulo-gestor{
+    font-weight: bolder;
+    color: #54BCDE;
+    margin-top: 20px;
+}
+
+
+.saludo{
+    text-align: center;
+    color: #54BCDE;
+    margin-top: 100px;
+    font-size: 50px;
+    font-weight: lighter;
+}
+
+
+
+
+/* PAGINA TABLAS GESTION PROYECTOS */
+
+
+
+#busqueda{
+    border-bottom: #0E2B3E 3px solid;
+    padding-bottom: 15px;
+}
+#input-buscar{
+    background-color: #0E2B3E;
+    color: #54BCDE;
+    margin-right: 20px;
+    width: 31.25rem;
+    
+}
+
+
+
+#input-buscar::placeholder{
+    color: #54BCDE;
+    opacity: 0.5;
+}
+
+
+
+
+
+
+
+
+#btn-buscar{
+    color: #54BCDE;
+    background-color: #0E2B3E;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* MEDIA CUERIS  */
+/* Media queries para las tablas */
+@media (max-width: 768px) {
+    #input-buscar {
+        max-width: 300px;
+    }
+
+    .tabla {
+        max-width: 100%;
+    }
+
+    .tabla.table-responsive {
+        max-height: 100%;
+        overflow-y: auto;
+        font-size: 15px;
+    }
+}
+
+/* Media query para pantallas de teléfonos muy pequeñas (hasta 576px) */
+@media (max-width: 576px) {
+    #input-buscar {
+        max-width: 200px;
+    }
+
+    .tabla {
+        max-width: 100%;
+    }
+
+    .tabla.table-responsive {
+        max-height: 100%;
+        overflow-y: auto;
+        font-size: 13px;
+    }
+    
+    
+}
+
+
+#sidebar{
+    width: 300px;
+}
+
+.offcanvas {
+    transition: transform 0.2s ease-in-out;
+    transform: translateX(-100%); 
+    
+}
+
+.offcanvas.show {
+    transform: translateX(0); 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.filtro{
+    margin-left: 20px;
+}
+.filtro, #btn-filtroicon, span{
+    background-color: #0E2B3E;
+    color: #54BCDE;
+    border-radius: 8px;
+    font-size: 18px;
+    
+    
+}
+
+/* Estilo del menú desplegable */
+
+
+
+
+.filtro .dropdown-toggle::after {
+    display: none; 
+}
+
+.filtro .dropdown-menu{
+    background-color: #0E2B3E;
+    top: 90%;
+    margin-top: 0;
+    border-radius: 8px;
+}
+
+
+
+.filtro .dropdown-submenu .dropdown-menu{
+    left: 100%;
+    top: 0;
+    margin-top: 0;
+}
+
+.filtro .dropdown-submenu .dropdown-item{
+    color: #54BCDE;
+}
+
+.filtro .dropdown-submenu .dropdown-item:hover{
+    background-color: #54BCDE;
+    color: #0E2B3E;
+    
+}
+
+.filtro .dropdown-submenu .dropdown-item:focus{
+    background-color: #54BCDE;
+    color: #0E2B3E;
+}
+
+
+
+
+
+
+
+
+/* tablas css */
+
+/* Aplica estilos al contenedor de la tabla */
+.tabla.table-responsive {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+/* Anchos fijos */
+.col-proyecto {
+    width: 100px; 
+}
+
+.col-descripcion {
+    width: 350px;
+    white-space: normal;
+}
+
+.col-fecha {
+    width: 100px;
+}
+
+.col-acciones {
+    width: 40px;
+}
+
+
+/* VISTA GESTION USUARIOS */
+
+/* Anchos fijos */
+.col-usuario {
+    width: 100px; 
+}
+
+.col-correo {
+    width:200px  ;
+    
+}
+.col-acciones {
+    width: 40px;
+}
+
+
+/* Botones */
+#btn-editar, #btn-borrar {
+    background-color: #0E2B3E;
+    color: #54BCDE;
+}
+
+#btn-editar-usu, #btn-borrar-usu, i {
+    background-color: #0E2B3E;
+    color: #54BCDE;
+}
+
+
+.tabla .table th{
+    background-color: #0e2b3e;
+    color: #54bcde80;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    text-align: center;
+    
+    align-items: center;
+    justify-content: center;
+    
+    
+}
+
+
+.tabla .table tr{
+    border: #0E2B3E 2px solid;
+}
+
+
+
+
+
+
+#btn-editar,#btn-borrar{
+    background-color: #0E2B3E;
+    color: #54BCDE;
+}
+
+#btn-editar,#btn-borrar, i{
+    background-color: #0E2B3E;
+}
+
+
+
+
+
