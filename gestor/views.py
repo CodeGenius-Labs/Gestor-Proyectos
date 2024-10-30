@@ -333,19 +333,27 @@ def verproyectos(request, id):
         
 
     if request.method == 'POST':
-        # Cargar archivo
+    # Cargar archivo
         if 'legalDocument' in request.FILES:
             archivo_file = request.FILES['legalDocument']
             nombre_archivo = request.POST.get('nombre')
-            nuevo_archivo = Archivos(
-                nombre=request.nombre_archivo,
-                archivoss=request.archivo_file,
-                proyecto=proyecto,
-                usuario=request.user
-            )
-            nuevo_archivo.save()
-            messages.success(request, 'Archivo cargado exitosamente.')
+
+            # Verificar que ambos campos estén llenos
+            if nombre_archivo and archivo_file:
+                nuevo_archivo = Archivos(
+                    nombre=nombre_archivo,
+                    archivoss=archivo_file,
+                    proyecto=proyecto,
+                    usuario=request.user
+                )
+                nuevo_archivo.save()
+                messages.success(request, 'Archivo cargado exitosamente.')
+                return redirect('verproyectos', id=proyecto.id)
+        else:
+            # Si falta algún campo, mostrar un mensaje de error
+            messages.error(request, 'Por favor, llena todos los campos obligatorios.')
             return redirect('verproyectos', id=proyecto.id)
+
 
         if 'eliminar_archivo' in request.POST:
             archivo_id = request.POST.get('archivo_id')
