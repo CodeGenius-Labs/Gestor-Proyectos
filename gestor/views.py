@@ -22,6 +22,7 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import ValidationError
 from datetime import datetime, timedelta
+from django.utils import timezone
 
 
 
@@ -68,11 +69,16 @@ def registro(request):
 
         # Validar que el nombre de usuario no contenga números
         # Validar que el nombre tenga entre 8 y 50 caracteres  
-        if any(char.isdigit() for char in username) or len(username) < 8 or len(username) > 50:
+        #Validar que el usuario no tenga caracteres especiales
+        if (any(char.isdigit() for char in username) or 
+            len(username) < 8 or len(username) > 50 or 
+            not re.match(r'^[a-zA-Z]+$', username)):
             if any(char.isdigit() for char in username):
                 messages.error(request, 'El nombre de usuario no puede contener números.')
-            else:
+            elif len(username) < 8 or len(username) > 50:
                 messages.error(request, 'El nombre de usuario debe tener entre 8 y 50 caracteres.')
+            else:
+                messages.error(request, 'El nombre de usuario no debe contener caracteres especiales ni espacios.')
             return render(request, 'registro.html')
 
 
@@ -126,25 +132,6 @@ def exit(request):
     logout(request)
     messages.success(request, 'Sesión cerrada correctamente.')  # Añadir mensaje de cierre de sesión
     return redirect('home')  # Redirigir al home
-
-
-def actualizar_proyecto(request, proyecto_id):
-    proyecto = get_object_or_404(Proyecto, id=proyecto_id)
-
-    if request.method == 'POST':
-        # Procesar la actualización
-        proyecto.nombre = request.POST.get('nombre')
-        proyecto.descripcion = request.POST.get('descripcion')
-        proyecto.fecha_inicio = request.POST.get('fecha_inicio')
-        proyecto.fecha_fin = request.POST.get('fecha_fin')
-        proyecto.progreso = request.POST.get('progreso')
-        proyecto.save()
-        return redirect('verproyectos')  # O redirigir a la página que prefieras
-
-    return render(request, 'actualizar_proyecto.html', {'proyecto': proyecto})
-
-
-
 
 
 #----------------Actualizar perfil----------------
@@ -214,7 +201,12 @@ def actualizarperfil(request):
 
     return render(request, 'perfilconfig.html')  # Asegúrate de que este nombre coincida con tu archivo de plantilla
 
-@login_required(login_url="login")
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.utils import timezone
+from datetime import timedelta
+import re
+
 def proyectos(request):
     if request.method == 'POST':
         # Recoger datos del formulario
@@ -224,31 +216,60 @@ def proyectos(request):
         fecha_fin = request.POST.get('fecha_fin')
 
         # Validar que todos los campos están llenos
-        if nombre and descripcion and fecha_inicio and fecha_fin:
-            try:
-                # Crear y guardar el proyecto usando el modelo Proyecto
-                proyecto = Proyecto(
-                    nombre=nombre,
-                    descripcion=descripcion,
-                    fecha_inicio=fecha_inicio,
-                    fecha_fin=fecha_fin
-                )
-                proyecto.save()
-                
-                # Asociar al usuario actual con el proyecto
-                miembro_proyecto = MiembrosProyectos(
-                    usuario=request.user,
-                    proyecto=proyecto,
-                    rol=Roles.objects.get(rol='Administrador del departamento')
-                )
-                miembro_proyecto.save()
-                
-                messages.success(request, 'Proyecto creado exitosamente.')
-            except Exception as e:
-                messages.error(request, f'Ocurrió un error al crear el proyecto: {e}')
-        else:
+        if not (nombre and descripcion and fecha_inicio and fecha_fin):
             messages.error(request, 'Por favor, rellene todos los campos.')
-        return redirect('proyectos')  # Redirige de vuelta a la página de perfil
+            return redirect('proyectos')
+
+        # Validación del campo 'nombre'
+        if not (3 <= len(nombre) <= 20):
+            messages.error(request, 'El nombre del proyecto debe tener entre 3 y 20 caracteres.')
+            return redirect('proyectos')
+        if not re.match(r'^[\w\-]+$', nombre):  # Permite solo letras, números, guiones y guiones bajos
+            messages.error(request, 'El nombre no puede tener caracteres espciales ni numeros.')
+            return redirect('proyectos')
+
+        # Validación de la longitud de 'descripcion'
+        if len(descripcion) > 500:
+            messages.error(request, 'La descripción no puede exceder los 500 caracteres.')
+            return redirect('proyectos')
+
+        # Validación de fechas
+        try:
+            fecha_inicio_dt = timezone.datetime.strptime(fecha_inicio, '%Y-%m-%d').date()
+            fecha_fin_dt = timezone.datetime.strptime(fecha_fin, '%Y-%m-%d').date()
+        except ValueError:
+            messages.error(request, 'Formato de fecha incorrecto. Use el formato YYYY-MM-DD.')
+            return redirect('proyectos')
+
+        if fecha_inicio_dt >= fecha_fin_dt:
+            messages.error(request, 'La fecha de inicio debe ser anterior a la fecha de fin.')
+            return redirect('proyectos')
+        if fecha_fin_dt > fecha_inicio_dt + timedelta(days=3650):  # 10 años en días
+            messages.error(request, 'La duración del proyecto no puede exceder los 10 años.')
+            return redirect('proyectos')
+
+        # Crear y guardar el proyecto si pasa todas las validaciones
+        try:
+            proyecto = Proyecto(
+                nombre=nombre,
+                descripcion=descripcion,
+                fecha_inicio=fecha_inicio,
+                fecha_fin=fecha_fin
+            )
+            proyecto.save()
+
+            # Asociar al usuario actual con el proyecto
+            miembro_proyecto = MiembrosProyectos(
+                usuario=request.user,
+                proyecto=proyecto,
+                rol=Roles.objects.get(rol='Administrador del departamento')
+            )
+            miembro_proyecto.save()
+            
+            messages.success(request, 'Proyecto creado exitosamente.')
+        except Exception as e:
+            messages.error(request, f'Ocurrió un error al crear el proyecto: {e}')
+        return redirect('proyectos')
 
     # Obtener los proyectos en los que el usuario es miembro
     proyectos_usuario = Proyecto.objects.filter(
@@ -277,7 +298,6 @@ def proyectos(request):
     }
 
     return render(request, 'vistaprojectos.html', context)
-
 
 #----------------Definir ver proyectos--------------------------
 @login_required(login_url="login")
@@ -508,20 +528,64 @@ def verproyectos(request, id):
 
 
 #-------------Actualizar Proyectos ---------------------------
+
 def actualizar_proyecto(request, id):
     proyecto = get_object_or_404(Proyecto, id=id)
 
     if request.method == 'POST':
-        # Procesar la actualización
-        proyecto.nombre = request.POST.get('nombre')
-        proyecto.descripcion = request.POST.get('descripcion')
-        proyecto.fecha_inicio = request.POST.get('fecha_inicio')
-        proyecto.fecha_fin = request.POST.get('fecha_fin')
-        proyecto.progreso = request.POST.get('progreso')
-        proyecto.save()
-        return redirect('verproyectos', id=id)  # Redireccionar con el id correcto
+        # Recoger datos del formulario
+        nombre = request.POST.get('nombre')
+        descripcion = request.POST.get('descripcion')
+        fecha_inicio = request.POST.get('fecha_inicio')
+        fecha_fin = request.POST.get('fecha_fin')
+        progreso = request.POST.get('progreso')
 
-    return render(request, 'actualizar_proyecto.html', {'proyecto': proyecto})
+        # Validación que todos los campos estén llenos
+        if not (nombre and descripcion and fecha_inicio and fecha_fin and progreso):
+            messages.error(request, 'Por favor, rellene todos los campos.')
+            return redirect('verproyectos', id=id)
+
+        # Validación del campo 'nombre'
+        if not (3 <= len(nombre) <= 20):
+            messages.error(request, 'El nombre del proyecto debe tener entre 3 y 20 caracteres.')
+            return redirect('verproyectos', id=id)
+        if not re.match(r'^[\w\-]+$', nombre):  # Permite solo letras, números, guiones y guiones bajos
+            messages.error(request, 'El nombre no puede tener caracteres espciales ni numeros.')
+            return redirect('verproyectos', id=id)
+
+        # Validación de la longitud de 'descripcion'
+        if len(descripcion) > 500:
+            messages.error(request, 'La descripción no puede exceder los 500 caracteres.')
+            return redirect('verproyectos', id=id)
+
+        # Validación de fechas
+        try:
+            fecha_inicio_dt = timezone.datetime.strptime(fecha_inicio, '%Y-%m-%d').date()
+            fecha_fin_dt = timezone.datetime.strptime(fecha_fin, '%Y-%m-%d').date()
+        except ValueError:
+            messages.error(request, 'Formato de fecha incorrecto. Use el formato YYYY-MM-DD.')
+            return redirect('verproyectos', id=id)
+
+        if fecha_inicio_dt >= fecha_fin_dt:
+            messages.error(request, 'La fecha de inicio debe ser anterior a la fecha de fin.')
+            return redirect('verproyectos', id=id)
+        if fecha_fin_dt > fecha_inicio_dt + timedelta(days=3650):  # 10 años en días
+            messages.error(request, 'La duración del proyecto no puede exceder los 10 años.')
+            return redirect('verproyectos', id=id)
+
+        # Si todas las validaciones pasan, guardar el proyecto
+        proyecto.nombre = nombre
+        proyecto.descripcion = descripcion
+        proyecto.fecha_inicio = fecha_inicio
+        proyecto.fecha_fin = fecha_fin
+        proyecto.progreso = progreso
+        proyecto.save()
+        
+        messages.success(request, 'Proyecto actualizado exitosamente.')
+        return redirect('verproyectos', id=id)  # Redireccionar a la vista de proyectos con el id correcto
+
+    return render(request, 'verproyectos.html', {'proyecto': proyecto})
+
 
 
 @login_required(login_url="login")
