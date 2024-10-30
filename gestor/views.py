@@ -20,6 +20,9 @@ import mimetypes
 from django.core.files.storage import default_storage
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import user_passes_test
+from django.core.exceptions import ValidationError
+from datetime import datetime, timedelta
+
 
 
 
@@ -335,8 +338,8 @@ def verproyectos(request, id):
             archivo_file = request.FILES['legalDocument']
             nombre_archivo = request.POST.get('nombre')
             nuevo_archivo = Archivos(
-                nombre=nombre_archivo,
-                archivoss=archivo_file,
+                nombre=request.nombre_archivo,
+                archivoss=request.archivo_file,
                 proyecto=proyecto,
                 usuario=request.user
             )
@@ -515,10 +518,14 @@ def actualizar_proyecto(request, id):
 
 @login_required(login_url="login")
 def superadmin(request):
-    return render(request, 'superadmin.html')
+    if not request.user.is_staff:
+        return redirect('home')  # Redirigir a "home" si no es staff
+    return render(request, 'vista_superadmin_main.html')
 
 @login_required(login_url="login")
 def superproyecto(request):
+    if not request.user.is_staff:
+        return redirect('home')  # Redirigir a "home" si no es staff
     proyectos = Proyecto.objects.all()
 
     # Editar proyecto
@@ -527,10 +534,40 @@ def superproyecto(request):
         proyecto = get_object_or_404(Proyecto, id=proyecto_id)
 
         # Obtener los valores del formulario
-        proyecto.nombre = request.POST.get('nombre')
-        proyecto.descripcion = request.POST.get('descripcion')
-        proyecto.fecha_inicio = request.POST.get('fecha_inicio')
-        proyecto.fecha_fin = request.POST.get('fecha_fin')
+        nombre = request.POST.get('nombre')
+        descripcion = request.POST.get('descripcion')
+        fecha_inicio = request.POST.get('fecha_inicio')
+        fecha_fin = request.POST.get('fecha_fin')
+
+        # Validación de nombre (mínimo 3 y máximo 20 caracteres, sin caracteres especiales)
+        if not re.match(r'^[a-zA-Z0-9_-]{3,20}$', nombre):
+            return HttpResponse("Error: El nombre debe tener entre 3 y 20 caracteres y solo puede contener letras, números, guiones bajos y guiones.")
+
+        # Validación de descripción (máximo 500 caracteres)
+        if len(descripcion) > 500:
+            return HttpResponse("Error: La descripción no puede tener más de 500 caracteres.")
+
+        # Validación de fechas
+        try:
+            fecha_inicio_dt = datetime.strptime(fecha_inicio, "%Y-%m-%d")
+            fecha_fin_dt = datetime.strptime(fecha_fin, "%Y-%m-%d")
+        except ValueError:
+            return HttpResponse("Error: Formato de fecha inválido.")
+
+        # Comprobar que la fecha de fin sea coherente con la fecha de inicio
+        if fecha_fin_dt < fecha_inicio_dt:
+            return HttpResponse("Error: La fecha de fin no puede ser anterior a la fecha de inicio.")
+
+        # Validar que la fecha de fin no sea más de 10 años después de la fecha de inicio
+        max_fecha_fin = fecha_inicio_dt + timedelta(days=365*10)  # 10 años
+        if fecha_fin_dt > max_fecha_fin:
+            return HttpResponse("Error: La fecha de fin no puede ser más de 10 años después de la fecha de inicio.")
+
+        # Si todas las validaciones pasan, guarda los cambios
+        proyecto.nombre = nombre
+        proyecto.descripcion = descripcion
+        proyecto.fecha_inicio = fecha_inicio
+        proyecto.fecha_fin = fecha_fin
 
         # Guardar los cambios
         proyecto.save()
@@ -544,17 +581,127 @@ def superproyecto(request):
         # Eliminar el proyecto
         proyecto.delete()
         return redirect('superproyecto')  # Redirige a la vista de proyectos después de eliminar
+    # Manejo de búsqueda
+    query = request.GET.get('search', '')
+    if query:
+        proyectos = proyectos.filter(nombre__icontains=query)
+
+    # Manejar el filtrado y ordenamiento
+    order = request.GET.get('order')
+    direction = request.GET.get('direction', 'asc')
+
+    if order in ['nombre', 'fecha_inicio', 'fecha_fin']:
+        if direction == 'asc':
+            proyectos = proyectos.order_by(order)
+        else:
+            proyectos = proyectos.order_by('-' + order)
+
+
+    # Pasar los proyectos al contexto de la plantilla
 
     context = {
-        'proyectos': proyectos
+        'proyectos': proyectos,
+        'search_query': query  # Para mantener la consulta en la barra de búsqueda
     }
-    return render(request, 'superproyecto.html', context)
+    return render(request, 'gestion_proyectos_superadmin.html', context)
 
 
 @login_required(login_url="login")
 def superusuario(request):
-    usuarios = User.objects.all()  # Obtener todos los usuarios
-    return render(request, 'superusuario.html', {'usuarios': usuarios})
+    if not request.user.is_staff:
+        return redirect('home')  # Redirigir a "home" si no es staff
+    # Obtener todos los usuarios
+    usuarios = User.objects.all()
+    
+    if request.method == 'POST':
+        # Actualizar el usuario seleccionado si se envía el formulario
+        user_id = request.POST.get('user_id')
+        user = User.objects.get(id=user_id)
+        
+        # Modificar nombre de usuario y correo electrónico
+        new_username = request.POST.get('username')
+        new_email = request.POST.get('email')
+        
+        user.username = new_username
+        user.email = new_email
+        user.save()
+
+    if request.method == 'POST':
+        # Eliminar el usuario si se presiona el botón de eliminar
+        if 'eliminar_usuario' in request.POST:
+            user_id = request.POST.get('user_id')
+            user = User.objects.get(id=user_id)
+            user.delete()
+    
+    query = request.GET.get('search', '')
+    if query:
+        usuarios = usuarios.filter(username__icontains=query)
+
+    # Manejar el filtrado y ordenamiento
+    order = request.GET.get('order')
+    direction = request.GET.get('direction', 'asc')
+
+    if order in ['username', 'email']:
+        if direction == 'asc':
+            usuarios = usuarios.order_by(order)
+        else:
+            usuarios = usuarios.order_by('-' + order)
+
+
+    # Pasar los proyectos al contexto de la plantilla
+
+    context = {
+        'usuarios': usuarios,
+        'search_query': query  # Para mantener la consulta en la barra de búsqueda
+    }
+
+    return render(request, 'gestion_usuarios_superadmin.html', context)
+
+
+
+def crearuser(request):
+    if request.method == 'POST':
+        
+        username = request.POST['nombre']  
+        email = request.POST['correo']  
+        password = request.POST['password'] 
+
+        # Validar que el nombre tenga entre 8 y 50 caracteres y que no contenga números
+        if any(char.isdigit() for char in username) or len(username) < 8 or len(username) > 50:
+            if any(char.isdigit() for char in username):
+                messages.error(request, 'El nombre de usuario no puede contener números.')
+            else:
+                messages.error(request, 'El nombre de usuario debe tener entre 8 y 50 caracteres.')
+            return redirect('superusuario')
+
+        # Validar que la contraseña tenga entre 7 y 20 caracteres
+        if len(password) < 7 or len(password) > 20:
+            messages.error(request, 'La contraseña debe tener entre 7 y 20 caracteres.')
+            return redirect('superusuario')
+
+        # Validar que el email sea válido
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request, 'El correo electrónico no es válido.')
+            return redirect('superusuario')
+
+        # Verificar si el nombre de usuario o correo ya están en uso
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'El nombre de usuario ya está en uso. Por favor, elige otro.')
+        elif User.objects.filter(email=email).exists():
+            messages.error(request, 'El correo electrónico ya está registrado. Por favor, usa otro.')
+        else:
+            
+            user = User.objects.create_user(username=username, email=email, password=password)
+            user.save()
+
+            messages.success(request, 'Usuario creado exitosamente.')
+            return redirect('superusuario')  
+
+    return render(request, 'gestion_usuarios_superadmin.html')  
+
+
 
 
 

@@ -1,0 +1,197 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Proyectos</title>
+    <link rel="stylesheet" href="/styles/vista_superadmin_main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="{% static '/admin/vista_superadmin_proyectos.css' %}">
+    <link rel="stylesheet" href="{% static '/css/modaleditarusuario.css' %}">
+    <!------ventanas toast.js------->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+</head>
+
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success'%}
+                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+            {% elif message.tags == 'info' %}
+                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+            {% elif message.tags == 'warning' %}
+                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+            {% elif message.tags == 'error' %}
+                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <div class="container-fluid  <">
+        <div class="row">
+            <div class="  p-0 d-none d-md-block col-md-2">
+                <div class="botones-laterales">
+                    <div class="d-flex flex-column">
+                        <button id="btn-proyectos"class="btn btn-proyectos"><a href="{% url "superproyecto" %}">Gestión de proyectos </a></button>
+                        <button id="btn-gestor-usuarios"class="btn btn-gestor-usuarios"><a href="{% url 'superusuario' %}">Gestión de Usuarios </a></button>
+                        <button  id="btn-crear-usuario"class="btn btn-proyectos">Crear Usuario</a></button>
+                        <button  id="btn-cerrar-sesion"class="btn btn-proyectos"><a href="{% url 'logout'%}">Cerrar Sesion </a></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-10 ">
+                    
+                <div class="imagen-titulo">
+
+
+                    
+                    <div class="titulo-gestor d-flex justify-content-center align-items-center">
+
+                        <div class="btn-hamburguesa d-block d-md-none ">
+                            <button id="btn-hamburguesa" class="btn btn-hamburguesa">
+                                <i class="fa-solid fa-bars fa-2"></i>
+                            </button>
+                        </div>
+                        <!-- Sidebar Offcanvas de Bootstrap -->
+                            <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="offcanvasLabel">
+                                <div class="offcanvas-header">
+                                    <h5 id="offcanvasLabel" class="offcanvas-title">Gestion De Proyectos</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                </div>
+                                <div class="offcanvas-body d-flex flex-column align-content-center ">
+                                    <button id="btn-proyectos-side" class="btn btn-proyectos"><a href="{% url "superproyecto" %}">Gestión de proyectos </a></button>
+                                    <button id="btn-gestor-usuarios-side"class="btn btn-gestor-usuarios "><a href="{% url 'superusuario' %}">Gestión de Usuarios </a></button>
+                                    <button id="btn-crear-usuario-side" class="btn btn-proyectos">Crear Usuario</button>
+                                    <button id="btn-cerrar-sesion-side"class="btn btn-cerrar-sesion"><a href="{% url 'logout'%}">Cerrar Sesion </a></button>
+                                </div>
+                            </div>
+
+                        <img id="img-logo" class="img-fluid"src="{% static '/imagenes/ico/logo-gestor-proyectos-en-azul.ico' %}" alt="">
+                        <h1 id="titulo-gestor">GESTOR DE PROYECTOS</h1>
+                    </div>
+                </div>
+
+
+
+                
+                    <div id="busqueda" class="row">
+                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                <form method="GET" action="{% url 'superusuario' %}" class='d-flex justify-content-end'>
+                                    <input id="input-buscar"type="search" class="form-control " placeholder="Buscar...." name="search" value="{{ search_query }}">
+                                    <button id="btn-buscar" type="submit" class="btn-buscar">
+                                        <i class="fa-solid fa-magnifying-glass  "></i>
+                                    </button>
+                                </form>
+
+
+
+                                <div class="dropdown">
+                                    <div class="filtro">
+                                        <button id="btn-filtro" class="btn btn-filtro d-flex justify-content-center align-items-center dropdown-toggle" type="button" aria-expanded="false">
+                                            <i id="btn-filtroicon" class="fa-solid fa-list-ul me-2"></i>
+                                            <span class="d-none d-md-inline">Filtros</span>
+                                        </button>
+                                    
+                                            <!-- menú principal -->
+                                            <ul class="dropdown-menu">
+                                                <li class="dropdown-submenu">
+                                                    <a class="dropdown-item dropdown-toggle" href="#" style="cursor: pointer;">Nombre</a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" onclick="applyFilter('username', 'asc')"
+                                                            style="cursor: pointer">Ascendente</a></li>
+                                                        <li><a class="dropdown-item" onclick="applyFilter('username', 'desc')"
+                                                                style="cursor: pointer">Descendente</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dropdown-submenu">
+                                                    <a class="dropdown-item dropdown-toggle" href="#" style="cursor: pointer;">Correo</a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" onclick="applyFilter('email', 'asc')"
+                                                                style="cursor: pointer">Ascendente</a></li>
+                                                        <li><a class="dropdown-item" onclick="applyFilter('email', 'desc')"
+                                                                style="cursor: pointer">Descendente</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                            </div>
+                            
+                    </div>
+                
+                    
+                    {% include "modaleditarusuaario.html" %}
+                    {% include "crearusuario.html" %}
+
+
+
+                        <div class="titulo mt-2 ">
+                            <h2>USUARIOS</h2>
+                        </div>
+
+                        <div class="tabla  table-responsive table-responsive-sm table-responsive-xs">
+                            <table class="table table-bordered text-center align-middle">
+                                
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="col-usuario">USUARIO</th>
+                                        <th scope="col" class="col-correo">CORREO ELECTRONICO</th>
+                                        <th scope="col" class="col-acciones">ACCIONES</th>
+                                    </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                        {% for user in usuarios %}
+                                        <tr class="fila">
+                                            <td class="td-usuario">{{ user.username }}</td>
+                                            <td class="td-correo">{{ user.email }}</td>
+                                            
+                                            <td class="td-acciones">
+                                                <button id="btn-editar-usu" class="btn btn-editar" data-id="{{ user.id }}"
+                                                data-username="{{ user.username }}" data-email="{{ user.email }}"><i class="fa-solid fa-pen"></i></button>
+                                                <form method="POST" action="{% url 'superusuario' %}" style="display:inline;">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                                                    <button type="submit" name="eliminar_usuario" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?');" id="btn-borrar-usu"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
+                                                </form>
+                                                
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="3">No hay usuarios disponibles.</td>
+                                        </tr>
+                                        {% endfor %}
+
+
+                                    </tbody>
+                                    
+                                </table>
+                        </div>
+
+
+
+
+                    </div>
+
+                    
+                    
+                    
+                
+            </div>
+        </div>
+    <script src="{% static 'js/dropdown.js' %}"></script>
+    <script src="{% static 'js/modales.js' %}"></script>
+    <script src="{% static 'js/modaleditarusu.js' %}"></script>
+    <script src="{% static 'js/modalcrearusu.js' %}"></script>
+    <script src="{% static 'js/sidebar_busqueda.js' %}"></script>
+    
+</body>
+</html>

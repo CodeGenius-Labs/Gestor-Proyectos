@@ -219,22 +219,6 @@ hr .txtfooter,
     
 }
 
-/*menuchikito*/
-
-.dropdown-toggle::after {
-    display: none !important;
-}
-
-.dropdown-submenu {
-    position: relative;
-}
-
-.dropdown-submenu .dropdown-menu {
-    top: 0;
-    left: 100%;
-    margin-top: -1px;
-}
-
 
 .welcome-text {
     font-size: 24px;

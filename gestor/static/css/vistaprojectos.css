@@ -11,8 +11,32 @@ body {
     border: 1px solid #ccc;
     padding: 10px 20px;
     background-color: #0E2B3E;
-    color: white;
+    color: #54BCDE;
 }
+
+.search-bar::placeholder{
+    color: #54BCDE;
+    opacity: 0.6;
+}
+
+/* Para pantallas pequeñas (menos de 576px) */
+@media (max-width: 575.98px) {
+    .search-bar {
+        width: 100%; /* Ancho completo en pantallas pequeñas */
+        padding: 8px 15px; /* Ajustar el padding */
+        border-radius: 20px; /* Hacer los bordes un poco menos redondeados */
+    }
+}
+
+/* Para pantallas medianas (entre 576px y 768px) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .search-bar {
+        width: 80%; /* Ancho del 80% en pantallas medianas */
+        padding: 9px 18px; /* Ajustar el padding */
+        border-radius: 25px; /* Bordes ligeramente redondeados */
+    }
+}
+
 .filter-btn {
     background-color: #0E2B3E;
     color: #54BCDE;
@@ -38,7 +62,12 @@ body {
 .Botonfilter i{
     color: #54BCDE;
     
-    
+}
+
+.Botonfilter span{
+    color: #54BCDE;
+    font-weight: bolder;
+    font-size: 18px;
 }
 
 /*menuchikito*/
@@ -64,8 +93,8 @@ body {
     text-align: center;
     margin-bottom: 30px;
     font-size: 45px;
-    display: block;
-    width: 90%;
+    display: flexbox;
+    width: 100%;
 }
 
 
@@ -90,9 +119,9 @@ body {
     
 }
 .project-card h5 {
-    font-weight: lighter;
+    font-weight: bold;
     border-bottom: 30px;
-    color: #000;
+    
 }
 .project-card p {
     color: #000;
@@ -101,18 +130,37 @@ body {
 .btn-view {
     border-radius: 15px;
     color: #54BCDE;    ;
-    
-    padding: 10px 20px;
+    padding: 10px 10px;
     background-color: #0E2B3E;
 
 }
+
+.btn-crear{
+    color: #0E2B3E;
+    border: #0E2B3E 5px solid;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 13px;
+    padding: 0;
+}
+
+.btn-crear:hover{
+    border: #54BCDE 5px solid;
+    color: #54BCDE;
+
+}
+
+
+
+
 
 
 .btn-view:hover {
     background-color: #031d2e;
     color: #ffffff;
-    transform: scale(1.1);
-    transition: 0.2s ease-in;
+    transform: scale(1.03);
+    transition: 0.2s ease-in-out;
 
 }
 .profile-icon {
