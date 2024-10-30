@@ -40,7 +40,7 @@
             {% endif %}
         {% endfor %}
     {% endif %}
-    <div class="container-fluid  <">
+    <div class="container-fluid">
         <div class="row">
             <div class="  p-0 d-none d-md-block col-md-2">
                 <div class="botones-laterales">
@@ -74,7 +74,8 @@
                                     <div class="offcanvas-body d-flex flex-column align-content-center ">
                                         <button id="btn-proyectos-side" class="btn btn-proyectos"><a href="{% url "superproyecto" %}">Gestión de proyectos </a></button>
                                         <button id="btn-gestor-usuarios-side"class="btn btn-gestor-usuarios "><a href="{% url 'superusuario' %}">Gestión de Usuarios </a></button>
-                                        <button id="btn-crear-proyecto-side" class="btn btn-proyectos">Crear Proyecto</button>
+
+                                        <button id="btn-crear-proyecto-side" class="btn btn-proyectos">Crear Proyecto</button>                                        
                                         <button id="btn-cerrar-sesion-side"class="btn btn-cerrar-sesion"><a href="{% url 'logout'%}">Cerrar Sesion </a></button>
                                     </div>
                                 </div>
