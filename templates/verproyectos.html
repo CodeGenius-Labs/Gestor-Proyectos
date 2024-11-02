@@ -314,15 +314,15 @@
 </div>
 
 <!-- Modal emergente -->
-<div id="modal3" class="modal">
+<div id="modal3"  class="modal">
     <div class="modal-content3">
         <div class="content">
             <div class="inputs">
                 <span class="close-btn-modal3">&times;</span>
                 <form method="POST" action="{% url 'verproyectos' id=proyecto.id %}" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <div class="modalito">
-                        <h2>Cargar Archivo</h2>
+                    <div class="modalito3">
+                        <h2 class="archivo">Cargar Archivo</h2>
                         <div class="uploadDocuments">
                             <label for="legalDocumentModal3">Examinar...</label>
                             <input type="file" id="legalDocumentModal3" name="legalDocument" 
