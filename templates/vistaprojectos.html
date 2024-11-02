@@ -139,11 +139,20 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             <div class="welcome-text">Bienvenid@, {{user.username}}</div>
-            <div class="profile-icon ">
+            <div class="profile-icon d-flex ">
                 <a href="/perfil">
                     {% comment %} <i class="fa-regular fa-user fa-2x"></i> {% endcomment %}
                     <img id="fotoperfil"src="{{ user.picture.url }}" alt="">
                 </a>
+
+                <div class="botonlogout">
+                    <a href="{% url 'logout' %}" class="w-100" style="text-decoration: none;">
+                        <button class="buttonlogout btn w-100">
+                            <i class="fa-solid fa-right-from-bracket fa-4x d-inline-block"></i>
+                            
+                        </button>
+                    </a>
+                </div>
             </div>
         </div>
     <!--saludotexto---iconoperfil-->

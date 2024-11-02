@@ -19,6 +19,15 @@ body {
     opacity: 0.6;
 }
 
+
+
+
+
+.botonlogout i{
+    color: #54BCDE;
+}
+
+
 /* Para pantallas pequeñas (menos de 576px) */
 @media (max-width: 575.98px) {
     .search-bar {
