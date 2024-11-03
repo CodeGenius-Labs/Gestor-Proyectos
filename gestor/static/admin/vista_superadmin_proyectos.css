@@ -4,9 +4,7 @@
 
 }
 
-.container-fluid{
-    position: relative;
-}
+
 
 .botones-laterales{
     border-right: #0E2B3E 3px solid ;
@@ -193,6 +191,7 @@
 
     .tabla {
         max-width: 100%;
+        min-height: 100px;
     }
 
     .tabla.table-responsive {
@@ -200,6 +199,45 @@
         overflow-y: auto;
         font-size: 15px;
     }
+    .filtro .dropdown-toggle::after {
+        display: none; 
+    }
+    
+    .filtro .dropdown-menu{
+        background-color: #0E2B3E;
+        top: 100%;
+        margin-top: 0;
+        border-radius: 8px;
+    }
+    
+    
+    .filtro .dropdown-submenu .dropdown-menu{
+        left: 100%;
+        top: 0;
+        margin-top: 0;
+    }
+    
+    .filtro .dropdown-submenu .dropdown-item{
+        color: #54BCDE;
+    }
+    
+    .filtro .dropdown-submenu .dropdown-item:hover{
+        background-color: #54BCDE;
+        color: #0E2B3E;
+        
+    }
+    
+    .filtro .dropdown-submenu .dropdown-item:focus{
+        background-color: #54BCDE;
+        color: #0E2B3E;
+    }
+    
+
+
+
+    
+
+
 }
 
 /* Media query para pantallas de teléfonos muy pequeñas (hasta 576px) */

@@ -137,18 +137,18 @@
     
     <!--saludotexto-iconoperfil-->
     <div class="container">
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="welcome-text">Bienvenid@, {{user.username}}</div>
-            <div class="profile-icon d-flex ">
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="welcome-text">Bienvenid@ {{user.username}}</div>
+            <div class="profile-icon d-flex justify-content-center align-content-center ">
                 <a href="/perfil">
                     {% comment %} <i class="fa-regular fa-user fa-2x"></i> {% endcomment %}
                     <img id="fotoperfil"src="{{ user.picture.url }}" alt="">
                 </a>
 
                 <div class="botonlogout">
-                    <a href="{% url 'logout' %}" class="w-100" style="text-decoration: none;">
-                        <button class="buttonlogout btn w-100">
-                            <i class="fa-solid fa-right-from-bracket fa-4x d-inline-block"></i>
+                    <a href="{% url 'logout' %}">
+                        <button class="buttonlogout btn ">
+                            <i class="fa-solid fa-right-from-bracket fa-4x"></i>
                             
                         </button>
                     </a>
@@ -208,7 +208,7 @@
 
 
         <!--ProjectsCards -->
-        <div class="row">
+        <div class="row ">
             <div class="col-md-3">
                 <div class="project-card">
 
