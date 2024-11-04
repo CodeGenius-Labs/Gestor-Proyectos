@@ -391,10 +391,11 @@
 
                     
                     <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editArchivoModal{{ archivo.id }}" data-bs-archivo-id="{{ archivo.id }}" data-bs-archivo-nombre="{{ archivo.nombre }}">Editar</button>
                         <button class="btn btn-primary" name="descargar_archivo" type="submit">Descargar</button>
                         {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
                         <button class="btn btn-danger" name="eliminar_archivo" type="submit">Eliminar</button>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editArchivoModal{{ archivo.id }}" data-bs-archivo-id="{{ archivo.id }}" data-bs-archivo-nombre="{{ archivo.nombre }}">Editar</button>
+                        
                         {% endif %}
                     </div>
                 </form>
