@@ -41,8 +41,9 @@
                 <div class="logogestor">
                     <img class="img-fluid" src="{% static 'imagenes/logo.png' %}" alt="">
                 </div>
+                
 
-                <div class="collapse navbar-collapse   ">
+                <div class="btonesacciones d-flex justify-content-center align-items-center">
                     {% if request.user.is_authenticated %}
                     
                     <div class="botonproyectos">
@@ -60,8 +61,8 @@
                                 <span class="d-none d-md-inline">Cerrar Sesión</span>
                             </button>
                         </a>
-                    </div>
-
+                    
+                    </div>  
                     {% else %}
 
                 </div>

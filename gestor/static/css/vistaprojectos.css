@@ -19,23 +19,14 @@ body {
     opacity: 0.6;
 }
 
-/* Para pantallas pequeñas (menos de 576px) */
-@media (max-width: 575.98px) {
-    .search-bar {
-        width: 100%; /* Ancho completo en pantallas pequeñas */
-        padding: 8px 15px; /* Ajustar el padding */
-        border-radius: 20px; /* Hacer los bordes un poco menos redondeados */
-    }
+
+
+
+.botonlogout i{
+    color: #54BCDE;
 }
 
-/* Para pantallas medianas (entre 576px y 768px) */
-@media (min-width: 576px) and (max-width: 767.98px) {
-    .search-bar {
-        width: 80%; /* Ancho del 80% en pantallas medianas */
-        padding: 9px 18px; /* Ajustar el padding */
-        border-radius: 25px; /* Bordes ligeramente redondeados */
-    }
-}
+
 
 .filter-btn {
     background-color: #0E2B3E;
@@ -88,13 +79,13 @@ body {
 
 
 .welcome-text {
-    font-size: 24px;
+    font-weight: bold;
     color: #54BCDE;
     text-align: center;
     margin-bottom: 30px;
     font-size: 45px;
-    display: flexbox;
-    width: 100%;
+    width: 90%;
+    
 }
 
 
@@ -132,6 +123,7 @@ body {
     color: #54BCDE;    ;
     padding: 10px 10px;
     background-color: #0E2B3E;
+    
 
 }
 
@@ -148,6 +140,7 @@ body {
 .btn-crear:hover{
     border: #54BCDE 5px solid;
     color: #54BCDE;
+    transition: 0.2s ease-in-out;
 
 }
 
@@ -164,14 +157,9 @@ body {
 
 }
 .profile-icon {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    
     color: #54BCDE;
-    margin-left: auto;
+    margin-left: 10px;
     
 
     
@@ -181,8 +169,67 @@ body {
 .profile-icon #fotoperfil{
     color: #54BCDE;
     width: 80px;
-    height: 80px;
+    height: auto;
     border-radius: 50%;
 }
 
 
+
+
+/* Para pantallas pequeñas (menos de 576px) */
+@media (max-width: 575.98px) {
+    .search-bar {
+        width: 180px;
+        padding: 8px 15px;
+        border-radius: 20px;
+    }
+
+    .welcome-text{
+        font-size: 30px;
+    }
+
+    .project-title{
+        font-size: 20px;
+    }
+    .botonlogout{
+        font-size: 10px;
+    }
+    
+
+        /*menuchikito*/
+
+    .dropdown-toggle::after {
+        display: none !important;
+    }
+
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu .dropdown-menu {
+        top: 100%;
+        left: 0;
+        margin-top: 0;
+        border-radius: 8px;
+        
+    }
+
+
+    }
+
+/* Para pantallas medianas (entre 576px y 768px) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .search-bar {
+        width: 80%; 
+        padding: 9px 18px; 
+        border-radius: 25px;
+    }
+
+    
+
+    
+
+    
+
+
+}
