@@ -76,10 +76,17 @@
 #btn-crear-proyecto-side a,
 #btn-crear-usuario-side a,
 #btn-cerrar-sesion-side a{
-    color: #54BCDE;
-    text-decoration: none;
+   color: #54BCDE;
+   text-decoration: none;
 }
 
+#btn-proyectos-side:hover,
+#btn-gestor-usuarios-side :hover, 
+#btn-crear-proyecto-side:hover ,
+#btn-crear-usuario-side:hover ,
+#btn-cerrar-sesion-side:hover{
+    background-color: aliceblue;
+}
 
 
 
@@ -99,11 +106,14 @@
 
 
 #btn-hamburguesa{
-    background-color: #0E2B3E;
-    margin-right: 50px;
+    margin-right: 70px;
+    font-size: 30px;
 }
 
-
+#btn-hamburguesa i{
+    background-color: transparent;
+    color: #54BCDE;
+}
 
 .titulo{
     text-align: center;

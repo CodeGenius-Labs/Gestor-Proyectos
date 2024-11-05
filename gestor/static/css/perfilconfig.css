@@ -97,3 +97,16 @@ color: black;
 }
 
 
+
+/* Para pantallas medianas (entre 576px y 768px) */
+@media (min-width: 576px) and (max-width: 767.98px){
+
+
+    .containermain{
+        width: 100% !important;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        
+    }
+}
