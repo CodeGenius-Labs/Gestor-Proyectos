@@ -21,7 +21,7 @@ from django.core.files.storage import default_storage
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import ValidationError
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 
 
@@ -128,20 +128,7 @@ def exit(request):
     return redirect('home')  # Redirigir al home
 
 
-def actualizar_proyecto(request, proyecto_id):
-    proyecto = get_object_or_404(Proyecto, id=proyecto_id)
 
-    if request.method == 'POST':
-        # Procesar la actualización
-        proyecto.nombre = request.POST.get('nombre')
-        proyecto.descripcion = request.POST.get('descripcion')
-        proyecto.fecha_inicio = request.POST.get('fecha_inicio')
-        proyecto.fecha_fin = request.POST.get('fecha_fin')
-        proyecto.progreso = request.POST.get('progreso')
-        proyecto.save()
-        return redirect('verproyectos')  # O redirigir a la página que prefieras
-
-    return render(request, 'actualizar_proyecto.html', {'proyecto': proyecto})
 
 
 
@@ -337,9 +324,10 @@ def verproyectos(request, id):
         if 'legalDocument' in request.FILES:
             archivo_file = request.FILES['legalDocument']
             nombre_archivo = request.POST.get('nombre')
-            nuevo_archivo = Archivos(
-                nombre=request.nombre_archivo,
-                archivoss=request.archivo_file,
+            if nombre_archivo and archivo_file:
+                nuevo_archivo = Archivos(
+                nombre=nombre_archivo,
+                archivoss=archivo_file,
                 proyecto=proyecto,
                 usuario=request.user
             )
@@ -504,16 +492,58 @@ def actualizar_proyecto(request, id):
     proyecto = get_object_or_404(Proyecto, id=id)
 
     if request.method == 'POST':
-        # Procesar la actualización
-        proyecto.nombre = request.POST.get('nombre')
-        proyecto.descripcion = request.POST.get('descripcion')
-        proyecto.fecha_inicio = request.POST.get('fecha_inicio')
-        proyecto.fecha_fin = request.POST.get('fecha_fin')
-        proyecto.progreso = request.POST.get('progreso')
-        proyecto.save()
-        return redirect('verproyectos', id=id)  # Redireccionar con el id correcto
+        # Recoger datos del formulario
+        nombre = request.POST.get('nombre')
+        descripcion = request.POST.get('descripcion')
+        fecha_inicio = request.POST.get('fecha_inicio')
+        fecha_fin = request.POST.get('fecha_fin')
+        progreso = request.POST.get('progreso')
 
-    return render(request, 'actualizar_proyecto.html', {'proyecto': proyecto})
+        # Validación que todos los campos estén llenos
+        if not (nombre and descripcion and fecha_inicio and fecha_fin and progreso):
+            messages.error(request, 'Por favor, rellene todos los campos.')
+            return redirect('verproyectos', id=id)
+
+        # Validación del campo 'nombre'
+        if not (3 <= len(nombre) <= 20):
+            messages.error(request, 'El nombre del proyecto debe tener entre 3 y 20 caracteres.')
+            return redirect('verproyectos', id=id)
+        if not re.match(r'^[\w\-]+$', nombre):  # Permite solo letras, números, guiones y guiones bajos
+            messages.error(request, 'El nombre no puede tener caracteres espciales ni numeros.')
+            return redirect('verproyectos', id=id)
+
+        # Validación de la longitud de 'descripcion'
+        if len(descripcion) > 500:
+            messages.error(request, 'La descripción no puede exceder los 500 caracteres.')
+            return redirect('verproyectos', id=id)
+
+        # Validación de fechas
+        try:
+            fecha_inicio_dt = timezone.datetime.strptime(fecha_inicio, '%Y-%m-%d').date()
+            fecha_fin_dt = timezone.datetime.strptime(fecha_fin, '%Y-%m-%d').date()
+        except ValueError:
+            messages.error(request, 'Formato de fecha incorrecto. Use el formato YYYY-MM-DD.')
+            return redirect('verproyectos', id=id)
+
+        if fecha_inicio_dt >= fecha_fin_dt:
+            messages.error(request, 'La fecha de inicio debe ser anterior a la fecha de fin.')
+            return redirect('verproyectos', id=id)
+        if fecha_fin_dt > fecha_inicio_dt + timedelta(days=3650):  # 10 años en días
+            messages.error(request, 'La duración del proyecto no puede exceder los 10 años.')
+            return redirect('verproyectos', id=id)
+
+        # Si todas las validaciones pasan, guardar el proyecto
+        proyecto.nombre = nombre
+        proyecto.descripcion = descripcion
+        proyecto.fecha_inicio = fecha_inicio
+        proyecto.fecha_fin = fecha_fin
+        proyecto.progreso = progreso
+        proyecto.save()
+        
+        messages.success(request, 'Proyecto actualizado exitosamente.')
+        return redirect('verproyectos', id=id)  # Redireccionar a la vista de proyectos con el id correcto
+
+    return render(request, 'verproyectos.html', {'proyecto': proyecto})
 
 
 @login_required(login_url="login")
@@ -707,12 +737,37 @@ def crearuser(request):
 
 def crear_proyecto(request):
     if request.method == 'POST':
-        nombre = request.POST.get('nombre')
-        descripcion = request.POST.get('descripcion')
-        fecha_inicio = request.POST.get('fecha_inicio')
-        fecha_fin = request.POST.get('fecha_fin')
+        nombre = request.POST.get('nombre', '').strip()
+        descripcion = request.POST.get('descripcion', '').strip()
+        fecha_inicio_str = request.POST.get('fecha_inicio')
+        fecha_fin_str = request.POST.get('fecha_fin')
         
-        # Crear el nuevo proyecto
+        # Validación del nombre del proyecto (entre 8 y 50 caracteres)
+        if len(nombre) < 8 or len(nombre) > 50:
+            messages.error(request, 'El nombre del proyecto debe tener entre 8 y 50 caracteres.')
+            return render(request, 'superproyecto.html')
+        
+        # Validación de la descripción (opcional, pero puede tener un mínimo de caracteres si quieres)
+        if len(descripcion) < 20:
+            messages.error(request, 'La descripción del proyecto debe tener al menos 20 caracteres.')
+            return render(request, 'superproyecto.html')
+        
+        # Validación de fechas usando timezone
+        try:
+            fecha_inicio = datetime.strptime(fecha_inicio_str, '%Y-%m-%d').date()
+            fecha_fin = datetime.strptime(fecha_fin_str, '%Y-%m-%d').date()
+
+            if fecha_inicio > fecha_fin:
+                messages.error(request, 'La fecha de inicio no puede ser posterior a la fecha de fin.')
+                return render(request, 'superproyecto.html')
+            if fecha_inicio < timezone.now().date():
+                messages.error(request, 'La fecha de inicio no puede ser una fecha pasada.')
+                return render(request, 'superproyecto.html')
+        except ValueError:
+            messages.error(request, 'Las fechas no son válidas. Por favor, utiliza el formato adecuado.')
+            return render(request, 'superproyecto.html')
+
+        # Crear el nuevo proyecto si todas las validaciones son correctas
         nuevo_proyecto = Proyecto.objects.create(
             nombre=nombre,
             descripcion=descripcion,
@@ -724,6 +779,6 @@ def crear_proyecto(request):
         messages.success(request, 'El proyecto ha sido creado correctamente.')
         
         # Redireccionar a la pestaña superproyecto
-        return redirect('superproyecto')  # Asegúrate de que esta URL esté configurada en urls.py
+        return redirect('superproyecto')
     
     return render(request, 'superproyecto.html')
