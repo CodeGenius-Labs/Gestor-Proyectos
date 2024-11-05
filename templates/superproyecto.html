@@ -643,6 +643,17 @@
                         </div>
                     </div>
 
+                    <!-- Campo para seleccionar el tutor -->
+                    <div class="input_campos">
+                        <label for="tutor">Asignar Tutor</label>
+                        <select id="tutor" name="tutor" required>
+                            <option value="" selected disabled>Selecciona un tutor</option>
+                            {% for tutor in tutores %}
+                                <option value="{{ tutor.id }}">{{ tutor.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
                     <!-- Botón para crear el proyecto -->
                     <button class="btncrear" type="submit" name="crear_proyecto">Crear Proyecto</button>
                 </form>
@@ -650,6 +661,7 @@
         </div>
     </div>
 </div>
+
 
 
 

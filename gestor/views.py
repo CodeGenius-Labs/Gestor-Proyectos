@@ -776,26 +776,37 @@ def crearuser(request):
 
 
 
-
 def crear_proyecto(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombre')
         descripcion = request.POST.get('descripcion')
         fecha_inicio = request.POST.get('fecha_inicio')
         fecha_fin = request.POST.get('fecha_fin')
+        tutor_id = request.POST.get('tutor')  # Obtener el ID del tutor seleccionado
+        
+        # Obtener el objeto de usuario que será el tutor
+        tutor = User.objects.get(id=tutor_id) if tutor_id else None
         
         # Crear el nuevo proyecto
         nuevo_proyecto = Proyecto.objects.create(
             nombre=nombre,
             descripcion=descripcion,
             fecha_inicio=fecha_inicio,
-            fecha_fin=fecha_fin
+            fecha_fin=fecha_fin,
+            tutor=tutor  # Asignar el tutor al proyecto
         )
         
         # Mostrar un mensaje de éxito
         messages.success(request, 'El proyecto ha sido creado correctamente.')
         
         # Redireccionar a la pestaña superproyecto
-        return redirect('superproyecto')  # Asegúrate de que esta URL esté configurada en urls.py
+        return redirect('superproyecto')
     
-    return render(request, 'superproyecto.html')
+    # Obtener todos los posibles tutores (ajusta este filtro si es necesario)
+    tutores = User.objects.filter(groups__name='Tutores')  # Filtra a los usuarios que pertenezcan al grupo 'Tutores'
+    
+    context = {
+        'tutores': tutores  # Pasar la lista de tutores al contexto
+    }
+    
+    return render(request, 'superproyecto.html', context)
