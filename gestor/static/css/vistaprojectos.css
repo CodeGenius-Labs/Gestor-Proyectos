@@ -27,33 +27,6 @@ body {
 }
 
 
-/* Para pantallas pequeñas (menos de 576px) */
-@media (max-width: 575.98px) {
-    .search-bar {
-        width: 100%;
-        padding: 8px 15px;
-        border-radius: 20px;
-    }
-
-    .welcome-text{
-        font-size: 10px;
-    }
-}
-
-/* Para pantallas medianas (entre 576px y 768px) */
-@media (min-width: 576px) and (max-width: 767.98px) {
-    .search-bar {
-        width: 80%; 
-        padding: 9px 18px; 
-        border-radius: 25px;
-    }
-
-    
-
-    
-
-
-}
 
 .filter-btn {
     background-color: #0E2B3E;
@@ -201,3 +174,62 @@ body {
 }
 
 
+
+
+/* Para pantallas pequeñas (menos de 576px) */
+@media (max-width: 575.98px) {
+    .search-bar {
+        width: 180px;
+        padding: 8px 15px;
+        border-radius: 20px;
+    }
+
+    .welcome-text{
+        font-size: 30px;
+    }
+
+    .project-title{
+        font-size: 20px;
+    }
+    .botonlogout{
+        font-size: 10px;
+    }
+    
+
+        /*menuchikito*/
+
+    .dropdown-toggle::after {
+        display: none !important;
+    }
+
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu .dropdown-menu {
+        top: 100%;
+        left: 0;
+        margin-top: 0;
+        border-radius: 8px;
+        
+    }
+
+
+    }
+
+/* Para pantallas medianas (entre 576px y 768px) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .search-bar {
+        width: 80%; 
+        padding: 9px 18px; 
+        border-radius: 25px;
+    }
+
+    
+
+    
+
+    
+
+
+}
