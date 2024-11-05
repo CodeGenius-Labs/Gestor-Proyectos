@@ -350,16 +350,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1>Previsualización de archivo</h1>
-                    <form method="POST" action="{% url 'verproyectos' id=proyecto.id %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
-                        <button type="submit" name="ver_archivo" class="btn btn-primary">Ver Archivo</button>
-                    </form>
+                    <a href="{{ archivo.archivoss.url }}" target="_blank" class="btn btn-primary">Ver Archivo</a>
                 </div>
             </div>
         </div>
     </div>
 {% endfor %}
+
 
 
 

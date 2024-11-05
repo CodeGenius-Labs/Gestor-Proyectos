@@ -201,11 +201,6 @@ def actualizarperfil(request):
 
     return render(request, 'perfilconfig.html')  # Asegúrate de que este nombre coincida con tu archivo de plantilla
 
-from django.contrib import messages
-from django.shortcuts import render, redirect
-from django.utils import timezone
-from datetime import timedelta
-import re
 
 def proyectos(request):
     if request.method == 'POST':
@@ -370,8 +365,7 @@ def verproyectos(request, id):
                 messages.success(request, 'Archivo cargado exitosamente.')
                 return redirect('verproyectos', id=proyecto.id)
         else:
-            # Si falta algún campo, mostrar un mensaje de error
-            messages.error(request, 'Por favor, llena todos los campos obligatorios.')
+           
             return redirect('verproyectos', id=proyecto.id)
 
 
