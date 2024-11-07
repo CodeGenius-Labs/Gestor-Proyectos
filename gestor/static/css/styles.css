@@ -331,7 +331,6 @@ height: 100% ;
     }
     .inputs span{
         display: flex;
-        flex-direction: column;
         margin: 6% 0 8% 40%;
     }
 
