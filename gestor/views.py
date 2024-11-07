@@ -742,14 +742,14 @@ def crear_proyecto(request):
         fecha_inicio_str = request.POST.get('fecha_inicio')
         fecha_fin_str = request.POST.get('fecha_fin')
         
-        # Validación del nombre del proyecto (entre 8 y 50 caracteres)
-        if len(nombre) < 8 or len(nombre) > 50:
-            messages.error(request, 'El nombre del proyecto debe tener entre 8 y 50 caracteres.')
+        # Validación del nombre del proyecto (entre 3 y 20 caracteres)
+        if len(nombre) < 3 or len(nombre) > 20:
+            messages.error(request, 'El nombre del proyecto debe tener entre 3 y 20 caracteres.')
             return render(request, 'superproyecto.html')
         
         # Validación de la descripción (opcional, pero puede tener un mínimo de caracteres si quieres)
-        if len(descripcion) < 20:
-            messages.error(request, 'La descripción del proyecto debe tener al menos 20 caracteres.')
+        if len(descripcion) > 20:
+            messages.error(request, 'La descripcion no puede exceder de 500 caracteres.')
             return render(request, 'superproyecto.html')
         
         # Validación de fechas usando timezone
