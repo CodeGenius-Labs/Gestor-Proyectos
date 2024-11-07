@@ -97,9 +97,8 @@ h2 {
     height: 40px;
     border-radius: 50%;
     position: absolute; /* Cambiado a posición absoluta */
-    top: 10px; /* Alinear hacia arriba */
-    right: 10px; /* Alinear hacia la derecha */
     z-index: 5;
+    text-align: center;
 }
 
 /* Media Query para Tablets */
