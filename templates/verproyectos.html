@@ -63,10 +63,10 @@
                                     </div>
                 
                                     <div class="form-container">
-                                        <label for="fecha_inicio">Fecha de Inicio</label>
+                                        <label for="fecha_inicio">Fecha de Inicio </label>
                                         <input type="date" class="fecha" id="fecha_inicio2" name="fecha_inicio" value="{{ proyecto.fecha_inicio|date:'Y-m-d' }}" required>
                                     
-                                        <label for="fecha_fin">Fecha de Fin</label>
+                                        <label for="fecha_fin">Fecha de Fin </label>
                                         <input type="date" class="fecha" id="fecha_fin2" name="fecha_fin" value="{{ proyecto.fecha_fin|date:'Y-m-d' }}" required>
                                     </div>
                 
@@ -122,11 +122,54 @@
         </aside>
 
         <main class="contenido-principal">
-            <header class="encabezado">
+            <header class="encabezado ">
+
+                <!-- HAMBURGUESAAAAAAAAAAAAAAAAA -->
+                <div class="btn-hamburguesa d-block d-md-none ">
+                    <button id="btn-hamburguesa" class="btn btn-hamburguesa">
+                        <i class="fa-solid fa-bars fa-2"></i>
+                    </button>
+                </div>
+                <!-- Sidebar Offcanvas de Bootstrap -->
+                    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="offcanvasLabel">
+                        <div class="offcanvas-header">
+                            <h5 id="offcanvasLabel" class="offcanvas-title"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body d-flex flex-column align-content-center ">
+                            <!-- Botón de "Editar proyecto" visible solo para el Administrador del Departamento -->
+                                    {% if rol_usuario_actual.rol == 'Administrador del departamento' %}
+                                    <button class="boton-lateral" id="openModalBtn2">Editar proyecto</button>
+                                    {% endif %}
+
+                                    <!-- Botón para ver usuarios visible para Administrador del Departamento y Tutor -->
+                                    {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor' %}
+                                    <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuarios">Ver Usuarios</button>
+                                    {% endif %}
+
+                                    
+
+                                    <!-- Modal para visualizar usuarios solo para Tutor -->
+                                    {% if rol_usuario_actual.rol == 'Tutor' %}
+                                    <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuariosTutor">Ver Usuarios</button>
+                                    {% endif %}
+
+                                    <!-- Botón de "Anotaciones" -->
+                                    <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalAnotaciones">Anotaciones</button>
+
+                                    <!-- Botón de "Volver" -->
+                                    <button class="boton-lateral">
+                                    <a href="{% url 'proyectos' %}" style="color: #54BCDE;">Volver</a>
+                                    </button>
+
+                        </div>
+
+                        <!-- fin De hamburguesaaaaa -->
+                    </div>
                 <h1>{{ proyecto.nombre }}</h1>
                 <div class="fechas">
-                    <p>Fecha inicial: {{ proyecto.fecha_inicio }}</p>
-                    <p>Fecha final: {{ proyecto.fecha_fin }}</p>
+                    <p>Fecha inicial: <br> {{ proyecto.fecha_inicio }}</p>
+                    <p>Fecha final: <br> {{ proyecto.fecha_fin }}</p>
                 </div>
             </header>
 
@@ -524,7 +567,7 @@
 </script>
 
 
-    
+<script src="{% static 'js/sidebar_busqueda.js' %}"></script>
 </body>
 
 </html>

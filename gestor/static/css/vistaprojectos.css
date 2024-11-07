@@ -189,7 +189,7 @@ body {
     }
 
     .project-title{
-        font-size: 20px;
+        display: none;
     }
     .botonlogout{
         font-size: 10px;
@@ -230,7 +230,7 @@ body {
     }
 
     .project-title{
-        font-size: 20px;
+        display: none;
     }
     .botonlogout{
         font-size: 10px;

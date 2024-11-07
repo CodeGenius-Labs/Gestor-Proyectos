@@ -51,11 +51,12 @@
 
 .contenido-principal {
     flex: 1;
-    padding: 20px;
+    padding: 10px 0px;
     background-color: #FFFFFF; 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow-x: hidden;
 }
 
 
@@ -64,17 +65,20 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    border-bottom: 2px solid #0E2B3E;
+    border-bottom: 3px solid #0E2B3E;
     padding-bottom: 10px;
 }
 
 .encabezado h1 {
     color: #0E2B3E;
-    font-size: 30px;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin: 5px;
 }
 
 .fechas {
-    margin-top: 30px;
+    margin-top: 10px;
     width: 100%;
     display: flex;
     justify-content: space-evenly;
@@ -95,8 +99,10 @@
 .documentos h2 {
     font-size: 30px;
     color: #0E2B3E;
-    margin-bottom: 10px;
+    margin: 10px 0px;
+    
 }
+
 
 .progreso {
     margin-top: 20px;
@@ -147,6 +153,7 @@
     transition: box-shadow 0.3s;
     font-family: AngsanaUPC ;
     text-align: center;
+    margin-left: 10px;
 }
 
 #project-card-id:hover {
@@ -167,3 +174,56 @@
 
 
 
+/* mediacuerismeow  */
+
+
+@media only screen and (max-width: 768px) {
+    
+    .barra-lateral{
+        display: none;
+
+    }
+
+    .fechas p{
+        font-size: 20px;
+        font-weight: bold;
+
+    }
+
+
+    #project-card-id{
+        display: flex;
+        flex-direction: column;
+        width: 100px;
+        height: auto;
+        align-items: center;
+        justify-content: center;
+
+    }
+    
+    #project-card-id:hover {
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+        background-color: #dcdcdc;
+        
+    }
+    .file-card {
+        display: flex;
+        flex-direction: row;
+        width: 100px;
+        height: auto;
+    }
+    
+
+    #btn-hamburguesa{
+        
+        position: absolute;
+        left: 30px;
+        color: #54BCDE;
+        font-size: 35px;
+
+    }
+
+    .encabezado h1{
+        margin-top: 50px;
+    }
+}

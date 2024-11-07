@@ -204,3 +204,18 @@ h3 {
     font-size: 16px;
     font-family: 'Arial', sans-serif;
 }
+
+
+
+@media only screen and (max-width: 768px) {
+    
+   
+    .file-card {
+        display: flex;
+        flex-direction: row;
+        width: 100px;
+        height: auto;
+    }
+    
+}
+
