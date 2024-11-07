@@ -179,7 +179,7 @@ body {
 /* Para pantallas pequeñas (menos de 576px) */
 @media (max-width: 575.98px) {
     .search-bar {
-        width: 180px;
+        width: 100%;
         padding: 8px 15px;
         border-radius: 20px;
     }
@@ -223,6 +223,36 @@ body {
         width: 80%; 
         padding: 9px 18px; 
         border-radius: 25px;
+    }
+    
+    .welcome-text{
+        font-size: 30px;
+    }
+
+    .project-title{
+        font-size: 20px;
+    }
+    .botonlogout{
+        font-size: 10px;
+    }
+    
+
+        /*menuchikito*/
+
+    .dropdown-toggle::after {
+        display: none !important;
+    }
+
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu .dropdown-menu {
+        top: 100%;
+        left: 0;
+        margin-top: 0;
+        border-radius: 8px;
+        
     }
 
     
