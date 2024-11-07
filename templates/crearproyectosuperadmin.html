@@ -7,7 +7,7 @@
                 <h4>Crear Proyecto</h4>
 
                 <!-- Formulario para crear proyecto -->
-                <form method="POST" action="{% url 'crear_proyecto' %}">
+                <form method="POST" action="{% url 'superproyecto' %}">
                     {% csrf_token %}
                     
                     <!-- Campo de nombre -->
@@ -36,7 +36,7 @@
                     </div>
 
                     <!-- Botón para crear el proyecto -->
-                    <button class="btncrear" type="submit" name="crear_proyecto">Crear Proyecto</button>
+                    <button class="btncrear" type="submit" name="superproyecto">Crear Proyecto</button>
                 </form>
             </div>
         </div>
