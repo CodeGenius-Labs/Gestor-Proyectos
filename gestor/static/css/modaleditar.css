@@ -87,7 +87,7 @@ label {
     font-size: 14px;
 }
 
-h2 {
+.archivo {
     font-size: 15px;
     margin-top: -3%;
     text-align: center;
@@ -146,4 +146,86 @@ button.increment {
 
 button:focus {
     outline: none;
+}
+/* Media Query para Tablets */
+@media (max-width: 998px) {
+    .modal2 .modal-content {
+        width: 80%; 
+        margin: 5% auto; 
+        padding: 15px; 
+    }
+
+    .input_campos,
+    .form-container {
+        display: flex;
+        flex-direction: column; 
+        align-items: flex-start;
+        margin: 10px 0; 
+    }
+    .fecha{
+        margin: 0;
+        padding: 0;
+    }
+.form-container input{
+    margin: 0 0 0 10px !important;
+}
+    .input_nombre,
+    .input_descripcion,
+    .form-container input {
+        width: calc(100% - 20px) ; /* Hacer los campos de entrada responsivos */
+        margin: 0 !important; /* Eliminar márgenes que causan desbordamiento */
+    }
+
+    .close-btn {
+        margin: -8% 0 0 auto; /* Ajustar la posición del botón de cerrar */
+        left: 10px; /* Cambiar la posición a la izquierda */
+    }
+
+    h2 {
+        font-size: 20px; /* Aumentar el tamaño de fuente en tabletas */
+        text-align: center; /* Centrar el título */
+    }
+}
+
+/* Media Query para Móviles */
+@media (max-width: 480px) {
+    .modal2 .modal-content {
+        width: 95%; /* Aumentar el ancho en móviles */
+        padding: 10px; /* Ajustar el padding */
+    }
+
+    h2 {
+        font-size: 18px; /* Ajustar el tamaño de fuente */
+    }
+
+    .input_campos,
+    .form-container {
+        flex-direction: column; /* Alinear inputs verticalmente */
+        align-items: flex-start; /* Alinear a la izquierda */
+        width: 100%; /* Asegurarse de que ocupen todo el ancho */
+    }
+
+    .input_nombre,
+    .input_descripcion,
+    .form-container input {
+        width: 100%; /* Hacer los campos de entrada responsivos */
+        margin: 5px 0; /* Espacio entre campos */
+    }
+
+    .number-input-container {
+        flex-direction: column; /* Colocar los botones en columna */
+        align-items: flex-start; 
+        width: 100%;
+    }
+
+    button.decrement, button.increment {
+        width: 30px; 
+        height: 30px; 
+        margin: 5px 0; 
+    }
+
+    .btnactualizar {
+        width: 100%; 
+        margin: 15px 0; 
+    }
 }

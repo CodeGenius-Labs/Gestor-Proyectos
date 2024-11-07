@@ -41,10 +41,72 @@ header img{
 
 }
 
+
+.botonlogout span,
+.botonproyectos span,
+.botonlogin span{
+    color: #54BCDE;
+    text-decoration: none;
+
+}
+
 .botonproyectos i,
 .botonlogout i,
 .botonlogin i{
     color: #54BCDE
+}
+/* Media query para tabletas */
+@media (max-width: 768px) {
+    .botonlogout, .botonproyectos, .botonlogin {
+        font-size: 14px;
+        padding: 5px; 
+        width: 100px; 
+    }
+/* tamaño bototnes */
+    .botonproyectos {
+        margin-left: 100px;
+        width: 60px;
+        padding: 5px;
+        
+        
+    }
+
+
+
+
+    .botonlogout {
+        width: 60px;
+        padding: 5px;
+    }
+
+
+
+
+}
+
+/* Media query para móviles */
+@media (max-width: 480px) {
+    .botonlogout, .botonproyectos, .botonlogin {
+        
+        padding: 6px;    
+    }
+
+    /* cambiar tamaño botones */
+    .botonproyectos {
+        margin-left: 100px;
+        width: 50px;
+        padding: 2px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        
+    }
+    
+    
+    
+    
+    .botonlogout {
+        width: 50px;
+        padding: 2px;
+    }
 }
 
 

@@ -105,6 +105,12 @@
     display: block;
 }
 
+
+#modalAnotaciones textarea{
+    resize: none;
+    field-sizing: content;
+}
+
 #modalAnotaciones .btn-danger {
     background-color: #FF4C4C;
     color: #0E2B3E;

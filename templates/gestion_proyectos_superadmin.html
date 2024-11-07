@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="{% static '/css/modaleditarproyecto.css' %}">
     
-    <link rel="stylesheet" href="{% static '/admin/vista_superadmin_main.css' %}">
+    <link rel="stylesheet" href="{% static '/admin/vista_superadmin_proyectos.css' %}">
 
     <!------ventanas toast.js------->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -40,22 +40,50 @@
             {% endif %}
         {% endfor %}
     {% endif %}
-    <div class="container-fluid  <">
+    <div class="container-fluid ">
         <div class="row">
-            <div class="col-2 p-0">
+            <div class="  p-0 d-none d-md-block col-md-2">
                 <div class="botones-laterales">
                     <div class="d-flex flex-column">
                         <button id="btn-proyectos"class="btn btn-proyectos"><a href="{% url 'superproyecto' %}">Gestión de proyectos </a></button>
                         <button id="btn-gestor-usuarios"class="btn btn-gestor-usuarios"><a href="{% url 'superusuario' %}">Gestión de Usuarios </a></button>
-                        <button  id="btn-crear-proyecto"class="btn btn-proyectos">Crear Proyecto</a></button>
+                        <button  id="btn-crear-proyecto" class="btn btn-proyectos">Crear Proyecto</a></button>
                         <button  id="btn-cerrar-sesion"class="btn btn-proyectos"><a href="{% url 'logout'%}">Cerrar Sesion </a></button>
                     </div>
                 </div>
             </div>
-            <div class="col-10">
-                
+            <div class="col-12 col-md-10 ">
+                    
                     <div class="imagen-titulo">
+
+
+                        
                         <div class="titulo-gestor d-flex justify-content-center align-items-center">
+
+                            <div class="btn-hamburguesa d-block d-md-none ">
+                                <button id="btn-hamburguesa" class="btn btn-hamburguesa">
+                                    <i class="fa-solid fa-bars fa-2"></i>
+                                </button>
+                            </div>
+                            <!-- Sidebar Offcanvas de Bootstrap -->
+                                <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="offcanvasLabel">
+                                    <div class="offcanvas-header">
+                                        <h5 id="offcanvasLabel" class="offcanvas-title"></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body d-flex flex-column align-content-center ">
+                                        <button id="btn-proyectos-side" class="btn btn-proyectos"><a href="{% url "superproyecto" %}">Gestión de proyectos </a></button>
+
+
+                                        <button id="btn-gestor-usuarios-side"class="btn btn-gestor-usuarios "><a href="{% url 'superusuario' %}">Gestión de Usuarios </a></button>
+
+                                        <button  id="btn-crear-proyecto-side" class="btn btn-proyectos">Crear Proyecto</a></button>
+
+
+                                        <button id="btn-cerrar-sesion-side"class="btn btn-cerrar-sesion"><a href="{% url 'logout'%}">Cerrar Sesion </a></button>
+                                    </div>
+                                </div>
+
                             <img id="img-logo" class="img-fluid"src="{% static '/imagenes/ico/logo-gestor-proyectos-en-azul.ico' %}" alt="">
                             <h1 id="titulo-gestor">GESTOR DE PROYECTOS</h1>
                         </div>
@@ -64,10 +92,10 @@
                     
                     <div id="busqueda" class="row">
                         <div class="d-flex justify-content-center align-items-center mt-3">
-                            <form method="GET" action="{% url 'superproyecto' %}" class='d-flex align-items-center'>
-                                <input id="input-buscar"type="search" class="form-control w-50" placeholder="Buscar...." name="search" value="{{ search_query }}">
-                                <button type="submit" class="filter-btn ms-2">
-                                    <i id="btn-buscar"class="fa-solid fa-magnifying-glass btn  "></i>
+                            <form method="GET" action="{% url 'superproyecto' %}" class='d-flex justify-content-end'>
+                                <input id="input-buscar"type="search" class="form-control" placeholder="Buscar...." name="search" value="{{ search_query }}">
+                                <button id="btn-buscar" type="submit" class="btn btn-buscar  ">
+                                    <i class="fa-solid fa-magnifying-glass  "></i>
                                 </button>
                             </form>
 
@@ -77,7 +105,7 @@
                                     <div class="filtro">
                                         <button id="btn-filtro" class="btn btn-filtro d-flex justify-content-center align-items-center dropdown-toggle" type="button" aria-expanded="false">
                                             <i id="btn-filtroicon" class="fa-solid fa-list-ul me-2"></i>
-                                            <span>Filtros</span>
+                                            <span class="d-none d-md-inline">Filtros</span>
                                         </button>
                                 
                                         <!-- menú principal -->
@@ -113,8 +141,8 @@
                 
 
                 {% comment %} modales  {% endcomment %}
-                 {% include "modalescreareditar.html" %}
-                 {% include "crearproyectosuperadmin.html" %}
+                {% include "modalescreareditar.html" %}
+                {% include "crearproyectosuperadmin.html" %}
 
 
 
@@ -122,7 +150,7 @@
                             <h2>PROYECTOS</h2>
                         </div>
 
-                        <div class="tabla table-responsive">
+                        <div class="tabla  table-responsive table-responsive-sm table-responsive-xs  ">
                             <table class="table table-bordered text-center align-middle"
                                 
                                 <thead>
@@ -182,18 +210,12 @@
     
     <script src="{% static 'js/dropdown.js' %}"></script>
     <script src="{% static 'js/modales.js' %}"></script>
-    <script>
-        function applyFilter(order, direction) {
-            // Obtener la URL actual
-            const url = new URL(window.location.href);
-            
-            // Establecer los parámetros de filtro
-            url.searchParams.set('order', order);
-            url.searchParams.set('direction', direction);
-            
-            // Redirigir a la nueva URL
-            window.location.href = url.toString();
-        }
-    </script>
+    <script src="{% static 'js/sidebar_busqueda.js' %}"></script>
+    
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -43,36 +43,42 @@
     </div>
 </div>
 
-
-
-
 <script>
-    // Obtener el modal
-    var modalCrear = document.getElementById("modalCrearProyecto");
-    
-    // Obtener el botón que abre el modal
-    var btnAbrirModal = document.getElementById("btn-crear-proyecto");
-    
-    // Obtener el botón de cierre del modal
-    var closeBtn = document.getElementsByClassName("close-btn")[0];
-    
-    // Cuando el usuario haga clic en el botón, abre el modal
-    btnAbrirModal.onclick = function() {
+
+
+// Obtener el modal
+var modalCrear = document.getElementById("modalCrearProyecto");
+
+// Obtener ambos botones que abren el modal
+var btnAbrirModal = document.querySelectorAll("#btn-crear-proyecto, #btn-crear-proyecto-side");
+
+// Obtener el botón de cierre del modal
+var closeBtn = document.getElementsByClassName("close-btn")[0];
+
+// Función para abrir el modal
+btnAbrirModal.forEach(function(btn) {
+    btn.onclick = function() {
         modalCrear.style.display = "block";
     }
-    
-    // Cuando el usuario haga clic en la 'X', cierra el modal
-    closeBtn.onclick = function() {
+});
+
+// Cuando el usuario haga clic en la 'X', cierra el modal
+closeBtn.onclick = function() {
+    modalCrear.style.display = "none";
+}
+
+// Cuando el usuario haga clic fuera del modal, también lo cierra
+window.onclick = function(event) {
+    if (event.target == modalCrear) {
         modalCrear.style.display = "none";
     }
-    
-    // Cuando el usuario haga clic fuera del modal, también lo cierra
-    window.onclick = function(event) {
-        if (event.target == modalCrear) {
-            modalCrear.style.display = "none";
-        }
-    }
-    </script>
-    
+}
 
+// Cerrar el modal al presionar la tecla "Escape"
+window.onkeydown = function(event) {
+    if (event.key === "Escape") {
+        modalCrear.style.display = "none";
+    }
+}
+</script>
             
