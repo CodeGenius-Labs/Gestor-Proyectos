@@ -789,7 +789,7 @@ def crear_proyecto(request):
             messages.error(request, 'El nombre del proyecto debe tener entre 3 y 20 caracteres.')
             return redirect('superproyecto')
         if not re.match(r'^[a-zA-Z\s]+$', nombre):  # Permite solo letras y espacios
-            messages.error(request, 'El nombre no puede tener números ni caracteres especiales.')
+            messages.error(request, 'El nombre no puede tener caracteres especiales.')
             return redirect('superproyecto')
 
         # Validación de la longitud de 'descripcion'
