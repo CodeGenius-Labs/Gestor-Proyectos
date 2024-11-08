@@ -772,30 +772,66 @@ def crearuser(request):
 
 def crear_proyecto(request):
     if request.method == 'POST':
+        # Recoger datos del formulario
         nombre = request.POST.get('nombre')
         descripcion = request.POST.get('descripcion')
         fecha_inicio = request.POST.get('fecha_inicio')
         fecha_fin = request.POST.get('fecha_fin')
         tutor_id = request.POST.get('tutor')  # Obtener el ID del tutor seleccionado
-        
+
+        # Validar que todos los campos están llenos
+        if not (nombre and descripcion and fecha_inicio and fecha_fin):
+            messages.error(request, 'Por favor, rellene todos los campos.')
+            return redirect('superproyecto')
+
+        # Validación del campo 'nombre'
+        if not (3 <= len(nombre) <= 20):
+            messages.error(request, 'El nombre del proyecto debe tener entre 3 y 20 caracteres.')
+            return redirect('superproyecto')
+        if not re.match(r'^[a-zA-Z\s]+$', nombre):  # Permite solo letras y espacios
+            messages.error(request, 'El nombre no puede tener números ni caracteres especiales.')
+            return redirect('superproyecto')
+
+        # Validación de la longitud de 'descripcion'
+        if len(descripcion) > 500:
+            messages.error(request, 'La descripción no puede exceder los 500 caracteres.')
+            return redirect('superproyecto')
+
+        # Validación de fechas
+        try:
+            fecha_inicio_dt = timezone.datetime.strptime(fecha_inicio, '%Y-%m-%d').date()
+            fecha_fin_dt = timezone.datetime.strptime(fecha_fin, '%Y-%m-%d').date()
+        except ValueError:
+            messages.error(request, 'Formato de fecha incorrecto. Use el formato YYYY-MM-DD.')
+            return redirect('superproyecto')
+
+        if fecha_inicio_dt >= fecha_fin_dt:
+            messages.error(request, 'La fecha de inicio debe ser anterior a la fecha de fin.')
+            return redirect('superproyecto')
+        if fecha_fin_dt > fecha_inicio_dt + timedelta(days=3650):  # 10 años en días
+            messages.error(request, 'La duración del proyecto no puede exceder los 10 años.')
+            return redirect('superproyecto')
+
         # Obtener el objeto de usuario que será el tutor
         tutor = User.objects.get(id=tutor_id) if tutor_id else None
         
-        # Crear el nuevo proyecto
-        nuevo_proyecto = Proyecto.objects.create(
-            nombre=nombre,
-            descripcion=descripcion,
-            fecha_inicio=fecha_inicio,
-            fecha_fin=fecha_fin,
-            tutor=tutor  # Asignar el tutor al proyecto
-        )
-        
-        # Mostrar un mensaje de éxito
-        messages.success(request, 'El proyecto ha sido creado correctamente.')
-        
-        # Redireccionar a la pestaña superproyecto
-        return redirect('superproyecto')
-    
+        # Crear el nuevo proyecto si pasa todas las validaciones
+        try:
+            nuevo_proyecto = Proyecto.objects.create(
+                nombre=nombre,
+                descripcion=descripcion,
+                fecha_inicio=fecha_inicio_dt,
+                fecha_fin=fecha_fin_dt,
+                tutor=tutor  # Asignar el tutor al proyecto
+            )
+            # Mostrar un mensaje de éxito
+            messages.success(request, 'El proyecto ha sido creado correctamente.')
+            # Redireccionar a la pestaña superproyecto
+            return redirect('superproyecto')
+        except Exception as e:
+            messages.error(request, f'Ocurrió un error al crear el proyecto: {e}')
+            return redirect('superproyecto')
+
     # Obtener todos los posibles tutores (ajusta este filtro si es necesario)
     tutores = User.objects.filter(groups__name='Tutores')  # Filtra a los usuarios que pertenezcan al grupo 'Tutores'
     
