@@ -2,8 +2,8 @@ html {
     padding: 0;
     margin: 0;
     scrollbar-width: none;
-    overflow: hidden;
     box-sizing: border-box;
+    overflow: hidden;
 
 }
 
@@ -19,7 +19,9 @@ body {
     box-sizing: border-box;
     padding: 0 10px;
 }
-
+.labelconf{
+    margin-top: 30px ;
+}
 .content {
     display: flex;
 }
@@ -34,17 +36,19 @@ body {
 }
 
 .inputs {
-    width: 27%;
+    width: 29%;
     margin-left: 20px;
+    text-align: right;
+
     margin-top: 2%;
 
 }
 
 .inputs label {
-    margin-left: 10px;
+    margin-left: 0;
     padding-top: 2%;
     color: white;
-    font-size: 13px;
+    font-size: 15px; 
     font-weight: 450;
 }
 
@@ -94,7 +98,7 @@ body {
 }
 
 .password {
-    margin-left: 59px;
+    margin-left: 66px;
     background-color: #274960;
     border: 1px solid rgba(255, 255, 255, 0.664);
     box-shadow: 2px 3px 4px black;
@@ -116,32 +120,37 @@ body {
 
     border: 1px solid #257fbb;
 }
-
-#boton {
+.crear{
+    margin-left: 13%;
+    text-align: center;
+   }
+.botonr {
     background-color: #162e3d;
+    color: white;
     border: none;
     border-radius: 20px;
     padding: 10px 40px;
     margin-top: 80px;
-    margin-left: 130px;
+    margin-left: 100px;
     font-weight: bold;
     margin-bottom: 50px;
 
 }
 
-#boton:hover {
+#botonr:hover {
     transform: scale(106%);
 }
 
-#botonr {
+.botonr {
     background-color: #162e3d;
+    color: white;
+
     border: none;
     border-radius: 20px;
     padding: 10px 40px;
-    margin-top: 60px;
-    margin-left: 130px;
     font-weight: bold;
-    margin-bottom: 50px;
+    margin: 70px 50px 0 0 !important;
+
 
 }
 
@@ -166,8 +175,8 @@ body {
 
 .crear {
     color: #54BCDE;
-    margin-left: 140px;
-    font-size: 120%;
+    margin-left: 80px;
+    font-size: 105%;
     font-weight: bold;
     margin-bottom: 20px;
     margin-top: 10px;
@@ -175,24 +184,97 @@ body {
 
 }
 
-@media (min-width: 992px) and (max-width: 1276px) {
 
+
+@media (min-width: 1280px) and (max-width: 1352px) {
+    .input_campos input {
+        width: 50%;
+        margin: 5% 0 0 3%;
+    }
+   .crear{
+    margin-left: 13%;
+    text-align: center;
+   }
+    .inputs{
+        margin-top: 12%;
+        text-align: right;
+        width: 40%;
+    }
     .login {
         height: 300px !important;
     }
-
-    .correo {
-        margin-right: -15vw;
-
+    .inputs label{
+        margin-left: 20px;
+        font-size: 18px;
+    }
+    .labelconf{
+        font-size: 16px !important;
+        margin-left: 10px;
     }
 
-    .password {
-        margin-right: -15vw;
-
+    .botonr {
+        margin: 80px 0 0 200px !important;
+        display: block;
+        color: white;
+        padding: 10px 30px;
+        background-color: #162e3d;
+        border: none;
+        border-radius: 20px;
+        font-weight: bold;
     }
 
     .image img {
-        margin-left: 100px;
+        margin-left: 150px;
+        width: 111vw;
+        height: auto;
+
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1279px) {
+
+    .input_campos input {
+        width: 50%;
+        margin: 5% 0 0 3%;
+    }
+   .crear{
+    margin-left: 130px;
+    text-align: center;
+    font-size: 25px;
+   }
+
+    .inputs{
+        margin-top: 12%;
+        text-align: right;
+        width: 40%;
+        font-size: 30px;
+
+    }
+    .login {
+        height: 300px !important;
+    }
+    .inputs label{
+        font-size: 18px;
+        margin-left: -10px;
+    }
+    .labelconf{
+        font-size: 16px !important;
+    }
+    
+    .botonr {
+        margin: 80px 0 0 200px !important;
+        display: block;
+        color: white;
+        padding: 10px 30px;
+        background-color: #162e3d;
+        border: none;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .image img {
+        margin-left: 150px;
         width: 111vw;
         height: auto;
 
@@ -207,9 +289,14 @@ body {
         margin-top: 20%;
     }
 
+    .crear{
+        margin-left: 13%;
+        text-align: center;
+        font-size: 25px;
+       }
+
     .img_logo {
         width: 12px;
-
     }
 
     .inputs span {
@@ -219,13 +306,20 @@ body {
 
     .image,
     .inputs {
+        text-align: right;
         width: 90%;
         margin-top: 8%;
         margin: 0;
+        font-size: 18px;
+    }
+    .inputs label{
+        margin-right: 12%;
+        font-size: 20px;
     }
 
     .password {
-        margin: 5% 5% 0 14% !important;
+        margin: 5% 15%  0 0 !important;
+        
     }
 
     .image img {
@@ -241,8 +335,11 @@ body {
     }
 
     .input_campos input {
-        width: 60%;
-        margin: 0 10%;
+        width: 40%;
+        margin: 5% 15% 0 0;
+        font-size: 30px;
+
+        
     }
 
     .inputs span {
@@ -252,10 +349,16 @@ body {
         text-align: center;
     }
 
-    #boton {
-        margin: 30px auto;
+    .botonr {
+        margin: 80px 50px 0 290px !important;
         display: block;
-        padding: 10px 300px;
+        color: white;
+        padding: 10px 30px;
+        background-color: #162e3d;
+        border: none;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 20px;
     }
 
     .inputs h6 {
@@ -264,8 +367,8 @@ body {
     }
 
     .inputs img {
-        width: 40%;
-        margin: 1% 30%;
+        width: 50%;
+        margin: 1% 165px;
     }
 
     .crear {
@@ -273,6 +376,10 @@ body {
         text-align: center;
     }
 }
+
+
+
+
 
 @media (min-width: 582px) and (max-width: 767px) {
     body {
@@ -286,6 +393,7 @@ body {
     .inputs span {
         display: none;
 
+
     }
 
     .content {
@@ -298,27 +406,28 @@ body {
 
     .inputs {
         width: 90%;
-        padding: 20px;
+        padding:0px;
         border-radius: 10px;
-        position: relative;
+        text-align: right !important;
     }
 
     .input_campos input {
         width: 65%;
+        font-size: 18px;
     }
 
     .correo {
         margin-right: 1%;
-
     }
 
     .password {
-        margin-right: 3%;
+        margin-right: 1%;
     }
 
     .inputs img {
-        width: 220px;
-        margin: 0 33%;
+        width: 280px;
+        margin: 5% 28%;
+        
     }
 
     .nombre,
@@ -328,20 +437,27 @@ body {
         padding: 12px;
     }
 
-    #boton {
-        font-size: 14px;
+    .botonr {
+        font-size: 20px;
         padding: 10px 32px;
-        margin: 5% 45%;
+        color: white;
+        margin: 12% 180px 0 0 !important;
+        background-color: #162e3d;
+        border: none;
+        border-radius: 20px;
+        font-weight: bold;
     }
 
     .crear {
         text-align: center;
-        font-size: 1.2em;
+        font-size: 25px;
         margin-top: 20px;
         color: #54BCDE;
         font-weight: bold;
     }
 }
+
+
 
 @media (max-width: 581px) {
     body {
@@ -349,11 +465,13 @@ body {
         background-image: url('imagenes/logo.png');
         background-size: cover;
         background-position: center;
-        margin-top: 40%;
 
 
     }
+.login{
+    margin-top: 10%;
 
+}
     #person {
 
         display: none !important;
@@ -361,6 +479,7 @@ body {
 
     .content {
         flex-direction: column;
+
     }
 
     .image {
@@ -370,7 +489,7 @@ body {
     .inputs {
         text-align: center;
         width: 90%;
-        padding: 20px;
+       /*  padding: 20px; */
         border-radius: 10px;
         position: relative;
     }
@@ -381,14 +500,24 @@ body {
     }
 
     .input_campos label {
-        margin-right: 20%;
+        text-align: left;
+        margin-right: 17%;
         margin-left: -11%;
+    }
+    .labelconf{
+        font-size: 18px;
+        margin-left: -11% !important;
+
+    }
+    .labelpass{
+        margin-right: 28% !important;
+
     }
 
     .correo {
         position: relative;
 
-        margin-top: 5%;
+        margin-top: 3%;
 
         margin-right: 1%;
 
@@ -396,7 +525,7 @@ body {
 
     .password {
         position: relative;
-        margin-top: 5%;
+        margin-top: 3%;
         margin-left: 6%;
     }
 
@@ -407,6 +536,7 @@ body {
 
     .inputs span {
         display: flex;
+        flex-direction: column;
         margin: 6% 0 8% 40%;
     }
 
@@ -414,20 +544,28 @@ body {
     .correo,
     .password {
         font-size: 16px;
-        padding: 12px;
     }
 
-    #boton {
+    .botonr {
         padding: 8px 32px;
-        margin: 8% 34%;
+        margin: 10% 0 0 0 !important;
+        background-color: #162e3d;
+    color: white;
+
+        border: none;
+        border-radius: 20px;
+        font-weight: bold;
+        margin-top: 90px;
+
     }
 
     .crear {
         text-align: center;
-        font-size: 1.2em;
-        margin-top: 20px;
+        font-size: 1.0em;
+        margin-top: 0;
         color: #54BCDE;
         font-weight: bold;
+        margin-left: 0;
     }
 
     .inputs h6 {

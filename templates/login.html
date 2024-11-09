@@ -21,7 +21,7 @@
       <div class="content">
         <div class="inputs">
           <a  class="img_logo"  href=""><img   class="img_logo" src="{% static 'imagenes/logo.png'%}" alt="" /></a>
-          <span class="material-symbols-outlined">person</span>
+          <span id="person" class="material-symbols-outlined">person</span>
 
           <!-- Bloque para mostrar mensajes de error -->
           {% if messages %}
@@ -53,7 +53,7 @@
                 <button class="btn btn-primary" type="submit" id="boton">Iniciar sesión</button>
             
           </form>
-          <h6>¿No tienes una cuenta? <a href="{% url 'registro'%}"> Registrate aqui</a></h6>
+          <h6 class="textAling">¿No tienes una cuenta? <a href="{% url 'registro'%}"> Registrate aqui</a></h6>
         </div>
         <div class="image">
           <img src="{% static 'imagenes/fondo_señor.png' %}" alt="" />
