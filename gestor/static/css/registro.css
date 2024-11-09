@@ -1,0 +1,573 @@
+html {
+    padding: 0;
+    margin: 0;
+    scrollbar-width: none;
+    box-sizing: border-box;
+    overflow: hidden;
+
+}
+
+body {
+    background-color: #274960 !important;
+    font-family: "Libre Franklin", sans-serif;
+    font-weight: 300;
+}
+
+.login {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0 10px;
+}
+.labelconf{margin-top: 30px ;}
+.content {
+    display: flex;
+}
+
+.image {
+    width: 45%;
+
+    height: 100%;
+
+    margin-top: -8PX;
+
+}
+
+.inputs {
+    width: 27%;
+    margin-left: 20px;
+    text-align: right;
+
+    margin-top: 2%;
+
+}
+
+.inputs label {
+    margin-left: 10px;
+    padding-top: 2%;
+    color: white;
+    font-size: 13px;
+    font-weight: 450;
+}
+
+
+.image img {
+    margin-left: 100px;
+    width: 180%;
+    height: 85%;
+
+}
+
+.inputs img {
+    margin: 0;
+    margin-left: 65px;
+    padding-bottom: 40px;
+    width: 80%;
+}
+
+.material-symbols-outlined {
+    color: white;
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 200,
+        'GRAD' 0,
+        'opsz' 24
+}
+
+.inputs span {
+    font-size: 100px;
+    margin-left: 160px;
+}
+
+.nombre {
+    margin: 30px 0 20px 25px;
+    background-color: #274960;
+    border: 1px solid rgba(255, 255, 255, 0.664);
+    box-shadow: 2px 3px 4px black;
+
+}
+
+
+.correo {
+    margin: 30px 0 40px 25px;
+    background-color: #274960;
+    border: 1px solid rgba(255, 255, 255, 0.664);
+    box-shadow: 2px 3px 4px black;
+}
+
+.password {
+    margin-left: 66px;
+    background-color: #274960;
+    border: 1px solid rgba(255, 255, 255, 0.664);
+    box-shadow: 2px 3px 4px black;
+    color: white;
+}
+
+.nombre,
+.correo,
+.password {
+    color: white;
+}
+
+.correo:hover {
+
+    border: 1px solid #257fbb;
+}
+
+.password:hover {
+
+    border: 1px solid #257fbb;
+}
+.crear{
+    margin-left: 13%;
+    text-align: center;
+   }
+.botonr {
+    background-color: #162e3d;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 40px;
+    margin-top: 80px;
+    margin-left: 100px;
+    font-weight: bold;
+    margin-bottom: 50px;
+
+}
+
+#botonr:hover {
+    transform: scale(106%);
+}
+
+.botonr {
+    background-color: #162e3d;
+    color: white;
+
+    border: none;
+    border-radius: 20px;
+    padding: 10px 40px;
+    font-weight: bold;
+    margin: 70px 50px 0 0 !important;
+
+
+}
+
+.inputs a {
+    text-decoration: none;
+    color: #74b7f5;
+    font-weight: 400;
+}
+
+.inputs a:hover {
+    color: #009dff;
+
+}
+
+.inputs h6 {
+    color: white;
+    font-weight: 100;
+    text-align: center;
+    margin-left: 80px;
+    font-family: "Libre Franklin", sans-serif;
+}
+
+.crear {
+    color: #54BCDE;
+    margin-left: 80px;
+    font-size: 105%;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 10px;
+
+
+}
+
+@media (min-width: 992px) and (max-width: 1308px) {
+
+    .input_campos input {
+        width: 50%;
+        margin: 5% 0 0 3%;
+    }
+   .crear{
+    margin-left: 130px;
+    text-align: center;
+    font-size: 25px;
+   }
+
+    .inputs{
+        margin-top: 12%;
+        text-align: right;
+        width: 40%;
+        font-size: 30px;
+
+    }
+    .login {
+        height: 300px !important;
+    }
+    .inputs label{
+        font-size: 18px;
+        margin-left: -10px;
+    }
+    .labelconf{
+        font-size: 16px !important;
+    }
+    
+    .botonr {
+        margin: 80px 0 0 200px !important;
+        display: block;
+        color: white;
+        padding: 10px 30px;
+        background-color: #162e3d;
+        border: none;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .image img {
+        margin-left: 150px;
+        width: 111vw;
+        height: auto;
+
+    }
+}
+
+
+
+@media (min-width: 1280px) and (max-width: 1305px) {
+    .input_campos input {
+        width: 50%;
+        margin: 5% 0 0 3%;
+    }
+   .crear{
+    margin-left: 13%;
+    text-align: center;
+   }
+    .inputs{
+        margin-top: 12%;
+        text-align: right;
+        width: 40%;
+    }
+    .login {
+        height: 300px !important;
+    }
+    .inputs label{
+        margin-left: 20px;
+        font-size: 18px;
+    }
+    .labelconf{
+        font-size: 16px !important;
+    }
+
+    .botonr {
+        margin: 80px 0 0 200px !important;
+        display: block;
+        color: white;
+        padding: 10px 30px;
+        background-color: #162e3d;
+        border: none;
+        border-radius: 20px;
+        font-weight: bold;
+    }
+
+    .image img {
+        margin-left: 150px;
+        width: 111vw;
+        height: auto;
+
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    .content {
+        flex-direction: column;
+        align-items: center;
+        scrollbar-width: auto;
+        margin-top: 20%;
+    }
+
+    .crear{
+        margin-left: 13%;
+        text-align: center;
+        font-size: 25px;
+       }
+
+    .img_logo {
+        width: 12px;
+    }
+
+    .inputs span {
+        display: none;
+
+    }
+
+    .image,
+    .inputs {
+        text-align: right;
+        width: 90%;
+        margin-top: 8%;
+        margin: 0;
+        font-size: 18px;
+    }
+    .inputs label{
+        margin-right: 12%;
+        font-size: 20px;
+    }
+
+    .password {
+        margin: 5% 15%  0 0 !important;
+        
+    }
+
+    .image img {
+        width: 80%;
+        height: 60%;
+        margin: auto;
+        display: none;
+    }
+
+    .inputs {
+        width: 90%;
+        margin-top: 10%;
+    }
+
+    .input_campos input {
+        width: 40%;
+        margin: 5% 15% 0 0;
+        font-size: 30px;
+
+        
+    }
+
+    .inputs span {
+        font-size: 80px;
+        margin-left: 0;
+        display: block;
+        text-align: center;
+    }
+
+    .botonr {
+        margin: 80px 50px 0 290px !important;
+        display: block;
+        color: white;
+        padding: 10px 30px;
+        background-color: #162e3d;
+        border: none;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .inputs h6 {
+        text-align: center;
+        margin-left: 0;
+    }
+
+    .inputs img {
+        width: 50%;
+        margin: 1% 165px;
+    }
+
+    .crear {
+        margin-left: 0;
+        text-align: center;
+    }
+}
+
+
+
+
+
+@media (min-width: 582px) and (max-width: 767px) {
+    body {
+        margin: auto;
+        background-image: url('imagenes/logo.png');
+        background-size: cover;
+        background-position: center;
+        margin-top: 30%;
+    }
+
+    .inputs span {
+        display: none;
+
+
+    }
+
+    .content {
+        flex-direction: column;
+    }
+
+    .image {
+        display: none;
+    }
+
+    .inputs {
+        width: 90%;
+        padding:0px;
+        border-radius: 10px;
+        text-align: right !important;
+    }
+
+    .input_campos input {
+        width: 65%;
+        font-size: 18px;
+    }
+
+    .correo {
+        margin-right: 1%;
+    }
+
+    .password {
+        margin-right: 1%;
+    }
+
+    .inputs img {
+        width: 280px;
+        margin: 5% 28%;
+        
+    }
+
+    .nombre,
+    .correo,
+    .password {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .botonr {
+        font-size: 20px;
+        padding: 10px 32px;
+        color: white;
+        margin: 12% 180px 0 0 !important;
+        background-color: #162e3d;
+        border: none;
+        border-radius: 20px;
+        font-weight: bold;
+    }
+
+    .crear {
+        text-align: center;
+        font-size: 25px;
+        margin-top: 20px;
+        color: #54BCDE;
+        font-weight: bold;
+    }
+}
+
+
+
+@media (max-width: 581px) {
+    body {
+        margin: auto;
+        background-image: url('imagenes/logo.png');
+        background-size: cover;
+        background-position: center;
+        margin-top: 20%;
+
+
+    }
+
+    #person {
+
+        display: none !important;
+    }
+
+    .content {
+        flex-direction: column;
+    }
+
+    .image {
+        display: none;
+    }
+
+    .inputs {
+        text-align: center;
+        width: 90%;
+        padding: 20px;
+        border-radius: 10px;
+        position: relative;
+    }
+
+    .input_campos input {
+        width: 70%;
+        height: 40px;
+    }
+
+    .input_campos label {
+        text-align: left;
+        margin-right: 17%;
+        margin-left: -11%;
+    }
+    .labelconf{
+        font-size: 18px;
+        margin-left: -11% !important;
+
+    }
+    .labelpass{
+        margin-right: 28% !important;
+
+    }
+
+    .correo {
+        position: relative;
+
+        margin-top: 5%;
+
+        margin-right: 1%;
+
+    }
+
+    .password {
+        position: relative;
+        margin-top: 5%;
+        margin-left: 6%;
+    }
+
+    .inputs img {
+        width: 220px;
+        margin: 0 8% 0 27%;
+    }
+
+    .inputs span {
+        display: flex;
+        flex-direction: column;
+        margin: 6% 0 8% 40%;
+    }
+
+    .nombre,
+    .correo,
+    .password {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .botonr {
+        padding: 8px 32px;
+        margin: 10% 0 0 0 !important;
+        background-color: #162e3d;
+    color: white;
+
+        border: none;
+        border-radius: 20px;
+        font-weight: bold;
+    }
+
+    .crear {
+        text-align: center;
+        font-size: 1.2em;
+        margin-top: 0;
+        color: #54BCDE;
+        font-weight: bold;
+        margin-left: 0;
+    }
+
+    .inputs h6 {
+        text-align: center !important;
+        margin-left: 0;
+    }
+
+    .inputs img {
+        width: 220px;
+        margin: 0 8% 0 7%;
+    }
+
+}
