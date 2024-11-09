@@ -19,7 +19,9 @@ body {
     box-sizing: border-box;
     padding: 0 10px;
 }
-.labelconf{margin-top: 30px ;}
+.labelconf{
+    margin-top: 30px ;
+}
 .content {
     display: flex;
 }
@@ -34,7 +36,7 @@ body {
 }
 
 .inputs {
-    width: 27%;
+    width: 29%;
     margin-left: 20px;
     text-align: right;
 
@@ -43,10 +45,10 @@ body {
 }
 
 .inputs label {
-    margin-left: 10px;
+    margin-left: 0;
     padding-top: 2%;
     color: white;
-    font-size: 13px;
+    font-size: 15px; 
     font-weight: 450;
 }
 
@@ -182,7 +184,54 @@ body {
 
 }
 
-@media (min-width: 992px) and (max-width: 1308px) {
+
+
+@media (min-width: 1280px) and (max-width: 1352px) {
+    .input_campos input {
+        width: 50%;
+        margin: 5% 0 0 3%;
+    }
+   .crear{
+    margin-left: 13%;
+    text-align: center;
+   }
+    .inputs{
+        margin-top: 12%;
+        text-align: right;
+        width: 40%;
+    }
+    .login {
+        height: 300px !important;
+    }
+    .inputs label{
+        margin-left: 20px;
+        font-size: 18px;
+    }
+    .labelconf{
+        font-size: 16px !important;
+        margin-left: 10px;
+    }
+
+    .botonr {
+        margin: 80px 0 0 200px !important;
+        display: block;
+        color: white;
+        padding: 10px 30px;
+        background-color: #162e3d;
+        border: none;
+        border-radius: 20px;
+        font-weight: bold;
+    }
+
+    .image img {
+        margin-left: 150px;
+        width: 111vw;
+        height: auto;
+
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1279px) {
 
     .input_campos input {
         width: 50%;
@@ -232,51 +281,6 @@ body {
     }
 }
 
-
-
-@media (min-width: 1280px) and (max-width: 1305px) {
-    .input_campos input {
-        width: 50%;
-        margin: 5% 0 0 3%;
-    }
-   .crear{
-    margin-left: 13%;
-    text-align: center;
-   }
-    .inputs{
-        margin-top: 12%;
-        text-align: right;
-        width: 40%;
-    }
-    .login {
-        height: 300px !important;
-    }
-    .inputs label{
-        margin-left: 20px;
-        font-size: 18px;
-    }
-    .labelconf{
-        font-size: 16px !important;
-    }
-
-    .botonr {
-        margin: 80px 0 0 200px !important;
-        display: block;
-        color: white;
-        padding: 10px 30px;
-        background-color: #162e3d;
-        border: none;
-        border-radius: 20px;
-        font-weight: bold;
-    }
-
-    .image img {
-        margin-left: 150px;
-        width: 111vw;
-        height: auto;
-
-    }
-}
 @media (min-width: 768px) and (max-width: 991px) {
     .content {
         flex-direction: column;
@@ -461,11 +465,13 @@ body {
         background-image: url('imagenes/logo.png');
         background-size: cover;
         background-position: center;
-        margin-top: 20%;
 
 
     }
+.login{
+    margin-top: 10%;
 
+}
     #person {
 
         display: none !important;
@@ -473,6 +479,7 @@ body {
 
     .content {
         flex-direction: column;
+
     }
 
     .image {
@@ -482,14 +489,14 @@ body {
     .inputs {
         text-align: center;
         width: 90%;
-        padding: 20px;
+       /*  padding: 20px; */
         border-radius: 10px;
         position: relative;
     }
 
     .input_campos input {
         width: 70%;
-        height: 40px;
+        height: 30px;
     }
 
     .input_campos label {
@@ -510,7 +517,7 @@ body {
     .correo {
         position: relative;
 
-        margin-top: 5%;
+        margin-top: 3%;
 
         margin-right: 1%;
 
@@ -518,7 +525,7 @@ body {
 
     .password {
         position: relative;
-        margin-top: 5%;
+        margin-top: 3%;
         margin-left: 6%;
     }
 
@@ -537,7 +544,6 @@ body {
     .correo,
     .password {
         font-size: 16px;
-        padding: 12px;
     }
 
     .botonr {
@@ -549,11 +555,13 @@ body {
         border: none;
         border-radius: 20px;
         font-weight: bold;
+        margin-top: 90px;
+
     }
 
     .crear {
         text-align: center;
-        font-size: 1.2em;
+        font-size: 1.0em;
         margin-top: 0;
         color: #54BCDE;
         font-weight: bold;
