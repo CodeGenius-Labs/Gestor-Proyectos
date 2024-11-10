@@ -211,11 +211,17 @@ h3 {
     
    
     .file-card {
-        display: flex;
-        flex-direction: row;
-        width: 100px;
+        
+        width: auto;
         height: auto;
+        margin: 20px;
     }
     
 }
+
+
+
+
+
+
 

@@ -168,7 +168,7 @@
 }
 
 .file-name a {
-    color: #54BCDE; /* Cambiar el color del enlace */
+    color: #0E2B3E; /* Cambiar el color del enlace */
     text-decoration: none; /* Opcional: quitar el subrayado del enlace */
 }
 
@@ -190,11 +190,13 @@
 
     }
 
+    
+
 
     #project-card-id{
         display: flex;
         flex-direction: column;
-        width: 100px;
+        width: auto;
         height: auto;
         align-items: center;
         justify-content: center;
@@ -206,12 +208,7 @@
         background-color: #dcdcdc;
         
     }
-    .file-card {
-        display: flex;
-        flex-direction: row;
-        width: 100px;
-        height: auto;
-    }
+   
     
 
     #btn-hamburguesa{
@@ -226,4 +223,5 @@
     .encabezado h1{
         margin-top: 50px;
     }
+
 }

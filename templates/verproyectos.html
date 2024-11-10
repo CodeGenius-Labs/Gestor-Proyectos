@@ -177,9 +177,9 @@
                 <h2>Descripción</h2>
                 <p>{{ proyecto.descripcion }}</p>
             </section>
-            <section class="row">
-                {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
-                <div class="col-md-3 mb-3">
+            <section id="archivos"class="row">
+                {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor' %}
+                <div class="col-md-2 mb-3">
                     <div class="project-card" id="project-card-id">
                         <button class="btn btn-view" id="openModalBtnModal3">
                             <i class="fa-solid fa-plus fa-2x"></i>
@@ -191,13 +191,13 @@
             
                 <!-- Este es el div que contendrá las tarjetas de archivos en el futuro -->
                 {% for archivo in archivos %}
-                <div class="col-md-3 mb-3">
+                <div class="col-md-2  mb-3">
                     <div class="file-card">
                         <div class="file-header d-flex justify-content-between">
                             <span class="file-icon">E</span>
                             <div class="file-options" data-bs-toggle="modal" data-bs-target="#modal{{ archivo.id }}">•••</div>
                         </div>
-                        <!-- Agregar el enlace aquí -->
+                        <!-- Enlace para ver el archivo -->
                         <div class="file-name">
                             <a href="{% url 'verproyectos' proyecto.id %}?archivo_id={{ archivo.id }}" 
                                data-bs-toggle="modal" 
@@ -208,7 +208,6 @@
                     </div>
                 </div>
                 {% endfor %}
-                
             </section>
             
             
