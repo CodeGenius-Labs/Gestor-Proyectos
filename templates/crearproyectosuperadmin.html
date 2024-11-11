@@ -35,6 +35,21 @@
                         </div>
                     </div>
 
+                    <!-- Tutor selection dropdown -->
+                    <div class="input_campos">
+                        <label for="tutor">Tutor</label>
+                        <select class="input_tutor" name="tutor" id="tutor">
+                            <option value="">-- Seleccione un tutor --</option>
+                        </select>
+                    </div>
+
+                    <!-- Lista de usuarios -->
+                    <div id="lista-usuarios" style="display: none;">
+                        {% for user in tutores %}
+                            <option value="{{ user.id }}">{{ user.username }}</option>
+                        {% endfor %}
+                    </div>
+
                     <!-- Botón para crear el proyecto -->
                     <button class="btncrear" type="submit" name="crear_proyecto">Crear Proyecto</button>
                 </form>

@@ -28,6 +28,7 @@ from django.utils import timezone
 
 
 
+
 #----------------Inicio----------------
 def home(request):
     if request.user.is_superuser:
@@ -765,6 +766,13 @@ def crearuser(request):
 
 
 
+
+
+
+
+
+
+
 def crear_proyecto(request):
     if request.method == 'POST':
         # Recoger datos del formulario
@@ -772,8 +780,8 @@ def crear_proyecto(request):
         descripcion = request.POST.get('descripcion')
         fecha_inicio = request.POST.get('fecha_inicio')
         fecha_fin = request.POST.get('fecha_fin')
-        tutor_id = request.POST.get('tutor')  # Obtener el ID del tutor seleccionado
-
+        tutor_id = request.POST.get('tutor')  # Get the selected tutor ID
+        
         # Validar que todos los campos están llenos
         if not (nombre and descripcion and fecha_inicio and fecha_fin):
             messages.error(request, 'Por favor, rellene todos los campos.')
@@ -807,31 +815,31 @@ def crear_proyecto(request):
             messages.error(request, 'La duración del proyecto no puede exceder los 10 años.')
             return redirect('superproyecto')
 
-        # Obtener el objeto de usuario que será el tutor
-        tutor = User.objects.get(id=tutor_id) if tutor_id else None
+        # Obtain the selected tutor
+        users = User.objects.exclude(id=request.user.id).filter(groups__name='Tutores')  # Filtra a los usuarios que pertenezcan al grupo 'Tutores'
+        tutor_options = [(user.id, user.username) for user in users]
+        tutor = User.objects.get(id=tutor_id)
+
+        # Create the new project with the selected tutor
+        nuevo_proyecto = Proyecto.objects.create(
+            nombre=nombre,
+            descripcion=descripcion,
+            fecha_inicio=fecha_inicio_dt,
+            fecha_fin=fecha_fin_dt,
+            tutor=tutor  # Assign the selected tutor to the project
+        )
         
-        # Crear el nuevo proyecto si pasa todas las validaciones
-        try:
-            nuevo_proyecto = Proyecto.objects.create(
-                nombre=nombre,
-                descripcion=descripcion,
-                fecha_inicio=fecha_inicio_dt,
-                fecha_fin=fecha_fin_dt,
-                tutor=tutor  # Asignar el tutor al proyecto
-            )
-            # Mostrar un mensaje de éxito
-            messages.success(request, 'El proyecto ha sido creado correctamente.')
-            # Redireccionar a la pestaña superproyecto
-            return redirect('superproyecto')
-        except Exception as e:
-            messages.error(request, f'Ocurrió un error al crear el proyecto: {e}')
-            return redirect('superproyecto')
+        # Mostrar un mensaje de éxito
+        messages.success(request, 'El proyecto ha sido creado correctamente.')
+        # Redireccionar a la pestaña superproyecto
+        return redirect('superproyecto')
 
     # Obtener todos los posibles tutores (ajusta este filtro si es necesario)
-    tutores = User.objects.filter(groups__name='Tutores')  # Filtra a los usuarios que pertenezcan al grupo 'Tutores'
+    tutores = User.objects.exclude(id=request.user.id).filter(groups__name='Tutores')  # Filtra a los usuarios que pertenezcan al grupo 'Tutores'
     
+    # Renderizar la vista con la lista de tutores
     context = {
-        'tutores': tutores  # Pasar la lista de tutores al contexto
+        'tutores': tutores,  # Pass the list of tutor options to the context
     }
-    
+
     return render(request, 'superproyecto.html', context)
