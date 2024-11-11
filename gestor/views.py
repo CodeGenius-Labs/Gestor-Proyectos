@@ -538,7 +538,7 @@ def actualizar_proyecto(request, id):
         if not (3 <= len(nombre) <= 20):
             messages.error(request, 'El nombre del proyecto debe tener entre 3 y 20 caracteres.')
             return redirect('verproyectos', id=id)
-        if not re.match(r'^[\w\-]+$', nombre):  # Permite solo letras, números, guiones y guiones bajos
+        if not re.match(r'^[\w\s\-]+$', nombre):  # Permite solo letras, números, guiones y guiones bajos
             messages.error(request, 'El nombre no puede tener caracteres espciales ni numeros.')
             return redirect('verproyectos', id=id)
 
@@ -601,28 +601,28 @@ def superproyecto(request):
         fecha_fin = request.POST.get('fecha_fin')
 
         # Validación de nombre (mínimo 3 y máximo 20 caracteres, sin caracteres especiales)
-        if not re.match(r'^[a-zA-Z0-9_-]{3,20}$', nombre):
-            return HttpResponse("Error: El nombre debe tener entre 3 y 20 caracteres y solo puede contener letras, números, guiones bajos y guiones.")
+        if not re.match(r'^[a-zA-Z0-9\s_-]{3,20}$', nombre):
+            messages.error(request, "Error: El nombre debe tener entre 3 y 20 caracteres y solo puede contener letras, números, guiones bajos y guiones.")
 
         # Validación de descripción (máximo 500 caracteres)
         if len(descripcion) > 500:
-            return HttpResponse("Error: La descripción no puede tener más de 500 caracteres.")
+            messages.error(request, "Error: La descripción no puede tener más de 500 caracteres.")
 
         # Validación de fechas
         try:
             fecha_inicio_dt = datetime.strptime(fecha_inicio, "%Y-%m-%d")
             fecha_fin_dt = datetime.strptime(fecha_fin, "%Y-%m-%d")
         except ValueError:
-            return HttpResponse("Error: Formato de fecha inválido.")
+            messages.error(request, "Error: Formato de fecha inválido.")
 
         # Comprobar que la fecha de fin sea coherente con la fecha de inicio
         if fecha_fin_dt < fecha_inicio_dt:
-            return HttpResponse("Error: La fecha de fin no puede ser anterior a la fecha de inicio.")
+            messages.error(request, "Error: La fecha de fin no puede ser anterior a la fecha de inicio.")
 
         # Validar que la fecha de fin no sea más de 10 años después de la fecha de inicio
         max_fecha_fin = fecha_inicio_dt + timedelta(days=365*10)  # 10 años
         if fecha_fin_dt > max_fecha_fin:
-            return HttpResponse("Error: La fecha de fin no puede ser más de 10 años después de la fecha de inicio.")
+            messages.error(request, "Error: La fecha de fin no puede ser más de 10 años después de la fecha de inicio.")
 
         # Si todas las validaciones pasan, guarda los cambios
         proyecto.nombre = nombre
