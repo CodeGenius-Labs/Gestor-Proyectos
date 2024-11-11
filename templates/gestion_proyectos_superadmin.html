@@ -45,7 +45,7 @@
             <div class="  p-0 d-none d-md-block col-md-2">
                 <div class="botones-laterales">
                     <div class="d-flex flex-column">
-                        <button id="btn-proyectos"class="btn btn-proyectos"><a href="{% url "superproyecto" %}">Gestión de proyectos </a></button>
+                        <button id="btn-proyectos"class="btn btn-proyectos"><a href="{% url 'superproyecto' %}">Gestión de proyectos </a></button>
                         <button id="btn-gestor-usuarios"class="btn btn-gestor-usuarios"><a href="{% url 'superusuario' %}">Gestión de Usuarios </a></button>
                         <button  id="btn-crear-proyecto" class="btn btn-proyectos">Crear Proyecto</a></button>
                         <button  id="btn-cerrar-sesion"class="btn btn-proyectos"><a href="{% url 'logout'%}">Cerrar Sesion </a></button>
@@ -72,7 +72,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                                     </div>
                                     <div class="offcanvas-body d-flex flex-column align-content-center ">
-                                        <button id="btn-proyectos-side" class="btn btn-proyectos"><a href="{% url "superproyecto" %}">Gestión de proyectos </a></button>
+                                        <button id="btn-proyectos-side" class="btn btn-proyectos"><a href="{% url 'superproyecto' %}">Gestión de proyectos </a></button>
 
 
                                         <button id="btn-gestor-usuarios-side"class="btn btn-gestor-usuarios "><a href="{% url 'superusuario' %}">Gestión de Usuarios </a></button>
@@ -146,58 +146,50 @@
 
 
 
-                        <div class="titulo mt-2 ">
-                            <h2>PROYECTOS</h2>
-                        </div>
-
-                        <div class="tabla  table-responsive table-responsive-sm table-responsive-xs  ">
-                            <table class="table table-bordered text-center align-middle"
+                <div class="titulo mt-2">
+                    <h2>PROYECTOS</h2>
+                </div>
+                
+                <div class="tabla table-responsive table-responsive-sm table-responsive-xs">
+                    <table class="table table-bordered text-center align-middle">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="col-proyecto">PROYECTO</th>
+                                <th scope="col" class="col-descripcion">DESCRIPCION</th>
+                                <th scope="col" class="col-proyecto">TUTOR</th>
+                                <th scope="col" class="col-fecha">FECHA CREACION</th>
+                                <th scope="col" class="col-acciones">ACCIONES</th>
                                 
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="col-proyecto">PROYECTO</th>
-                                        <th scope="col" class="col-descripcion">DESCRIPCION</th>
-                                        <th scope="col" class="col-fecha">FECHA CREACION</th>
-                                        <th scope="col" class="col-acciones">ACCIONES</th>
-                                    </tr>
-                                    </thead>
-                                    
-                                    <tbody>
-                                        {% for proyecto in proyectos %}
-                                        <tr class="fila">
-                                            <td class="td-proyecto">{{ proyecto.nombre }}</td>
-                                            <td class="td-descripcion">{{ proyecto.descripcion }}</td>
-                                            <td class="td-fecha">{{ proyecto.fecha_inicio|date:"d/m/Y" }}</td>
-                                            <td class="td-acciones">
-                                                <button id="btn-editar" class="btn btn-editar"data-id="{{ proyecto.id }}" data-nombre="{{ proyecto.nombre }}" data-descripcion="{{ proyecto.descripcion }}" data-fecha-inicio="{{ proyecto.fecha_inicio|date:'Y-m-d' }}" data-fecha-fin="{{ proyecto.fecha_fin|date:'Y-m-d' }}">
-                                                    <i class="fa-solid fa-pen"></i>
-                                                </button>
-                                                <!-- Botón de Eliminar -->
-                                                <form method="POST" style="display:inline;">
-                                                    {% csrf_token %}
-                                                    <input type="hidden" name="proyecto_id" value="{{ proyecto.id }}">
-                                                    <button type="submit" name="eliminar_proyecto" id="btn-borrar"class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        {% empty %}
-                                        <tr>
-                                            <td colspan="4">No hay proyectos disponibles.</td>
-                                        </tr>
-                                        {% endfor %}
-
-                                        
-                                        
-                                    </tbody>
-                                    
-                                </table>
-                        </div>
-
-
-
-
-                    </div>
-
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for proyecto in proyectos %}
+                            <tr class="fila">
+                                <td class="td-proyecto">{{ proyecto.nombre }}</td>
+                                <td class="td-descripcion">{{ proyecto.descripcion }}</td>
+                                
+                                <td class="td-fecha">{{ proyecto.fecha_inicio|date:"d/m/Y" }}</td>
+                                <td class="td-acciones">
+                                    <button id="btn-editar" class="btn btn-editar" data-id="{{ proyecto.id }}" data-nombre="{{ proyecto.nombre }}" data-descripcion="{{ proyecto.descripcion }}" data-fecha-inicio="{{ proyecto.fecha_inicio|date:'Y-m-d' }}" data-fecha-fin="{{ proyecto.fecha_fin|date:'Y-m-d' }}">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+                                    <!-- Botón de Eliminar -->
+                                    <form method="POST" style="display:inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="proyecto_id" value="{{ proyecto.id }}">
+                                        <button type="submit" name="eliminar_proyecto" id="btn-borrar" class="btn btn-borrar"><i class="fa-solid fa-trash"></i></button>
+                                    </form>
+                                </td>
+                                
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5">No hay proyectos disponibles.</td> <!-- Cambia el colspan a 5 para incluir la columna de Tutor -->
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                     
                     
                     
