@@ -692,3 +692,54 @@ def superproyecto(request):
         'tutores': usuarios,  # Pasamos todos los usuarios, ya que cualquiera puede ser administrador de departamento
     }
     return render(request, 'gestion_proyectos_superadmin.html', context)
+
+login_required(login_url="login")
+def superusuario(request):
+    if not request.user.is_staff:
+        return redirect('home')  # Redirigir a "home" si no es staff
+    # Obtener todos los usuarios
+    usuarios = User.objects.all()
+    
+    if request.method == 'POST':
+        # Actualizar el usuario seleccionado si se envía el formulario
+        user_id = request.POST.get('user_id')
+        user = User.objects.get(id=user_id)
+        
+        # Modificar nombre de usuario y correo electrónico
+        new_username = request.POST.get('username')
+        new_email = request.POST.get('email')
+        
+        user.username = new_username
+        user.email = new_email
+        user.save()
+
+    if request.method == 'POST':
+        # Eliminar el usuario si se presiona el botón de eliminar
+        if 'eliminar_usuario' in request.POST:
+            user_id = request.POST.get('user_id')
+            user = User.objects.get(id=user_id)
+            user.delete()
+    
+    query = request.GET.get('search', '')
+    if query:
+        usuarios = usuarios.filter(username__icontains=query)
+
+    # Manejar el filtrado y ordenamiento
+    order = request.GET.get('order')
+    direction = request.GET.get('direction', 'asc')
+
+    if order in ['username', 'email']:
+        if direction == 'asc':
+            usuarios = usuarios.order_by(order)
+        else:
+            usuarios = usuarios.order_by('-' + order)
+
+
+    # Pasar los proyectos al contexto de la plantilla
+
+    context = {
+        'usuarios': usuarios,
+        'search_query': query  # Para mantener la consulta en la barra de búsqueda
+    }
+
+    return render(request, 'gestion_usuarios_superadmin.html', context)
