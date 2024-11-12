@@ -37,9 +37,9 @@
 
                     <!-- Tutor selection dropdown -->
                     <div class="input_campos">
-                        <label for="tutor">Tutor</label>
+                        <label for="tutor">ADMIN</label>
                         <select class="input_tutor" name="tutor" id="tutor" required>
-                            <option value="">-- Seleccione un tutor --</option>
+                            <option value="">-- Seleccione un admin --</option>
                             {% for tutor in tutores %}
                                 <option value="{{ tutor.id }}">{{ tutor.username }}</option>
                             {% endfor %}
