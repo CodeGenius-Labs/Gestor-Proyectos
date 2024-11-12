@@ -592,19 +592,17 @@ def superproyecto(request):
     
     proyectos = Proyecto.objects.all()
 
-    # Obtener todos los usuarios registrados para que puedan ser seleccionados como tutores
+    # Obtener todos los usuarios registrados para que puedan ser seleccionados como administradores de departamento
     usuarios = User.objects.all()
 
     # Crear proyecto
     if request.method == 'POST' and 'crear_proyecto' in request.POST:
-        # Recoger datos del formulario
         nombre = request.POST.get('nombre')
         descripcion = request.POST.get('descripcion')
         fecha_inicio = request.POST.get('fecha_inicio')
         fecha_fin = request.POST.get('fecha_fin')
         tutor_id = request.POST.get('tutor')
 
-        # Validaciones del formulario de creación
         if not (nombre and descripcion and fecha_inicio and fecha_fin and tutor_id):
             messages.error(request, 'Por favor, complete todos los campos.')
         elif not re.match(r'^[a-zA-Z0-9\s_-]{3,20}$', nombre):
@@ -620,24 +618,23 @@ def superproyecto(request):
                 elif fecha_fin_dt > fecha_inicio_dt + timedelta(days=365*10):
                     messages.error(request, "Error: La fecha de fin no puede ser más de 10 años después de la fecha de inicio.")
                 else:
-                    # Crear el proyecto
                     nuevo_proyecto = Proyecto.objects.create(
                         nombre=nombre,
                         descripcion=descripcion,
                         fecha_inicio=fecha_inicio_dt,
                         fecha_fin=fecha_fin_dt
                     )
-                    # Asignar el tutor al proyecto en MiembrosProyectos
+                    # Asignar el administrador de departamento al proyecto en MiembrosProyectos
                     tutor = User.objects.get(id=tutor_id)
-                    rol_tutor, _ = Roles.objects.get_or_create(rol=Roles.TUTOR)  # Asegurarse de que el rol "Tutor" existe
-                    MiembrosProyectos.objects.create(usuario=tutor, proyecto=nuevo_proyecto, rol=rol_tutor)
+                    rol_admin, _ = Roles.objects.get_or_create(rol=Roles.ADMIN_DEPARTAMENTO)  # Asignar rol "Administrador de Departamento"
+                    MiembrosProyectos.objects.create(usuario=tutor, proyecto=nuevo_proyecto, rol=rol_admin)
 
                     messages.success(request, 'Proyecto creado correctamente.')
                     return redirect('superproyecto')
             except ValueError:
                 messages.error(request, "Error: Formato de fecha inválido. Use el formato AAAA-MM-DD.")
 
-    # Editar proyecto
+    # El resto de la vista sigue igual...
     if request.method == 'POST' and 'editar_proyecto' in request.POST:
         proyecto_id = request.POST.get('proyecto_id')
         proyecto = get_object_or_404(Proyecto, id=proyecto_id)
@@ -647,7 +644,6 @@ def superproyecto(request):
         fecha_inicio = request.POST.get('fecha_inicio')
         fecha_fin = request.POST.get('fecha_fin')
 
-        # Validaciones de edición de proyecto
         if not re.match(r'^[a-zA-Z0-9\s_-]{3,20}$', nombre):
             messages.error(request, "Error: El nombre debe tener entre 3 y 20 caracteres y solo puede contener letras, números, guiones bajos y guiones.")
         elif len(descripcion) > 500:
@@ -661,7 +657,6 @@ def superproyecto(request):
                 elif fecha_fin_dt > fecha_inicio_dt + timedelta(days=365*10):
                     messages.error(request, "Error: La fecha de fin no puede ser más de 10 años después de la fecha de inicio.")
                 else:
-                    # Guardar cambios en el proyecto
                     proyecto.nombre = nombre
                     proyecto.descripcion = descripcion
                     proyecto.fecha_inicio = fecha_inicio
@@ -672,7 +667,6 @@ def superproyecto(request):
             except ValueError:
                 messages.error(request, "Error: Formato de fecha inválido.")
 
-    # Eliminar proyecto
     if request.method == 'POST' and 'eliminar_proyecto' in request.POST:
         proyecto_id = request.POST.get('proyecto_id')
         proyecto = get_object_or_404(Proyecto, id=proyecto_id)
@@ -680,12 +674,10 @@ def superproyecto(request):
         messages.success(request, "Proyecto eliminado correctamente.")
         return redirect('superproyecto')
 
-    # Manejo de búsqueda
     query = request.GET.get('search', '')
     if query:
         proyectos = proyectos.filter(nombre__icontains=query)
 
-    # Manejo de filtrado y ordenamiento
     order = request.GET.get('order')
     direction = request.GET.get('direction', 'asc')
     if order in ['nombre', 'fecha_inicio', 'fecha_fin']:
@@ -694,182 +686,9 @@ def superproyecto(request):
         else:
             proyectos = proyectos.order_by('-' + order)
 
-    # Pasar los proyectos y todos los usuarios al contexto
     context = {
         'proyectos': proyectos,
         'search_query': query,
-        'tutores': usuarios,  # Pasamos todos los usuarios, ya que cualquier usuario puede ser tutor
+        'tutores': usuarios,  # Pasamos todos los usuarios, ya que cualquiera puede ser administrador de departamento
     }
     return render(request, 'gestion_proyectos_superadmin.html', context)
-
-
-
-@login_required(login_url="login")
-def superusuario(request):
-    if not request.user.is_staff:
-        return redirect('home')  # Redirigir a "home" si no es staff
-    # Obtener todos los usuarios
-    usuarios = User.objects.all()
-    
-    if request.method == 'POST':
-        # Actualizar el usuario seleccionado si se envía el formulario
-        user_id = request.POST.get('user_id')
-        user = User.objects.get(id=user_id)
-        
-        # Modificar nombre de usuario y correo electrónico
-        new_username = request.POST.get('username')
-        new_email = request.POST.get('email')
-        
-        user.username = new_username
-        user.email = new_email
-        user.save()
-
-    if request.method == 'POST':
-        # Eliminar el usuario si se presiona el botón de eliminar
-        if 'eliminar_usuario' in request.POST:
-            user_id = request.POST.get('user_id')
-            user = User.objects.get(id=user_id)
-            user.delete()
-    
-    query = request.GET.get('search', '')
-    if query:
-        usuarios = usuarios.filter(username__icontains=query)
-
-    # Manejar el filtrado y ordenamiento
-    order = request.GET.get('order')
-    direction = request.GET.get('direction', 'asc')
-
-    if order in ['username', 'email']:
-        if direction == 'asc':
-            usuarios = usuarios.order_by(order)
-        else:
-            usuarios = usuarios.order_by('-' + order)
-
-
-    # Pasar los proyectos al contexto de la plantilla
-
-    context = {
-        'usuarios': usuarios,
-        'search_query': query  # Para mantener la consulta en la barra de búsqueda
-    }
-
-    return render(request, 'gestion_usuarios_superadmin.html', context)
-
-
-
-def crearuser(request):
-    if request.method == 'POST':
-        
-        username = request.POST['nombre']  
-        email = request.POST['correo']  
-        password = request.POST['password'] 
-
-        # Validar que el nombre tenga entre 8 y 50 caracteres y que no contenga números
-        if any(char.isdigit() for char in username) or len(username) < 8 or len(username) > 50:
-            if any(char.isdigit() for char in username):
-                messages.error(request, 'El nombre de usuario no puede contener números.')
-            else:
-                messages.error(request, 'El nombre de usuario debe tener entre 8 y 50 caracteres.')
-            return redirect('superusuario')
-
-        # Validar que la contraseña tenga entre 7 y 20 caracteres
-        if len(password) < 7 or len(password) > 20:
-            messages.error(request, 'La contraseña debe tener entre 7 y 20 caracteres.')
-            return redirect('superusuario')
-
-        # Validar que el email sea válido
-        try:
-            validate_email(email)
-        except ValidationError:
-            messages.error(request, 'El correo electrónico no es válido.')
-            return redirect('superusuario')
-
-        # Verificar si el nombre de usuario o correo ya están en uso
-        if User.objects.filter(username=username).exists():
-            messages.error(request, 'El nombre de usuario ya está en uso. Por favor, elige otro.')
-        elif User.objects.filter(email=email).exists():
-            messages.error(request, 'El correo electrónico ya está registrado. Por favor, usa otro.')
-        else:
-            
-            user = User.objects.create_user(username=username, email=email, password=password)
-            user.save()
-
-            messages.success(request, 'Usuario creado exitosamente.')
-            return redirect('superusuario')  
-
-    return render(request, 'gestion_usuarios_superadmin.html')  
-
-
-
-
-
-
-
-
-
-
-def crear_proyecto(request):
-    if request.method == 'POST':
-        # Recoger datos del formulario
-        nombre = request.POST.get('nombre')
-        descripcion = request.POST.get('descripcion')
-        fecha_inicio = request.POST.get('fecha_inicio')
-        fecha_fin = request.POST.get('fecha_fin')
-        tutor_id = request.POST.get('tutor')  # Obtiene el ID del tutor seleccionado
-        
-        # Validación de los campos
-        if not (nombre and descripcion and fecha_inicio and fecha_fin):
-            messages.error(request, 'Por favor, rellene todos los campos.')
-            return redirect('superproyecto')
-
-        # Validación del campo 'nombre'
-        if not (3 <= len(nombre) <= 20):
-            messages.error(request, 'El nombre del proyecto debe tener entre 3 y 20 caracteres.')
-            return redirect('superproyecto')
-        if not re.match(r'^[a-zA-Z\s]+$', nombre):  # Permite solo letras y espacios
-            messages.error(request, 'El nombre no puede tener caracteres especiales.')
-            return redirect('superproyecto')
-
-        # Validación de la longitud de 'descripcion'
-        if len(descripcion) > 500:
-            messages.error(request, 'La descripción no puede exceder los 500 caracteres.')
-            return redirect('superproyecto')
-
-        # Validación de fechas
-        try:
-            fecha_inicio_dt = timezone.datetime.strptime(fecha_inicio, '%Y-%m-%d').date()
-            fecha_fin_dt = timezone.datetime.strptime(fecha_fin, '%Y-%m-%d').date()
-        except ValueError:
-            messages.error(request, 'Formato de fecha incorrecto. Use el formato YYYY-MM-DD.')
-            return redirect('superproyecto')
-
-        if fecha_inicio_dt >= fecha_fin_dt:
-            messages.error(request, 'La fecha de inicio debe ser anterior a la fecha de fin.')
-            return redirect('superproyecto')
-        if fecha_fin_dt > fecha_inicio_dt + timedelta(days=3650):  # 10 años en días
-            messages.error(request, 'La duración del proyecto no puede exceder los 10 años.')
-            return redirect('superproyecto')
-
-        # Crear el proyecto con el tutor seleccionado
-        nuevo_proyecto = Proyecto.objects.create(
-            nombre=nombre,
-            descripcion=descripcion,
-            fecha_inicio=fecha_inicio_dt,
-            fecha_fin=fecha_fin_dt,
-            tutor=User.objects.get(id=tutor_id) if tutor_id else None  # Asigna el tutor seleccionado si existe
-        )
-        
-        # Mostrar un mensaje de éxito
-        messages.success(request, 'El proyecto ha sido creado correctamente.')
-        # Redireccionar a la pestaña superproyecto
-        return redirect('superproyecto')
-
-    # Obtener todos los posibles tutores (ajusta este filtro si es necesario)
-    tutores = User.objects.exclude(id=request.user.id).filter(groups__name='Tutores')  # Filtra usuarios que pertenezcan al grupo 'Tutores'
-    
-    # Renderizar la vista con la lista de tutores
-    context = {
-        'tutores': tutores,  # Pasa la lista de tutores al contexto
-    }
-
-    return render(request, 'superproyecto.html', context)
