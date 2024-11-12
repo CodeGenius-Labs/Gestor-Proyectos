@@ -54,6 +54,10 @@
     color: #0E2B3E; /* Color claro para las etiquetas */
 }
 
+h2{
+    text-align: center;
+}
+
 .modal-content input {
     padding: 10px;
     border: none;
@@ -69,11 +73,12 @@
 }
 
 .modal-content span {
-    color: red;
+    color: #0E2B3E;
     font-size: 30px;
     cursor: pointer;
     padding-left: 20px;
     font-weight: bold;
+    background: transparent;
 }
 
 /* Estilo para el botón */

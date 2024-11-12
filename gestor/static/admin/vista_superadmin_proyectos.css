@@ -351,8 +351,15 @@
     border: #0E2B3E 2px solid;
 }
 
+/* cosas de yeral */
 
 
+.close-btn {
+    background-color: transparent;
+    font-size: 30px;
+    font-weight: bold;
+    color: #0E2B3E;
+}
 
 
 

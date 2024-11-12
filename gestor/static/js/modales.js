@@ -1,7 +1,7 @@
 // Obtener los botones de "Editar" y el modal
 // modal Editar proyecto
 
-const openModalBtns = document.querySelectorAll('.btn-editar'); // Asegúrate de que la clase tenga un punto delante
+const openModalBtns = document.querySelectorAll('.btn-editar , #openModalBtn2'); // Asegúrate de que la clase tenga un punto delante
 const modal = document.getElementById('modal7');
 const closeModalBtn = document.querySelector('.close-btn7');
 
