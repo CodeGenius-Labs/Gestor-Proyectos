@@ -1,40 +1,21 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const modal2 = document.getElementById('modal2');
-    const openModalBtn2 = document.getElementById('openModalBtn2'); 
-    const closeModalBtn2 = document.getElementById('closeModalBtn2'); 
+const modal = document.getElementById('modal');
+const openModalBtn = document.getElementById('openModalBtn');
+const closeModalBtn = document.querySelector('.close-btn1');
+const closeButton = document.getElementById('closeModalBtn'); 
 
-    openModalBtn2.onclick = function() {
-        modal2.style.display = 'block';
+// Abre el modal 
+openModalBtn.onclick = function() {
+    modal.style.display = 'block';
+}
+
+// Cierra el modal
+closeModalBtn.onclick = function() {
+    modal.style.display = 'none';
+}
+
+// Cierra el modal al hacer clic fuera de él
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = 'none';
     }
-
-    closeModalBtn2.onclick = function() {
-        modal2.style.display = 'none';
-    }
-
-    // Cierra el modal al hacer clic fuera de él
-    window.onclick = function(event) {
-        if (event.target === modal2) {
-            modal2.style.display = 'none';
-        }
-    }
-
-    decrementButton2.onclick = function() {
-        let currentValue = parseInt(numberInput2.value);
-        if (currentValue > parseInt(numberInput2.min)) {
-            numberInput2.value = currentValue - 1;
-        }
-    }
-    
-    incrementButton2.onclick = function() {
-        let currentValue = parseInt(numberInput2.value);
-        if (currentValue < parseInt(numberInput2.max)) {
-            numberInput2.value = currentValue + 1;
-        }
-    }
-});
-
-
-
-
-            
-
+}
