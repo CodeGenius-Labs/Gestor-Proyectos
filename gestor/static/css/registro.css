@@ -501,12 +501,21 @@ body {
 
     .input_campos label {
         text-align: left;
-        margin-right: 17%;
-        margin-left: -11%;
+        margin-right: 30% ; 
+        margin-left: -10%;
     }
     .labelconf{
         font-size: 18px;
-        margin-left: -11% !important;
+        margin-left: 8% !important;
+
+    }
+
+    .correoe{
+        margin-left: 5% !important;
+    }
+
+    .user{
+        margin-left: -15% !important;
 
     }
     .labelpass{

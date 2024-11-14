@@ -1,97 +1,113 @@
-.modal2 {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    transition: .8s;
-}
-
-/* Contenido del Modal */
-.modal2 .modal-content {
-    background-color: #fff;
-    margin: 9% auto;
-    padding: 20px 30px 20px 20px;
-    border: 1px solid #888;
-    width: 30%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-}
-
-/* Botón para cerrar el Modal */
-.close-btn {
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    background-color: red;
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin: -8% 0 0 400px;
-    z-index: 5;
-    display: block;
-    text-align: center;
-}
-
-.close-btn:hover,
-.close-btn:focus {
-    color: #000;
-}
-
-.input_campos input {
-    background-color: #0E2B3E;
-    color: white;
-}
-
-.input_nombre {
-    border: solid 1px white;
-    margin: 30px -10% 0 50px;
-    height: 35px;
-    width: 190px; 
-}
-
-.input_descripcion {
-    border: solid 1px white;
-    height: 100px;
-    margin: 20px -9% 0 20px;
-    width: 190px; 
-}
-
-.form-container input {
-    border: solid 1px white;
-    width: 188px;
-    height: 38px;
-    color: white;
-    background-color: #0E2B3E;
-    margin: 0 -6% 0 150px;
-}
-
-h2, label {
-    color: #0E2B3E;
-    font-family: "Libre Franklin", sans-serif;
-    font-weight: 600;
-}
-
-label {
-    margin: 0 4% 0 2%;
-}
-
-.fecha {
-    margin: 0 -130px 0 0;
-    padding-left: 8px;
-    width: 65px;
-    font-size: 14px;
-}
-
-.archivo {
-    font-size: 15px;
-    margin-top: -3%;
-    text-align: center;
-}
+    /* Estilos generales */
+    
+    .modal {
+        scrollbar-width: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+    
+    .modal-content1 {
+        background-color: #fff;
+  position: relative;
+        padding: 20px 40px 40px 30px;
+        border: 1px solid #888;
+        width: 500px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        margin:  2% 32% 14% 32%;
+        max-height: 100%; 
+    }
+    
+    .close-btn1 {
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        color: red;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-left: 90%;
+        top: 20px;
+        z-index: 5;
+    }
+    
+    .close-btn:hover,
+    .close-btn:focus {
+        color: #000;
+        text-decoration: none;
+    }
+    
+    .input_campos input,
+    .input_campos textarea {
+        background-color: #0E2B3E;
+        color: white;
+        border: solid 1px white;
+        width: 90%;
+    }
+    
+    .input_nombre {
+        margin: 10px 0;
+        height: 25px;
+    }
+    
+    .input_nombre::placeholder,
+    .input_descripcion::placeholder {
+        color: white;
+    }
+    
+    .input_descripcion {
+        height: 80px;
+        resize: vertical;
+    }
+    
+    .form-container input {
+        border: solid 1px white;
+        width: 90%;
+        height: 38px;
+        color: white;
+        background-color: #0E2B3E;
+    }
+    
+    h2, label {
+        color: #0E2B3E;
+        font-family: "Libre Franklin", sans-serif;
+        font-weight: 600;
+    }
+    
+    .fecha {
+        margin: 20px 0;
+        padding-left: 5px;
+    }
+    
+    .progreso{
+      margin: 20px 0;
+      padding-left: 5px;
+    }
+    h2 {
+        font-size: 20px;
+        text-align: center;
+        margin-top: 2px;
+    }
+    
+    .btnactualizar {
+        background-color: #0E2B3E;
+        color: #54BCDE;
+        width: 100%;
+        height: 40px;
+        font-family: "Libre Franklin", sans-serif;
+        font-weight: 700;
+    }
 
 .btnactualizar {
     background-color: #0E2B3E;
@@ -100,21 +116,28 @@ label {
     height: 40px;
     font-family: "Libre Franklin", sans-serif;
     font-weight: 700;
-    margin: 5% 40%;
+    margin: 0% 40%;
 }
 
 /* Progreso */
+
 .number-input-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 15px 0 0 45px;
+    margin: 15px 24px 10px;
+    background-color: #0E2B3E;
+      color: white;
+      border: solid 1px white;
+      width: 90%;
+      
+    
 }
 
 input[type="number"] {
     color: #54BCDE;
     text-align: center; 
-    width: 150px;
+    width: 500px;
     height: 30px;
     margin: 0;
     border: 1px solid #ddd;
@@ -127,7 +150,7 @@ button.decrement, button.increment {
     background-color: #0E2B3E;
     color: #54BCDE;
     border: 1px solid #ddd;
-    width: 20px;
+    width: 140px;
     height: 30px;
     cursor: pointer;
     font-size: 18px;
@@ -147,9 +170,10 @@ button.increment {
 button:focus {
     outline: none;
 }
+
 /* Media Query para Tablets */
 @media (max-width: 998px) {
-    .modal2 .modal-content {
+    .modal .modal-content1 {
         width: 80%; 
         margin: 5% auto; 
         padding: 15px; 
@@ -162,6 +186,20 @@ button:focus {
         align-items: flex-start;
         margin: 10px 0; 
     }
+    .input_campos input{
+        width: 97%;
+    }
+    .input_campos textarea{
+        width: 97%;
+
+    }
+    .input_campos label{
+margin: 0 auto;
+ }
+ .form-container label{
+margin: 0 auto;
+
+ }
     .fecha{
         margin: 0;
         padding: 0;
@@ -176,10 +214,7 @@ button:focus {
         margin: 0 !important; /* Eliminar márgenes que causan desbordamiento */
     }
 
-    .close-btn {
-        margin: -8% 0 0 auto; /* Ajustar la posición del botón de cerrar */
-        left: 10px; /* Cambiar la posición a la izquierda */
-    }
+  
 
     h2 {
         font-size: 20px; /* Aumentar el tamaño de fuente en tabletas */
@@ -189,9 +224,11 @@ button:focus {
 
 /* Media Query para Móviles */
 @media (max-width: 480px) {
-    .modal2 .modal-content {
+    .modal .modal-content1 {
         width: 95%; /* Aumentar el ancho en móviles */
         padding: 10px; /* Ajustar el padding */
+        min-height: 100vh; 
+
     }
 
     h2 {

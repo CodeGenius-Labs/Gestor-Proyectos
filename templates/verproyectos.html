@@ -35,7 +35,7 @@
             <img src="{% static 'imagenes/roibot.jpg' %}" alt="imagen proyecto" class="logo">
 
             {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
-            <button class="boton-lateral" id="openModalBtn2">Editar proyecto</button>
+            <button class="boton-lateral" id="openModalBtn">Editar proyecto</button>
             {% endif %}
             {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
             <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuarios">Ver Usuarios</button>
@@ -43,11 +43,11 @@
             {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
                 <!--1------Inicio del modal emergente------>
                   
-                <div id="modal2" class="modal2" style="display: none;">
-                    <div class="modal-content">
+                <div id="modal" class="modal" >
+                    <div class="modal-content1">
                         <div class="content">
                             <div class="inputs">
-                                <span class="close-btn" id="closeModalBtn2">&times;</span>
+                                <span class="close-btn1" id="idprueba">&times;</span>
                                 <h2>Configurar Proyecto</h2>
                 
                                 <form method="POST" action="{% url 'actualizar_proyecto' proyecto.id %}">
@@ -59,7 +59,7 @@
                 
                                     <div class="input_campos">
                                         <label for="descripcion" class="form-label">Descripción</label>
-                                        <input class="input_descripcion" type="text" name="descripcion" value="{{ proyecto.descripcion }}" required>
+                                        <textarea class="input_descripcion" name="descripcion" value="{{ proyecto.descripcion }}" required rows="4" style="resize: vertical;"></textarea>
                                     </div>
                 
                                     <div class="form-container">
@@ -70,14 +70,17 @@
                                         <input type="date" class="fecha" id="fecha_fin2" name="fecha_fin" value="{{ proyecto.fecha_fin|date:'Y-m-d' }}" required>
                                     </div>
                 
+
+
+                                    <label id="label_progreso2" for="progreso" class="form-label">Progreso</label>
+
                                     <div class="number-input-container">
-                                        <label id="label_progreso2" for="progreso" class="form-label">Progreso</label>
                                         <button type="button" class="decrement" id="decrementBtn2">-</button>
                                         <input type="number" id="progreso2" name="progreso" value="{{ proyecto.progreso }}" min="0" max="100" required>
                                         <button type="button" class="increment" id="incrementBtn2">+</button>
                                     </div>
                                     
-                                    <button class="btnactualizar" type="submit">Actualizar</button>
+                                    <button class="btnactualizar" type="submit" id="boton">Actualizar</button>
                                 </form>
                             </div>
                         </div>
@@ -126,8 +129,8 @@
 
                 <!-- HAMBURGUESAAAAAAAAAAAAAAAAA -->
                 <div class="btn-hamburguesa d-block d-md-none ">
-                    <button id="btn-hamburguesa" class="btn btn-hamburguesa">
-                        <i class="fa-solid fa-bars fa-2"></i>
+                    <button id="btn-hamburguesa" class="btn btn-hamburguesa" >
+                        <i class="fa-solid fa-bars fa-2" ></i>
                     </button>
                 </div>
                 <!-- Sidebar Offcanvas de Bootstrap -->
@@ -139,7 +142,7 @@
                         <div class="offcanvas-body d-flex flex-column align-content-center ">
                             <!-- Botón de "Editar proyecto" visible solo para el Administrador del Departamento -->
                                     {% if rol_usuario_actual.rol == 'Administrador del departamento' %}
-                                    <button class="boton-lateral" id="openModalBtn2">Editar proyecto</button>
+                                    <button class="boton-lateral" data-bs-toggle="modal" id="openModalBtn">Editar proyecto</button>
                                     {% endif %}
 
                                     <!-- Botón para ver usuarios visible para Administrador del Departamento y Tutor -->
