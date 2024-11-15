@@ -22,6 +22,7 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import ValidationError
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 from django.utils import timezone
 
 
@@ -240,7 +241,7 @@ def proyectos(request):
         if fecha_inicio_dt >= fecha_fin_dt:
             messages.error(request, 'La fecha de inicio debe ser anterior a la fecha de fin.')
             return redirect('proyectos')
-        if fecha_fin_dt > fecha_inicio_dt + timedelta(days=3650):  # 10 años en días
+        if fecha_fin_dt > fecha_inicio_dt + relativedelta(years=10):  # 10 años exactos
             messages.error(request, 'La duración del proyecto no puede exceder los 10 años.')
             return redirect('proyectos')
 
@@ -559,9 +560,9 @@ def actualizar_proyecto(request, id):
         if fecha_inicio_dt >= fecha_fin_dt:
             messages.error(request, 'La fecha de inicio debe ser anterior a la fecha de fin.')
             return redirect('verproyectos', id=id)
-        if fecha_fin_dt > fecha_inicio_dt + timedelta(days=3650):  # 10 años en días
+        if fecha_fin_dt > fecha_inicio_dt + relativedelta(years=10):  # 10 años exactos
             messages.error(request, 'La duración del proyecto no puede exceder los 10 años.')
-            return redirect('verproyectos', id=id)
+            return redirect('proyectos')  
 
         # Si todas las validaciones pasan, guardar el proyecto
         proyecto.nombre = nombre
@@ -616,7 +617,7 @@ def superproyecto(request):
                 fecha_fin_dt = datetime.strptime(fecha_fin, '%Y-%m-%d')
                 if fecha_fin_dt < fecha_inicio_dt:
                     messages.error(request, "Error: La fecha de fin no puede ser anterior a la fecha de inicio.")
-                elif fecha_fin_dt > fecha_inicio_dt + timedelta(days=365*10):
+                elif fecha_fin_dt > fecha_inicio_dt + relativedelta(years=10):
                     messages.error(request, "Error: La fecha de fin no puede ser más de 10 años después de la fecha de inicio.")
                 else:
                     nuevo_proyecto = Proyecto.objects.create(
@@ -655,7 +656,7 @@ def superproyecto(request):
                 fecha_fin_dt = datetime.strptime(fecha_fin, "%Y-%m-%d")
                 if fecha_fin_dt < fecha_inicio_dt:
                     messages.error(request, "Error: La fecha de fin no puede ser anterior a la fecha de inicio.")
-                elif fecha_fin_dt > fecha_inicio_dt + timedelta(days=365*10):
+                elif fecha_fin_dt > fecha_inicio_dt + relativedelta(years=10):
                     messages.error(request, "Error: La fecha de fin no puede ser más de 10 años después de la fecha de inicio.")
                 else:
                     proyecto.nombre = nombre
