@@ -1,0 +1,23 @@
+{% comment %} modalcreousuarios {% endcomment %}
+            <div id="modalsu" class="modal">
+                <div class="modal-content">
+                    <span id="closeModalsuBtn" class="close">&times;</span>
+                    <h2>Crear Usuario</h2>
+                    <form action="{% url 'crear_usuario' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" id="user_id" name="user_id">
+
+                        <label for="nombre">Nombre de Usuario:</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                        
+                        <label for="correo">Correo Electrónico:</label>
+                        <input type="email" id="correo" name="correo" required>
+                        
+                        <label for="password">Contraseña:</label>
+                        <input type="password" id="password" name="password" required>
+                        
+                        <button type="submit" class="save-btn">Guardar Cambios</button>
+                    </form>
+                    
+                </div>
+            </div>

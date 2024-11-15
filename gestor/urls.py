@@ -2,6 +2,9 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from . import views
+from django.conf import settings
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -14,6 +17,19 @@ urlpatterns = [
     path('logout/', views.exit, name='logout'),
     path('verproyectos/<int:id>/', views.verproyectos, name='verproyectos'),
     path('actualizar_proyecto/<int:id>/', views.actualizar_proyecto, name='actualizar_proyecto'),
+    path('superadmin/', views.superadmin, name='superadmin'),
+    path('superproyecto/', views.superproyecto, name='superproyecto'),
+    path('superusuario/', views.superusuario, name='superusuario'),
+    path('crear-usuario/', views.crearuser, name='crear_usuario'),
+    #path('crear_proyecto/', views.crear_proyecto, name='crear_proyecto'),
+    
+    
+    
+
+
+
+
+
     
 ]
 
@@ -21,3 +37,6 @@ urlpatterns = [
 if settings.DEBUG:
     from django.conf.urls.static import static
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.ARCHIVOS_URL, document_root=settings.ARCHIVOS_ROOT)
+    
+    

@@ -1,8 +1,5 @@
 
-body{
-    background-color: #ffff;
-    max-width: 100%;
-}
+
 
 .containermain{
     width: 50%;
@@ -71,10 +68,10 @@ body{
 }
 
 .container .input .input-group input{
-background-color: #0e2b3e46;
-border: 1px #0E2B3E solid;
-margin: 15px;
-color: black;
+    background-color: #0e2b3e46;
+    border: 1px #0E2B3E solid;
+    margin: 15px;
+    color: black;
 
 }
 .container .Boton{
@@ -97,3 +94,13 @@ color: black;
 }
 
 
+@media (max-width: 768px) {
+    /* Estilos específicos para pantallas de 768px o menos */
+    /* Ejemplo */
+    .containermain{
+        
+        margin: 0 auto;
+        padding: 0;
+        overflow-x: hidden;
+    }
+}

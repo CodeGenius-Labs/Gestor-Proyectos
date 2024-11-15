@@ -1,0 +1,341 @@
+.footer .logo2 {
+    background-color: #ffffff; 
+    color: #54BCDE;
+    width: 100px;
+    
+
+}
+
+.container .logo2{
+    margin-top: 15px;
+    width: 100px;
+    height: auto;
+}
+
+a{
+    display: contents;
+}
+
+.footer h5 {
+    color: #54BCDE;
+    font-weight: bold;
+}
+
+.footer a {
+    color: #54BCDE;
+    text-decoration: none;
+    text-align: left;
+    
+}
+.footer i{
+    color: #54bcde;
+    margin-top: 25px;
+}
+
+
+
+
+hr .txtfooter,
+.text-center p{
+    color: #54BCDE;
+
+}
+
+
+
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+    
+    .contenedor-principal {
+        display: flex;
+        height: 100%;
+    }
+    
+    .barra-lateral {
+        width: 280px;
+        background-color: #FFFFFF; 
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-right: 2px solid #0E2B3E;
+    }
+    
+
+    
+    .boton-lateral {
+        width: 100%;
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #0E2B3E; 
+        border-radius: 20px;
+        color: #54BCDE;
+        cursor: pointer;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+        margin-top: 80px;
+    }
+    
+    .boton-lateral:hover {
+        background-color: #54BCDE; 
+        color: #0E2B3E;
+    }
+    
+    .boton-lateral a{
+        text-decoration: none;
+    }
+    
+    .contenido-principal {
+        flex: 1;
+        padding: 20px;
+        background-color: #FFFFFF; 
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    
+    .encabezado {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        border-bottom: 2px solid #0E2B3E;
+        padding-bottom: 10px;
+    }
+    
+    .encabezado h1 {
+        color: #0E2B3E;
+        font-size: 30px;
+    }
+    
+
+    
+    #project-card-id{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        width: 150px;
+        padding: 18px 24px;
+        border: 3px solid #0E2B3E;
+        border-radius: 15px;
+        background-color: #f9f9f9;
+        transition: box-shadow 0.3s;
+        font-family: AngsanaUPC ;
+        text-align: center;
+    }
+    
+    #project-card-id:hover {
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+        background-color: #dcdcdc;
+        
+    }
+    
+    
+    #legalDocumentModal3{
+        margin-bottom: 15px;
+    }
+    
+    .file-name a {
+        color: #54BCDE; /* Cambiar el color del enlace */
+        text-decoration: none; /* Opcional: quitar el subrayado del enlace */
+    }
+
+    .content {
+            width: 70%;
+            float: right;
+            text-align: center;
+            margin-top: 10px;
+
+            color: #54BCDE;
+        }
+
+
+        .content h2 {
+            font-size: 28px;
+            color: #54BCDE;
+            margin-top: 50px;
+
+        }
+       
+
+
+
+        body {
+    background-color: #ffffff;
+}
+.container {
+    max-width: 1000px;
+    margin-top: 40px;
+
+}
+.search-bar {
+    width: 600px;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    background-color: #0E2B3E;
+    color: white;
+    margin-top: -720px;
+    margin-left: 130px;
+
+}
+.filter-btn {
+    background-color: #0E2B3E;
+    color: #54BCDE;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -720px;
+
+    
+}
+
+.Botonfilter{
+    background-color: #0E2B3E;
+    border-radius: 15px;
+    margin-left: 10px;
+    margin-right: auto;
+    margin-top: -720px;
+
+    
+}
+
+.Botonfilter i{
+    color: #54BCDE;
+    
+    
+}
+
+
+.welcome-text {
+    font-size: 24px;
+    color: #54BCDE;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 45px;
+    display: block;
+    width: 90%;
+}
+
+
+.project-title {
+    font-size: 30px;
+    font-weight: bold;
+    color:#54BCDE;
+    
+}
+.project-card {
+    border: 4px solid #0E2B3E;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    color: #0E2B3E;
+    margin-bottom: 30px;
+    transition: box-shadow 0.3s;
+}
+.project-card:hover {
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+    background-color: #dcdcdc;
+    
+}
+.project-card h5 {
+    font-weight: lighter;
+    border-bottom: 30px;
+    color: #000;
+}
+.project-card p {
+    color: #000;
+    font-weight: bolder;
+}
+.btn-view {
+    border-radius: 15px;
+    color: #54BCDE;    ;
+    
+    padding: 10px 20px;
+    background-color: #0E2B3E;
+
+}
+
+
+.btn-view:hover {
+    background-color: #031d2e;
+    color: #ffffff;
+    transform: scale(1.1);
+    transition: 0.2s ease-in;
+
+}
+
+
+
+.table-container {
+            margin-top: 10px;
+            text-align: center;
+            padding: 50px;
+
+
+        }
+
+        h3{
+            color: #54BCDE;
+            text-align: center;
+            margin-left: -830px;
+            margin-top: 120px;
+            font-weight: bold;
+
+            
+        }
+
+        table {
+            width: 700px;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            text-align: center;
+            margin-left: -750px;
+            margin-top: 50px;
+
+            
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+            
+            
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            
+        }
+        th {
+            background-color: #e0e0e0;
+            
+        }
+        .action-buttons button {
+            padding: 10px;
+            background-color:  #0E2B3E; 
+            color:#54BCDE;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 5%;
+        }
+        .action-buttons button:hover {
+            background-color: #54BCDE; 
+            color: #0E2B3E;
+        }
+
+
+
+

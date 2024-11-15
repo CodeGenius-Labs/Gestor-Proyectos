@@ -50,7 +50,7 @@
 
 #modalUsuarios .btn-danger{
     background-color: #FF4C4C;
-    color: #4A4A4A;
+    color: #0E2B3E;
     height: 30px;
 }
 
@@ -59,4 +59,61 @@
 #modalConfirmacion .btn-primary{
     background-color: #0E2B3E;
     color: #54BCDE;
+}
+
+/*vista modal Anotaciones #modalAnotaciones*/
+#modalAnotaciones .btn-primary {
+    background-color: #0E2B3E;
+    color: #54BCDE;
+}
+
+#modalAnotaciones .modal-dialog {
+    max-width: 850px;
+    max-height: auto;
+}
+
+#modalAnotaciones .modal-title {
+    font-weight: bold;
+    color: #0E2B3E;
+}
+
+#modalAnotaciones .modal-body {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#modalAnotaciones .user {
+    width: 250px;
+    text-align: left;
+    padding: 5px;
+}
+
+#modalAnotaciones .spancomm {
+    flex: 1;
+    text-align: justify;
+    margin-left: 10px;
+}
+
+#modalAnotaciones .spandate {
+    flex: 0 0 100px;
+    color: #3232328f;
+    text-align: center;
+    margin-left: 30px;
+}
+
+#modalAnotaciones .modal-footer {
+    display: block;
+}
+
+
+#modalAnotaciones textarea{
+    resize: none;
+    field-sizing: content;
+}
+
+#modalAnotaciones .btn-danger {
+    background-color: #FF4C4C;
+    color: #0E2B3E;
+    height: 30px;
+    margin-left: 30px;
 }

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user',
+    'proyecto',
 ]
 
 MIDDLEWARE = [
@@ -116,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Bogota'
 
 USE_I18N = True
 
@@ -126,7 +127,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR /'static'
 STATICFILES_DIRS = [ 
     'gestor/static'
@@ -138,8 +139,12 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #Creacion de la ruta de MEDIA
+BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+ARCHIVOS_URL = '/archivos/'
+ARCHIVOS_ROOT = os.path.join(BASE_DIR, 'archivos')
 
 AUTH_USER_MODEL = 'user.User'
 LOGIN_REDIRECT_URL = 'home'

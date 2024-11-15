@@ -12,8 +12,14 @@
 
     <!---------Css-------->
     <link rel="stylesheet" href="{% static 'css/verproyectos.css' %}">
-    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
     <link rel="stylesheet" href="{% static 'css/agregarusuario.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modaleditar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modalcargar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modaldetalle.css' %}">
+
+
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -23,177 +29,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
-<style>
-.customModal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    transition: .8;
-}
-
-/* Contenido del Modal */
-.customModal .modal-content {
-    background-color: #fff;
-    margin: 9% auto;
-    padding: 20px 30px 20px 20px;
-    border: 1px solid #888;
-    width: 30%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-}
-
-/* Botón para cerrar el Modal */
-.close-btn {
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    background-color: red;
-    color: white;
-    width: 40PX;
-    height: 40px;
-    border-radius: 50%;
-    margin: -9% 0 0 350px;
-    z-index: 5;
-    padding-left: 12px;
-    padding-top: 4px;
-    display: block;
-}
-
-.close-btn:hover,
-.close-btn:focus {
-    color: #000;
-    text-decoration: none;
-}
-
-.input_campos input{
-    background-color: #0E2B3E;
-    color: white;
-    
-}
-.input_nombre{
-    border: solid 1px white;
-    margin: 30px -10% 0 50px;
-    height: 35px;
-    width: 190px; 
-}
-
-.input_descripcion{
-    border: solid 1px white;
-    height: 100px;
-    margin: 20px -9% 0 20px;
-    width: 190px; 
-
-}
-
-.form-container input{
-    border: solid 1px white;
-    width: 188px;
-    height: 38px;
-    color: white;
-    background-color: #0E2B3E;
-    margin: 0 -6% 0 150px;
-
-}
-h2, label{
-    color: #0E2B3E;
-    font-family: "Libre Franklin", sans-serif;
-    font-weight: 600;
-}
-label{
-    margin: 0 4% 0 2%;
-    
-}
-
-.fecha{
-    margin: 0 -130px 0 0;
-    padding-left: 8px;
-    width: 65px;
-    font-size: 14px;
-
-}
-
-h2{
-    font-size: 15px;
-    margin-top: -3%;
-    text-align: center;
-}
-.btnactualizar{
-    background-color: #0E2B3E;
-    color: #54BCDE;
-    width: 90px;
-    height: 40px;
-    font-family: "Libre Franklin", sans-serif;
-    font-weight: 700;
-    margin: 5% 40%;
-}
-
-#endDate{
-    margin-right: -20px;
-    margin-top: 0;
-
-}
-
-
-/* Progreso*/
-.number-input-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 15px 0 0 45px;
-}
-
-input[type="number"] {
-    color: #54BCDE;
-    text-align: center; 
-    width: 150px;
-    height: 30px;
-    margin: 0;
-    border: 1px solid #ddd;
-    border-left: none;
-    border-right: none;
-    font-size: 20px;
-}
-
-button.decrement, button.increment {
-    background-color: #0E2B3E;
-    color: #54BCDE;
-    border: 1px solid #ddd;
-    width: 20px;
-    height: 30px;
-    cursor: pointer;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-button.decrement {
-    border-radius: 5px 0 0 5px; 
-}
-
-button.increment {
-    border-radius: 0 5px 5px 0; 
-
-}
-
-button:focus {
-    outline: none;
-}
-#label_progreso{
-    margin-left: -20px;
-    margin-right: 40px;
-
-}
-
-
-
-</style>
-
 <body>
     <div class="contenedor-principal">
         <aside class="barra-lateral">
@@ -201,78 +36,185 @@ button:focus {
 
             {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
             <button class="boton-lateral" id="openModalBtn">Editar proyecto</button>
+            {% endif %}
+            {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
             <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuarios">Ver Usuarios</button>
-
+            {% endif %}
+            {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
                 <!--1------Inicio del modal emergente------>
                   
-                    <div id="customModal" class="customModal" style="display: none;">
-                        <div class="modal-content">
-                            <div class="content">
-                                <div class="inputs">
-                                    <span class="close-btn">&times;</span>
-                                    <h2>Configurar Proyecto</h2>
-
-                                    <form method="POST" action="{% url 'actualizar_proyecto' proyecto.id %}">
-                                        {% csrf_token %}
-                                        <div class="input_campos">
-                                            <label for="nombre">Nombre</label>
-                                            <input class="input_nombre" type="text" name="nombre" value="{{ proyecto.nombre }}" required>
-                                        </div>
+                <div id="modal" class="modal" >
+                    <div class="modal-content1">
+                        <div class="content">
+                            <div class="inputs">
+                                <span class="close-btn1" id="idprueba">&times;</span>
+                                <h2>Configurar Proyecto</h2>
+                
+                                <form method="POST" action="{% url 'actualizar_proyecto' proyecto.id %}">
+                                    {% csrf_token %}
+                                    <div class="input_campos">
+                                        <label for="nombre">Nombre</label>
+                                        <input class="input_nombre" type="text" name="nombre" value="{{ proyecto.nombre }}" required>
+                                    </div>
+                
+                                    <div class="input_campos">
+                                        <label for="descripcion" class="form-label">Descripción</label>
+                                        <textarea class="input_descripcion" name="descripcion" value="{{ proyecto.descripcion }}" required rows="4" style="resize: vertical;"></textarea>
+                                    </div>
+                
+                                    <div class="form-container">
+                                        <label for="fecha_inicio">Fecha de Inicio </label>
+                                        <input type="date" class="fecha" id="fecha_inicio2" name="fecha_inicio" value="{{ proyecto.fecha_inicio|date:'Y-m-d' }}" required>
                                     
-                                        <div class="input_campos">
-                                            <label for="descripcion" class="form-label">Descripción</label>
-                                            <input class="input_descripcion" type="text" name="descripcion" value="{{ proyecto.descripcion }}" required>
-                                        </div>
-                                    
-                                        <div class="form-container">
-                                            <label for="fecha_inicio">Fecha de Inicio</label>
-                                            <input type="date" class="fecha" id="fecha_inicio" name="fecha_inicio" value="{{ proyecto.fecha_inicio|date:'Y-m-d' }}" required>
-                                        
-                                            <label for="fecha_fin">Fecha de Fin</label>
-                                            <input type="date" class="fecha" id="fecha_fin" name="fecha_fin" value="{{ proyecto.fecha_fin|date:'Y-m-d' }}" required>
-                                        </div>
+                                        <label for="fecha_fin">Fecha de Fin </label>
+                                        <input type="date" class="fecha" id="fecha_fin2" name="fecha_fin" value="{{ proyecto.fecha_fin|date:'Y-m-d' }}" required>
+                                    </div>
+                
 
-                                        <div class="number-input-container">
-                                            <label id="label_progreso" for="progreso" class="form-label">Progreso</label>
-                                            <button type="button" class="decrement">-</button>
-                                            <input type="number" id="progreso" name="progreso" value="{{ proyecto.progreso }}" min="0" max="100" required>
-                                            <button type="button" class="increment">+</button>
-                                        </div>
-                                        
-                                        <button class="btnactualizar" type="submit">Actualizar</button>
-                                    </form>
-                                </div>
+
+                                    <label id="label_progreso2" for="progreso" class="form-label">Progreso</label>
+
+                                    <div class="number-input-container">
+                                        <button type="button" class="decrement" id="decrementBtn2">-</button>
+                                        <input type="number" id="progreso2" name="progreso" value="{{ proyecto.progreso }}" min="0" max="100" required>
+                                        <button type="button" class="increment" id="incrementBtn2">+</button>
+                                    </div>
+                                    
+                                    <button class="btnactualizar" type="submit" id="boton">Actualizar</button>
+                                </form>
                             </div>
                         </div>
                     </div>
+                </div>
+                
 
                     
                     <!--Fin de modal emergente-->
 
             {% endif %}
 
+            <!-- Modal para el Tutor -->
+            {% if rol_usuario_actual.rol == 'Tutor' %}
+            <!-- Modal solo para visualizar usuarios -->
+            <div class="modal fade" id="modalUsuariosTutor" tabindex="-1" aria-labelledby="etiquetaModalUsuariosTutor" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Usuarios</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body" id="listaUsuariosTutor">
+                            <ul>
+                                {% for miembro in miembros %}
+                                <li class="d-flex justify-content-between align-items-center">
+                                    <span>{{ miembro.usuario.email }} - Rol: {{ miembro.rol }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
 
 
-            <!-- Botón que abre el modal de Usuarios -->
 
-            <button class="boton-lateral">Fechas y anotaciones</button>
+            <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalAnotaciones">Anotaciones</button>
+
             <button class="boton-lateral"><a href="{% url 'proyectos'%}" style="color: #54BCDE;">Volver</a></button>
         </aside>
 
         <main class="contenido-principal">
-            <header class="encabezado">
+            <header class="encabezado ">
+
+                <!-- HAMBURGUESAAAAAAAAAAAAAAAAA -->
+                <div class="btn-hamburguesa d-block d-md-none ">
+                    <button id="btn-hamburguesa" class="btn btn-hamburguesa" >
+                        <i class="fa-solid fa-bars fa-2" ></i>
+                    </button>
+                </div>
+                <!-- Sidebar Offcanvas de Bootstrap -->
+                    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="offcanvasLabel">
+                        <div class="offcanvas-header">
+                            <h5 id="offcanvasLabel" class="offcanvas-title"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body d-flex flex-column align-content-center ">
+                            <!-- Botón de "Editar proyecto" visible solo para el Administrador del Departamento -->
+                                    {% if rol_usuario_actual.rol == 'Administrador del departamento' %}
+                                    <button class="boton-lateral" data-bs-toggle="modal" id="openModalBtn">Editar proyecto</button>
+                                    {% endif %}
+
+                                    <!-- Botón para ver usuarios visible para Administrador del Departamento y Tutor -->
+                                    {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor' %}
+                                    <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuarios">Ver Usuarios</button>
+                                    {% endif %}
+
+                                    
+
+                                    <!-- Modal para visualizar usuarios solo para Tutor -->
+                                    {% if rol_usuario_actual.rol == 'Tutor' %}
+                                    <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalUsuariosTutor">Ver Usuarios</button>
+                                    {% endif %}
+
+                                    <!-- Botón de "Anotaciones" -->
+                                    <button class="boton-lateral" data-bs-toggle="modal" data-bs-target="#modalAnotaciones">Anotaciones</button>
+
+                                    <!-- Botón de "Volver" -->
+                                    <button class="boton-lateral">
+                                    <a href="{% url 'proyectos' %}" style="color: #54BCDE;">Volver</a>
+                                    </button>
+
+                        </div>
+
+                        <!-- fin De hamburguesaaaaa -->
+                    </div>
                 <h1>{{ proyecto.nombre }}</h1>
                 <div class="fechas">
-                    <p>Fecha inicial: {{ proyecto.fecha_inicio }}</p>
-                    <p>Fecha final: {{ proyecto.fecha_fin }}</p>
+                    <p>Fecha inicial: <br> {{ proyecto.fecha_inicio }}</p>
+                    <p>Fecha final: <br> {{ proyecto.fecha_fin }}</p>
                 </div>
             </header>
 
             <section class="documentos">
                 <h2>Descripción</h2>
                 <p>{{ proyecto.descripcion }}</p>
-                
             </section>
+            <section id="archivos"class="row">
+                {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor' %}
+                <div class="col-md-2 mb-3">
+                    <div class="project-card" id="project-card-id">
+                        <button class="btn btn-view" id="openModalBtnModal3">
+                            <i class="fa-solid fa-plus fa-2x"></i>
+                        </button>
+                        <h5>Cargar Archivos</h5>
+                    </div>
+                </div>
+                {% endif %}
+            
+                <!-- Este es el div que contendrá las tarjetas de archivos en el futuro -->
+                {% for archivo in archivos %}
+                <div class="col-md-2  mb-3">
+                    <div class="file-card">
+                        <div class="file-header d-flex justify-content-center">
+                            <span class="file-icon"><i class="fa-regular fa-file "></i></span>
+                            <div class="file-options" data-bs-toggle="modal" data-bs-target="#modal{{ archivo.id }}">•••</div>
+                        </div>
+                        <!-- Enlace para ver el archivo -->
+                        <div class="file-name">
+                            <a href="{% url 'verproyectos' proyecto.id %}?archivo_id={{ archivo.id }}" 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#modal5{{ archivo.id }}">
+                               {{ archivo.nombre }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </section>
+            
+            
+                
 
             <section class="progreso">
                 <h3>Progreso del proyecto</h3>
@@ -284,7 +226,8 @@ button:focus {
         </main>
     </div>
 
-    {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
+   
+    
     <!-- Modal  mostrar usuarios -->
     <div class="modal fade" id="modalUsuarios" tabindex="-1" aria-labelledby="etiquetaModalUsuarios" aria-hidden="true">
         <div class="modal-dialog">
@@ -299,6 +242,10 @@ button:focus {
                         <li class="d-flex justify-content-between align-items-center">
                             <span>{{ miembro.usuario.email }}</span>
                             <div class="d-flex">
+                                {% if rol_usuario_actual.rol == 'Tutor'%}
+                                    <span>{{ miembro.rol }}</span>
+                                {% elif rol_usuario_actual.rol == 'Administrador del departamento'%}
+
                                 <!--cambiar rol usuario -->
                                 <form method="POST" class="me-2">
                                     {% csrf_token %}
@@ -315,21 +262,25 @@ button:focus {
                                 <form method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="miembro_id" value="{{ miembro.id }}">
-                                    <button type="submit" name="eliminar_usuario" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
+                                    <button type="submit" name="eliminar_usuario" class="btn btn-danger btn-sm"><i class="fa-solid fa-user-minus"></i></button>
                                 </form>
+                                {% endif %}
                             </div>
                         </li>
                         {% endfor %}
                     </ul>
                 </div>
+                {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalConfirmacion">Agregar Usuario</button>
                 </div>
+                {% endif %}
             </div>
             </div>
         </div>
     </div>
-    <!-- Modal agregar usuario -->
+    {% if rol_usuario_actual.rol == 'Administrador del departamento'%}
+    <!-- ModalConfirmacion -->
     <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="etiquetaModalConfirmacion" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -361,11 +312,264 @@ button:focus {
         </div>
     </div>
     {% endif %}
+    
+
+    <!---ModalAnotaciones -->
+    <div class="modal fade" id="modalAnotaciones" tabindex="-1" aria-labelledby="etiquetaModalAnotacion" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Anotaciones</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body" id="Anotaciones">
+                    <ul class="list-group">
+                        {% for comentario in comentarios %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="user"><span>{{ comentario.usuario.email }}</span></div>
+                            <div class="spancomm"><span>{{ comentario.comentario }}</span></div>
+                            <div class="spandate"><span>{{ comentario.fecha_hora|date:"d/m/Y" }}</span></div>
+                            {% if rol_usuario_actual.rol == 'Administrador del departamento' %}
+                            <div>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="comentario_id" value="{{ comentario.id }}">
+                                    <button type="submit" name="eliminarAnotacion" class="btn btn-danger btn-sm">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <textarea class="form-control" name="anotaciontxt" placeholder="Anotación" required maxlength="500" rows="1"  ></textarea>
+                            <button type="submit" name="agregarAnotacion" class="btn btn-primary">Agregar Anotación</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<!-- Modal emergente -->
+<div id="modal3"  class="modal">
+    <div class="modal-content3">
+        <div class="content">
+            <div class="inputs">
+                <span class="close-btn-modal3">&times;</span>
+                <form method="POST" action="{% url 'verproyectos' id=proyecto.id %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modalito3">
+                        <h2 class="archivo">Cargar Archivo</h2>
+                        <div class="uploadDocuments">
+                            <label for="legalDocumentModal3">Examinar...</label>
+                            <input type="file" id="legalDocumentModal3" name="legalDocument" 
+       accept="image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+       application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" 
+       onchange="showFileNameModal3()" required>
+            
+                            <input type="text" name="nombre" placeholder="Ingresa el nombre del archivo" required>
+                            <span class="file-name" id="file-name-modal3">No se ha seleccionado ningún archivo</span>
+                        </div>
+                        <button type="submit" class="btncargar">Cargar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de previsualización (modal5) -->
+
+{% for archivo in archivos %}
+    <!-- Modal para cada archivo -->
+    <div id="modal5{{ archivo.id }}" class="modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1>Previsualización de archivo</h1>
+                    <form method="POST" action="{% url 'verproyectos' id=proyecto.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
+                        <button type="submit" name="ver_archivo" class="btn btn-primary">Ver Archivo</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+
+
+
+
+
+
+{% for archivo in archivos %}
+<!-- Modal detalle (modal4) -->
+<!-- Modal de detalles del documento -->
+<div id="modal{{ archivo.id }}" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detalles del documento</h3>
+                <button type="button" class="btn-close close-btn-modal4" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Subido por:</strong> {{ archivo.usuario.username }}</p>
+                <p><strong>Tipo de archivo:</strong> {{ archivo.tipo }}</p>
+                <p><strong>Tamaño:</strong> {{ archivo.tamaño }} KB</p>
+                <p><strong>Fecha modificación:</strong> {{ archivo.fecha_modificacion|date:"d/m/Y H:i" }}</p> <!-- Línea cambiada -->
+
+
+                
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
+
+                    
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-primary" name="descargar_archivo" type="submit">Descargar</button>
+                        {% if rol_usuario_actual.rol == 'Administrador del departamento' or rol_usuario_actual.rol == 'Tutor'%}
+                        <button class="btn btn-danger" name="eliminar_archivo" type="submit">Eliminar</button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editArchivoModal{{ archivo.id }}" data-bs-archivo-id="{{ archivo.id }}" data-bs-archivo-nombre="{{ archivo.nombre }}">Editar</button>
+                        {% endif %}
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para editar el archivo -->
+<div id="editArchivoModal{{ archivo.id }}" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar archivo</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'verproyectos' id=proyecto.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="archivo_id" value="{{ archivo.id }}">
+                    <div class="mb-3">
+                        <label for="nombreArchivo" class="form-label">Nuevo nombre</label>
+                        <input type="text" class="form-control" id="nombreArchivo" name="nombre" value="{{ archivo.nombre }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary" name="Editar_archivos">Guardar cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+                
+
+<script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    var editArchivoModal = document.getElementById('editArchivoModal');
+                
+                    editArchivoModal.addEventListener('show.bs.modal', function (event) {
+                        var button = event.relatedTarget; // Botón que activó el modal
+                        var archivoId = button.getAttribute('data-bs-archivo-id'); // Obtiene el ID del archivo
+                        var archivoNombre = button.getAttribute('data-bs-archivo-nombre'); // Obtiene el nombre del archivo
+                
+                        // Asignar los valores obtenidos del botón a los campos del modal
+                        var inputArchivoId = editArchivoModal.querySelector('input[name="archivo_id"]');
+                        var inputNombreArchivo = editArchivoModal.querySelector('input[name="nombre"]');
+                
+                        inputArchivoId.value = archivoId; 
+                        inputNombreArchivo.value = archivoNombre; 
+                    });
+                });
+
+            </script>
+                
+
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+
 
     {% include "footer.html" %}
     
     <script src="{% static 'js/verproyecto.js' %}"></script>
+    <script src="{% static 'js/cargararchivos.js' %}"></script>
+    <script src="{% static 'js/modaldetalle.js' %}"></script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const modal4 = document.getElementById('modal4');
+    const modal5 = document.getElementById('modal5');
+    const closeBtn4 = document.querySelector('.close-btn-modal4');
+    const closeBtn5 = document.querySelector('.close-btn-modal5');
+
+   
+    function openModal4() {
+        modal4.style.display = 'block';
+    }
+
+
+    function closeModal4() {
+        modal4.style.display = 'none';
+    }
+
+
+    function openModal5() {
+        modal5.style.display = 'block';
+    }
+
+
+    function closeModal5() {
+        modal5.style.display = 'none';
+    }
+
+
+    closeBtn4.onclick = function () {
+        closeModal4();
+    }
+
+    closeBtn5.onclick = function () {
+        closeModal5();
+    }
+
+   
+    window.onclick = function (event) {
+        if (event.target == modal4) {
+            closeModal4();
+        } else if (event.target == modal5) {
+            closeModal5();
+        }
+    }
+
+
+    window.openModal4 = openModal4;
+    window.openModal5 = openModal5;
+
+});
+
+
+
+
+
+</script>
+
+
+<script src="{% static 'js/sidebar_busqueda.js' %}"></script>
 </body>
 
 </html>

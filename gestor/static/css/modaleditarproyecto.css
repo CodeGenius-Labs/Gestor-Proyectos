@@ -1,0 +1,151 @@
+
+    /* Modal */
+
+    .modal {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        transition: .8s;
+        background-color: rgba(0, 0, 0, 0.5); /* Color y opacidad del backdrop */
+        /* Debe ser mayor que el modal */
+        
+    }
+
+    /* Contenido del Modal */
+    .modal-content {
+        background-color: #fff;
+        margin: 9% auto;
+        padding: 40px;
+        border: 1px solid #888;
+        width: 400px; /* Ajustado el ancho */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        position: relative;
+        align-items: center;
+    }
+
+    /* Botón para cerrar el Modal */
+    .close-btn7 {
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        background-color: red;
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .close-btn7:hover,
+    .close-btn7:focus {
+        color: #000;
+        text-decoration: none;
+    }
+
+    /* Inputs */
+    .input_campos {
+        margin-bottom: 20px;
+    }
+
+    .input_campos label {
+        display: block;
+        margin-bottom: 8px;
+        color: #0E2B3E;
+        font-family: "Libre Franklin", sans-serif;
+        font-weight: 600;
+    }
+
+    .input_campos input {
+        background-color: #0E2B3E;
+        color: white;
+        width: 100%; 
+        padding: 8px;
+        border: solid 1px white;
+        border-radius: 4px;
+    }
+
+    .input_campos input::placeholder {
+        color: white;
+    }
+
+    .input_fecha {
+        background-color: #0E2B3E;
+        color: white;
+        width: 100%; 
+        padding: 10px;
+        border: solid 1px white;
+        border-radius: 4px;
+    }
+
+    .input_descripcion {
+        background-color: #0E2B3E;
+        color: white;
+        width: 100%;
+        height: 100px;
+        padding: 10px;
+        border: solid 1px white;
+        border-radius: 4px;
+        resize: vertical; 
+        overflow-y: auto; 
+        white-space: pre-wrap; 
+    }
+
+    /* Fecha */
+    .form-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .form-container label {
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .form-container input {
+        background-color: #0E2B3E;
+        color: white;
+        border: solid 1px white;
+        padding: 10px;
+        width: 100%; 
+        border-radius: 4px;
+    }
+
+    .fecha {
+        padding-left: 5px;
+    }
+
+    /* Título del Modal */
+    h4 {
+        font-size: 25px;
+        color: #0E2B3E;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    /* Botón */
+    .btncrear {
+        background-color: #0E2B3E;
+        color: #54BCDE;
+        width: 100%;
+        height: 40px;
+        font-family: "Libre Franklin", sans-serif;
+        font-weight: 700;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btncrear:hover {
+        background-color: #54BCDE;
+        color: #0E2B3E;
+    }

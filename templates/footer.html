@@ -52,10 +52,10 @@
                 <div class="col-md-4 mb-4 mb-md-0 text-center">
                     <h5 class="text-uppercase">NOSOTROS</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text">Home</a></li>
-                        <li><a href="#" class="text">Quienes somos</a></li>
-                        <li><a href="#" class="text">Preguntas frecuentes</a></li>
-                        <li><a href="#" class="text">Términos y condiciones</a></li>
+                        <li><a href="{% url "home" %}" class="text">Home</a></li>
+                        <li><a href="{% url "home" %}" class="text">Quienes somos</a></li>
+                        <li><a href="{% url "home" %}" class="text">Preguntas frecuentes</a></li>
+                        <li><a href="{% url "home" %}" class="text">Términos y condiciones</a></li>
                     </ul>
                 </div>
             </div>
@@ -72,5 +72,4 @@
     
 {% endblock body %}
     
-</body>
 </html>

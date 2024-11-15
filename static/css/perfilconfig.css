@@ -1,0 +1,99 @@
+
+body{
+    background-color: #ffff;
+    max-width: 100%;
+}
+
+.containermain{
+    width: 50%;
+    height: auto;
+    margin: auto;
+    padding: 50px;
+    
+}
+
+.containermain .tittle{
+    font-family: AngsanaUPC ;
+    display: inline-block;
+    width: 560px;
+    font-size: 30px;
+    font-weight: bolder;
+    
+
+}
+
+
+.profileicon{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.profileicon i{
+    color:#54BCDE
+}
+
+.profileicon #fotoperfil{
+    color: #54BCDE;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+}
+
+.container .input .input-group{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+    
+.container .input .input-group label{
+    margin-right: 60px;
+    font-size: 17px;
+    text-align: center;
+    width: 160px;
+    
+}
+
+.container .input .input-group input{
+background-color: #0e2b3e46;
+border: 1px #0E2B3E solid;
+margin: 15px;
+color: black;
+
+}
+.container .Boton{
+    background-color: #0E2B3E;
+    color: #54BCDE;
+    display: flexbox;
+    width: 160px;
+    height: 50px;
+    margin: auto;
+    margin-top: 10px;
+    border-radius: 15px;
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+.Boton:hover{
+    background-color: #0E2B3E;
+    color: #ffffff;
+    
+}
+
+
