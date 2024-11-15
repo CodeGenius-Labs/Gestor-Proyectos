@@ -590,7 +590,8 @@ def superproyecto(request):
     if not request.user.is_staff:
         return redirect('home')  # Redirigir a "home" si no es staff
     
-    proyectos = Proyecto.objects.all()
+    proyectos = Proyecto.objects.prefetch_related('miembrosproyectos_set__usuario', 'miembrosproyectos_set__rol').all()
+
 
     # Obtener todos los usuarios registrados para que puedan ser seleccionados como administradores de departamento
     usuarios = User.objects.all()

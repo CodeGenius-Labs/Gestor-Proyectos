@@ -167,7 +167,15 @@
                             <tr class="fila">
                                 <td class="td-proyecto">{{ proyecto.nombre }}</td>
                                 <td class="td-descripcion">{{ proyecto.descripcion }}</td>
-                                <td class="td-proyecto">{{ proyecto.tutor.id }}</td>
+                                <td class="td-proyecto">
+                                    {% for miembro in proyecto.miembrosproyectos_set.all %}
+                                        {% if miembro.rol.rol == 'Administrador del departamento' %}
+                                            {{ miembro.usuario.username }}<br>
+                                        {% endif %}
+                                    {% empty %}
+                                        No asignado
+                                    {% endfor %}
+                                </td>
                                 <td class="td-fecha">{{ proyecto.fecha_inicio|date:"d/m/Y" }}</td>
                                 <td class="td-acciones">
                                     <button id="btn-editar" class="btn btn-editar" data-id="{{ proyecto.id }}" data-nombre="{{ proyecto.nombre }}" data-descripcion="{{ proyecto.descripcion }}" data-fecha-inicio="{{ proyecto.fecha_inicio|date:'Y-m-d' }}" data-fecha-fin="{{ proyecto.fecha_fin|date:'Y-m-d' }}">
