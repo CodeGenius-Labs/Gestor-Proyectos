@@ -221,7 +221,7 @@ def proyectos(request):
         if not (3 <= len(nombre) <= 20):
             messages.error(request, 'El nombre del proyecto debe tener entre 3 y 20 caracteres.')
             return redirect('proyectos')
-        if not re.match(r'^[\w\-]+$', nombre):  # Permite solo letras, números, guiones y guiones bajos
+        if not re.match(r'^[\w\s\-]+$', nombre):  # Permite solo letras, números, guiones y guiones bajos
             messages.error(request, 'El nombre no puede tener caracteres espciales ni numeros.')
             return redirect('proyectos')
 
