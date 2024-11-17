@@ -206,6 +206,12 @@ h3 {
     font-family: 'Arial', sans-serif;
 }
 
+.btn-primary {
+    background-color: #274960 !important;
+    color: #54BCDE !important;
+    border: none !important;
+}
+
 
 
 @media only screen and (max-width: 768px) {
