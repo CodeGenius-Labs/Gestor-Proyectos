@@ -356,7 +356,8 @@
     background-color: transparent;
     font-size: 30px;
     font-weight: bold;
-    color: #0E2B3E;
+    color: red;
+    cursor: pointer;
 }
 
 
