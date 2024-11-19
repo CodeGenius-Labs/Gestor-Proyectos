@@ -1,0 +1,16 @@
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    networks:
+      - backend
+    environment:
+      - DATABASE_URL=mysql://gestord3_admin:gestor_proyectos@cloud3.googiehost.com:3306/gestord3_gestor
+
+networks:
+  backend:
+    driver: bridge

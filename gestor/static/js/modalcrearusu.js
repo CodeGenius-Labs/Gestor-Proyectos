@@ -15,6 +15,10 @@
             });
 
 
+            document.getElementById('closeModalsuBtn').addEventListener('click', function() {
+                document.getElementById('modalsu').style.display = 'none';
+            });
+
 
             
             window.onclick = function(event) {
@@ -23,3 +27,4 @@
                     modal.style.display = 'none';
                 }
             };
+

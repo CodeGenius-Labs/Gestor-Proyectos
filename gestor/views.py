@@ -143,13 +143,11 @@ def actualizarperfil(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         email = request.POST.get('email')
-        number_phone = request.POST.get('number_phone')
-        location = request.POST.get('location')
         password = request.POST.get('password')
         current_password = request.POST.get('current_password')  # Campo para la contraseña actual
 
         user = request.user
-        if username != user.username or email != user.email or number_phone != user.number_phone or location != user.location or password:
+        if username != user.username or email != user.email or password:
             # Validaciones
             if username != user.username:
                 if not re.match(r'^[a-zA-Z]{8,50}$', username):
@@ -164,16 +162,6 @@ def actualizarperfil(request):
             if password and (len(password) < 7 or len(password) > 20):
                 messages.error(request, 'La contraseña debe tener entre 7 y 20 caracteres.')
                 return redirect('actualizar_perfil')
-
-            if number_phone != user.number_phone:
-                if not re.match(r'^\d{2}\d{10}$', number_phone):
-                    messages.error(request, 'El número de teléfono debe tener 12 dígitos, incluyendo el código de país.')
-                    return redirect('actualizar_perfil')
-
-            if location != user.location:
-                if not re.match(r'^[a-zA-Z\s]{4,20}$', location):
-                    messages.error(request, 'El lugar de residencia debe tener entre 4 y 20 caracteres y no incluir caracteres especiales.')
-                    return redirect('actualizar_perfil')
 
             # Verificación de contraseña actual antes de cambiarla
             if password:
@@ -190,8 +178,6 @@ def actualizarperfil(request):
             # Actualizar los campos del usuario
             user.username = username
             user.email = email
-            user.number_phone = number_phone
-            user.location = location
             user.save()
             auth_login(request, user)
 
@@ -221,7 +207,7 @@ def proyectos(request):
         if not (3 <= len(nombre) <= 20):
             messages.error(request, 'El nombre del proyecto debe tener entre 3 y 20 caracteres.')
             return redirect('proyectos')
-        if not re.match(r'^[\w\-]+$', nombre):  # Permite solo letras, números, guiones y guiones bajos
+        if not re.match(r'^[\w\s\-]+$', nombre):  # Permite solo letras, números, guiones y guiones bajos
             messages.error(request, 'El nombre no puede tener caracteres espciales ni numeros.')
             return redirect('proyectos')
 
