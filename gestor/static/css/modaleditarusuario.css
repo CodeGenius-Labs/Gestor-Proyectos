@@ -73,7 +73,7 @@ h2{
 }
 
 .modal-content span {
-    color: #0E2B3E;
+    color: red;
     font-size: 30px;
     cursor: pointer;
     padding-left: 20px;
