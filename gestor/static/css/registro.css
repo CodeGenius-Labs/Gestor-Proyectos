@@ -98,7 +98,7 @@ body {
 }
 
 .password {
-    margin-left: 66px;
+    margin-left: 25px;
     background-color: #274960;
     border: 1px solid rgba(255, 255, 255, 0.664);
     box-shadow: 2px 3px 4px black;
@@ -466,7 +466,6 @@ body {
         background-size: cover;
         background-position: center;
 
-
     }
 .login{
     margin-top: 10%;
@@ -501,12 +500,12 @@ body {
 
     .input_campos label {
         text-align: left;
-        margin-right: 30% ; 
+        margin-right: 30%; 
         margin-left: -10%;
     }
     .labelconf{
         font-size: 18px;
-        margin-left: 8% !important;
+        margin-left: 12% !important;
 
     }
 
@@ -519,7 +518,7 @@ body {
 
     }
     .labelpass{
-        margin-right: 28% !important;
+        margin-right: 29% !important;
 
     }
 
@@ -535,7 +534,7 @@ body {
     .password {
         position: relative;
         margin-top: 3%;
-        margin-left: 6%;
+        margin-left: 5%;
     }
 
     .inputs img {
@@ -559,8 +558,7 @@ body {
         padding: 8px 32px;
         margin: 10% 0 0 0 !important;
         background-color: #162e3d;
-    color: white;
-
+        color: white;
         border: none;
         border-radius: 20px;
         font-weight: bold;
